@@ -1,10 +1,12 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:skripsi/screen/fragment/dashboard.dart';
 import 'package:skripsi/screen/fragment/pembelian.dart';
 import 'package:skripsi/screen/fragment/penjualan.dart';
 import 'package:skripsi/screen/fragment/profile.dart';
 import 'package:skripsi/screen/fragment/stock.dart';
+import 'package:skripsi/screen/fragment/transaction.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,8 +19,7 @@ class _HomeState extends State<Home> {
   var listTab = [
     Dashboard(),
     Stock(),
-    Penjualan(),
-    Pembelian(),
+    Transaction(),
     Profile()
   ];
 
@@ -27,43 +28,33 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: listTab[_selectedIndex],
-      bottomNavigationBar: BottomNavyBar(
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedIndex : _selectedIndex,
-        showElevation: false,
-        onItemSelected: (index) => setState(() {
+        currentIndex : _selectedIndex,
+        elevation: 0,
+        unselectedItemColor: Colors.black,
+        unselectedLabelStyle: TextStyle(color: Colors.black),
+        showUnselectedLabels: true,
+        selectedItemColor: Color(0xff2D8EFF),
+        onTap: (index) => setState(() {
           _selectedIndex = index;
         }),
         items: [
-          BottomNavyBarItem(
-            icon: Icon(Icons.home),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.home_outline),
             title: Text('Home',style: TextStyle(color: Colors.black),),
-            activeColor: Color(0xf2D8EFF),
-            inactiveColor: Colors.black
           ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.widgets),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.cube_outline),
             title: Text('Stock',style: TextStyle(color: Colors.black),),
-            activeColor: Color(0xf2D8EFF),
-            inactiveColor: Colors.black
           ),
-          BottomNavyBarItem(  
-              icon: Icon(Icons.description),
-              title: Text('Penjualan',style: TextStyle(color: Colors.black),),
-              activeColor: Color(0xf2D8EFF),
-              inactiveColor: Colors.black
+          BottomNavigationBarItem(
+              icon: Icon(Ionicons.bar_chart_outline),
+              title: Text('Transactions',style: TextStyle(color: Colors.black),),
           ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.description),
-              title: Text('Pembelian',style: TextStyle(color: Colors.black),),
-              activeColor: Color(0xf2D8EFF),
-              inactiveColor: Colors.black
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.person_pin),
+          BottomNavigationBarItem(
+              icon: Icon(Ionicons.person_outline),
               title: Text('Profile',style: TextStyle(color: Colors.black),),
-              activeColor: Color(0xf2D8EFF),
-              inactiveColor: Colors.black
           ),
         ],
       ),
