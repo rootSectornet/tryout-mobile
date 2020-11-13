@@ -1,45 +1,37 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:skripsi/model/product.dart';
-import 'package:skripsi/model/warehouse.dart';
-
+import 'package:skripsi/src/model/stock.dart';
+import 'package:skripsi/src/model/warehouse.dart';
+import 'package:skripsi/src/presenter/stock.dart';
+import 'package:skripsi/src/state/stock.dart';
+import 'package:toast/toast.dart';
 class Stock extends StatefulWidget {
   @override
   _StockState createState() => _StockState();
 }
 
-class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  List<Product> products = [
-    Product(1,"Baterai ABC",50),
-    Product(2,"Lampu",40),
-    Product(3,"Baterai ABC",50),
-    Product(4,"Baterai ABC",50),
-    Product(5,"Baterai ABC",50),
-    Product(6,"Baterai ABC",50),
-    Product(7,"Baterai ABC",50),
-    Product(8,"Baterai ABC",50),
-    Product(9,"Baterai ABC",50),
-  ];
+class _StockState extends State<Stock> implements StockState {
+  StockModel _stockModel;
+  StockPresenter _stockPresenter;
 
-  Warehouse warehouse = new Warehouse(4,"Pekanbaru");
-  List<Warehouse> warehouses = [
-    Warehouse(1,"Jakarta"),
-    Warehouse(2,"Medan"),
-    Warehouse(3,"Surabaya"),
-    Warehouse(4,"Pekanbaru")
-  ];
+  _StockState(){
+      _stockPresenter=new StockPresenter();
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    this._stockPresenter.view=this;
+    this._stockPresenter.getWarehouse();
+    this._stockPresenter.getAllData();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
   }
 
 
@@ -70,7 +62,7 @@ class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
                                 color: Color(0xff7890AD)),
                           ),
                           Text(
-                            warehouse.name,
+                            this._stockModel.wareouseName,
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -90,18 +82,18 @@ class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
                           child: Center(child: Icon(Icons.filter_list,size: 40,)),
                         ),
                         onTap: ()=>{
-                          SelectDialog.showModal<Warehouse>(
+                          SelectDialog.showModal<WarehouseMod>(
                             context,
                             label: "Pilih Warehouse",
-                            selectedValue: warehouse,
+                            selectedValue: this._stockModel.warehouse,
                             showSearchBox: false,
-                            items: warehouses,
-                            itemBuilder: (BuildContext ctx,Warehouse data,isSelected){
+                            items: this._stockModel.warehouses,
+                            itemBuilder: (BuildContext ctx,WarehouseMod data,isSelected){
                               return Padding(padding: EdgeInsets.all(10),child: Text(data.name));
                             },
-                            onChange: (Warehouse selected) {
+                            onChange: (WarehouseMod selected) {
                               setState(() {
-                                warehouse = selected;
+                                this._stockPresenter.getData(selected);
                               });
                             },
                           )
@@ -111,12 +103,12 @@ class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
                 ),
               ),
               Expanded(
-                child: Container(
+                child:  this._stockModel.isloading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black),)) : Container(
                   padding: EdgeInsets.only(top:0,bottom: 10),
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: products.length,
+                    itemCount: this._stockModel.stocks.data != null ? this._stockModel.stocks.data.length : 0,
                     itemBuilder: (BuildContext context,int index){
                       return InkWell(
                         child: Container(
@@ -130,14 +122,14 @@ class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(products[index].nama,style: TextStyle(color: Colors.black,fontSize: 18),),
+                              Text(this._stockModel.stocks.data[index].nama,style: TextStyle(color: Colors.black,fontSize: 18),),
                               Badge(
                                 elevation: 0,
                                 badgeColor: Color(0xff2D8EFF),
                                 shape: BadgeShape.circle,
                                 padding: EdgeInsets.all(7),
                                 badgeContent: Text(
-                                  products[index].stock.toString(),
+                                  this._stockModel.stocks.data[index].jumlah.toString(),
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -152,6 +144,21 @@ class _StockState extends State<Stock> with SingleTickerProviderStateMixin {
             ],
           ),
         ));
+  }
+
+  @override
+  void onError(String error) {
+      Toast.show("$error", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void onSuccess(String success) {
+      Toast.show("$success", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void refreshData(StockModel stockModel) {
+      setState(() {
+        this._stockModel = stockModel;
+      });
   }
 }
 

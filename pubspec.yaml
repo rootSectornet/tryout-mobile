@@ -34,11 +34,25 @@ dependencies:
   badges: ^1.1.3
   select_dialog: ^1.2.1
   ionicons: ^0.0.3
+  provider: ^4.3.2+2
+  shared_preferences: ^0.5.12+2
+  http: ^0.12.2
+  dio: ^3.0.10
+  tuple: ^1.0.3
+  encrypt: ^4.0.0
+  rxdart: ^0.24.1
+  toast: ^0.1.5
+  loading: ^1.0.2
+  md2_tab_indicator: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.8.1
+flutter_icons:
+   android: "launcher_icon"
+   ios: true
+   image_path: "assets/img/ic_launcher.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

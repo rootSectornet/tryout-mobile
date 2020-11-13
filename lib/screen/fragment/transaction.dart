@@ -1,45 +1,40 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:skripsi/model/product.dart';
-import 'package:skripsi/model/warehouse.dart';
+import 'package:skripsi/screen/fragment/pembelian.dart';
+import 'package:skripsi/screen/fragment/penjualan.dart';
+import 'package:skripsi/src/model/transaction.dart';
+import 'package:skripsi/src/model/warehouse.dart';
+import 'package:skripsi/src/presenter/transaction.dart';
+import 'package:skripsi/src/state/transaction.dart';
+import 'package:toast/toast.dart';
 
 class Transaction extends StatefulWidget {
   @override
   _TransactionState createState() => _TransactionState();
 }
 
-class _TransactionState extends State<Transaction> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  List<Product> products = [
-    Product(1,"Baterai ABC",50),
-    Product(2,"Lampu",40),
-    Product(3,"Baterai ABC",50),
-    Product(4,"Baterai ABC",50),
-    Product(5,"Baterai ABC",50),
-    Product(6,"Baterai ABC",50),
-    Product(7,"Baterai ABC",50),
-    Product(8,"Baterai ABC",50),
-    Product(9,"Baterai ABC",50),
-  ];
+class _TransactionState extends State<Transaction> with SingleTickerProviderStateMixin implements TransactionState {
 
-  Warehouse warehouse = new Warehouse(4,"Pekanbaru");
-  List<Warehouse> warehouses = [
-    Warehouse(1,"Jakarta"),
-    Warehouse(2,"Medan"),
-    Warehouse(3,"Surabaya"),
-    Warehouse(4,"Pekanbaru")
-  ];
+  TransactionModel _transactionModel;
+  TransactionPresenter _transactionPresenter;
+
+  _TransactionState(){
+    _transactionPresenter = new TransactionPresenter();
+  }
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    this._transactionPresenter.view=this;
+    this._transactionPresenter.tabControl = new TabController(length: 2, vsync: this);
+    this._transactionPresenter.getWarehouse();
+    this._transactionPresenter.getAllData();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    this._transactionModel.tabController.dispose();
   }
 
 
@@ -47,13 +42,10 @@ class _TransactionState extends State<Transaction> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xffF1F4F7),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+        body: Column(
+            children: [
               Container(
-                padding: EdgeInsets.only(top: 40, bottom: 6),
+                padding: EdgeInsets.only(top: 40, bottom: 6,left: 20,right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -70,7 +62,7 @@ class _TransactionState extends State<Transaction> with SingleTickerProviderStat
                                 color: Color(0xff7890AD)),
                           ),
                           Text(
-                            warehouse.name,
+                            this._transactionModel.wareouseName,
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -90,18 +82,18 @@ class _TransactionState extends State<Transaction> with SingleTickerProviderStat
                           child: Center(child: Icon(Icons.filter_list,size: 40,)),
                         ),
                         onTap: ()=>{
-                          SelectDialog.showModal<Warehouse>(
+                          SelectDialog.showModal<WarehouseMod>(
                             context,
                             label: "Pilih Warehouse",
-                            selectedValue: warehouse,
+                            selectedValue: this._transactionModel.warehouse,
                             showSearchBox: false,
-                            items: warehouses,
-                            itemBuilder: (BuildContext ctx,Warehouse data,isSelected){
+                            items: this._transactionModel.warehouses,
+                            itemBuilder: (BuildContext ctx,WarehouseMod data,isSelected){
                               return Padding(padding: EdgeInsets.all(10),child: Text(data.name));
                             },
-                            onChange: (Warehouse selected) {
+                            onChange: (WarehouseMod selected) {
                               setState(() {
-                                warehouse = selected;
+                                this._transactionPresenter.setWarehouse(selected);
                               });
                             },
                           )
@@ -110,48 +102,54 @@ class _TransactionState extends State<Transaction> with SingleTickerProviderStat
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(top:0,bottom: 10),
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: products.length,
-                    itemBuilder: (BuildContext context,int index){
-                      return InkWell(
-                        child: Container(
-                          height: 80,
-                          padding: EdgeInsets.only(top: 10,left:10,right:10,bottom: 10),
-                          margin: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25)
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(products[index].nama,style: TextStyle(color: Colors.black,fontSize: 18),),
-                              Badge(
-                                elevation: 0,
-                                badgeColor: Color(0xff2D8EFF),
-                                shape: BadgeShape.circle,
-                                padding: EdgeInsets.all(7),
-                                badgeContent: Text(
-                                  products[index].stock.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+              new TabBar(
+              controller: this._transactionModel.tabController,
+              labelStyle: TextStyle( //up to your taste
+                  fontWeight: FontWeight.w700
+              ),
+              indicatorSize: TabBarIndicatorSize.label, //makes it better
+              labelColor: Color(0xff2D8EFF), //Google's sweet blue
+              unselectedLabelColor: Colors.black87, //niceish grey
+              isScrollable: true, //up to your taste
+              indicator: MD2Indicator( //it begins here
+                  indicatorHeight: 3,
+                  indicatorColor: Color(0xff2D8EFF),
+                  indicatorSize: MD2IndicatorSize.normal //3 different modes tiny-normal-full
+              ),
+              tabs: <Widget>[
+                Tab(text: "Penjualan"),
+                Tab(text: "Pembelian",),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                child: TabBarView(
+                  controller: this._transactionModel.tabController,
+                  children: <Widget>[
+                    Penjualan(key: Key("1"),transactionModel: this._transactionModel),
+                    Pembelian(key: Key("2"),transactionModel: this._transactionModel)
+                  ],
                 ),
-              )
-            ],
-          ),
-        ));
+              ),
+            ),
+          ],
+        ),
+    );
+  }
+
+  @override
+  void onError(String error) {
+      Toast.show("$error", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void onSuccess(String success) {
+      Toast.show("$success", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void refreshData(TransactionModel transactionModel) {
+      setState(() {
+        this._transactionModel = transactionModel;
+      });
   }
 }
 

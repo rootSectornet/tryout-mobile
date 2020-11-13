@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:skripsi/src/model/home.dart';
+import 'package:skripsi/src/presenter/home.dart';
+import 'package:skripsi/src/state/home.dart';
+import 'package:toast/toast.dart';
 
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+class _DashboardState extends State<Dashboard> implements HomeState{
+
+  HomeModel _homeModel;
+  HomePresenter _homePresenter;
+
+  _DashboardState(){
+    _homePresenter = new HomePresenter();
+  }
+
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    this._homePresenter.view=this;
+    this._homePresenter.getData();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
   }
 
   @override
@@ -51,7 +61,7 @@ class _DashboardState extends State<Dashboard>
                                   color: Color(0xff7890AD)),
                             ),
                             Text(
-                              "Tedi Susanto",
+                              "${this._homeModel.nama}",
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -99,7 +109,7 @@ class _DashboardState extends State<Dashboard>
                                 children: <Widget>[
                                   Center(
                                     child: Text(
-                                      "154",
+                                      "${this._homeModel.totalPenjualan}",
                                       style: TextStyle(
                                         fontSize: 56,
                                         fontWeight: FontWeight.bold,
@@ -138,7 +148,7 @@ class _DashboardState extends State<Dashboard>
                                 children: <Widget>[
                                   Center(
                                     child: Text(
-                                      "120",
+                                      "${this._homeModel.totalPembelian}",
                                       style: TextStyle(
                                         fontSize: 56,
                                         fontWeight: FontWeight.bold,
@@ -209,11 +219,11 @@ class _DashboardState extends State<Dashboard>
                         fontWeight: FontWeight.w700),
                   ),
                 ),
-                Container(
+                this._homeModel.isloading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black),)) : Container(
                   child: GridView.builder(
                       scrollDirection: Axis.vertical,
                       physics: ClampingScrollPhysics(),
-                      itemCount: 4,
+                      itemCount: this._homeModel.dataDashboard.length,
                       shrinkWrap: true,
                       gridDelegate:
                           new SliverGridDelegateWithFixedCrossAxisCount(
@@ -232,7 +242,7 @@ class _DashboardState extends State<Dashboard>
                             children: <Widget>[
                               Center(
                                 child: Text(
-                                  "120",
+                                  "${this._homeModel.dataDashboard[tc].total}",
                                   style: TextStyle(
                                     fontSize: 46,
                                     fontWeight: FontWeight.bold,
@@ -275,7 +285,7 @@ class _DashboardState extends State<Dashboard>
                               ),
                               Center(
                                 child: Text(
-                                  "Medan",
+                                  "${this._homeModel.dataDashboard[tc].warehouse}",
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color(0xff000000),
@@ -291,5 +301,24 @@ class _DashboardState extends State<Dashboard>
             ),
           ),
         ));
+  }
+
+  @override
+  void onError(String error) {
+      // TODO: implement onError
+      Toast.show("$error", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void onSuccess(String success) {
+      // TODO: implement onSuccess
+      Toast.show("$success", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    @override
+    void refreshData(HomeModel homeModel) {
+    // TODO: implement refreshData
+      setState(() {
+        this._homeModel = homeModel;
+      });
+
   }
 }
