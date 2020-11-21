@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:skripsi/screen/fragment/pembelian.dart';
-import 'package:skripsi/screen/fragment/penjualan.dart';
-import 'package:skripsi/src/model/transaction.dart';
-import 'package:skripsi/src/model/warehouse.dart';
-import 'package:skripsi/src/presenter/transaction.dart';
-import 'package:skripsi/src/state/transaction.dart';
+import 'package:SoalOnline/screen/fragment/pembelian.dart';
+import 'package:SoalOnline/screen/fragment/penjualan.dart';
+import 'package:SoalOnline/src/model/transaction.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalOnline/src/presenter/transaction.dart';
+import 'package:SoalOnline/src/state/transaction.dart';
 import 'package:toast/toast.dart';
 
 class Transaction extends StatefulWidget {

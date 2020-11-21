@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:skripsi/src/model/stock.dart';
-import 'package:skripsi/src/model/warehouse.dart';
-import 'package:skripsi/src/presenter/stock.dart';
-import 'package:skripsi/src/state/stock.dart';
+import 'package:SoalOnline/src/model/stock.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalOnline/src/presenter/stock.dart';
+import 'package:SoalOnline/src/state/stock.dart';
 import 'package:toast/toast.dart';
 class Stock extends StatefulWidget {
   @override

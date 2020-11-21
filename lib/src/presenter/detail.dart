@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:skripsi/src/model/detail.dart';
-import 'package:skripsi/src/resources/detailApi.dart';
-import 'package:skripsi/src/state/detail.dart';
+import 'package:SoalOnline/src/model/detail.dart';
+import 'package:SoalOnline/src/resources/detailApi.dart';
+import 'package:SoalOnline/src/state/detail.dart';
 
 abstract class DetailPresenterAbstract{
   set view(DetailState view){}

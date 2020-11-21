@@ -1,5 +1,5 @@
 
-import 'package:skripsi/src/model/stock.dart';
+import 'package:SoalOnline/src/model/stock.dart';
 
 abstract class StockState{
   void refreshData(StockModel stockModel);

@@ -1,9 +1,9 @@
 
 // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:skripsi/src/model/warehouse.dart';
-import 'package:skripsi/src/response/pembelian.dart';
-import 'package:skripsi/src/response/penjualan.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalOnline/src/response/pembelian.dart';
+import 'package:SoalOnline/src/response/penjualan.dart';
 
 class TransactionModel{
   bool isloading = false;

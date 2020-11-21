@@ -1,8 +1,8 @@
 
-import 'package:skripsi/src/response/products.dart';
-import 'package:skripsi/src/response/warehouse.dart';
+import 'package:SoalOnline/src/response/products.dart';
+import 'package:SoalOnline/src/response/warehouse.dart';
 // ignore: unused_import
-import 'package:skripsi/src/model/warehouse.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
 
 class StockModel{
   bool isloading = false;

@@ -1,13 +1,13 @@
 // ignore: unused_import
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
-import 'package:skripsi/src/model/user.dart';
+import 'package:SoalOnline/src/model/user.dart';
 // ignore: unused_import
-import 'package:skripsi/helper/paths.dart';
+import 'package:SoalOnline/helper/paths.dart';
 // ignore: unused_import
-import 'package:skripsi/helper/rijndael.dart';
+import 'package:SoalOnline/helper/rijndael.dart';
 import 'dart:convert';
-import 'package:skripsi/src/response/warehouse.dart';
+import 'package:SoalOnline/src/response/warehouse.dart';
 class WarehouseApi{
     Client _client = new Client();
     Future<Warehouse> getWarehouse() async{

@@ -1,4 +1,4 @@
-package com.example.skripsi
+package com.example.SoalOnline
 
 import io.flutter.embedding.android.FlutterActivity
 

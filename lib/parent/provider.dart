@@ -5,6 +5,7 @@ class Provider extends StatefulWidget {
 
   static of(BuildContext context) {
     _InheritedProvider p =
+    // ignore: deprecated_member_use
     context.inheritFromWidgetOfExactType(_InheritedProvider);
     return p.data;
   }

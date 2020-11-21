@@ -2,13 +2,13 @@
 
 import 'dart:convert';
 
-import 'package:skripsi/src/model/home.dart';
-import 'package:skripsi/src/resources/session.dart';
-import 'package:skripsi/src/resources/transactions.dart';
-import 'package:skripsi/src/response/pembelian.dart';
-import 'package:skripsi/src/response/penjualan.dart';
-import 'package:skripsi/src/response/warehouse.dart';
-import 'package:skripsi/src/state/home.dart';
+import 'package:SoalOnline/src/model/home.dart';
+import 'package:SoalOnline/src/resources/session.dart';
+import 'package:SoalOnline/src/resources/transactions.dart';
+import 'package:SoalOnline/src/response/pembelian.dart';
+import 'package:SoalOnline/src/response/penjualan.dart';
+import 'package:SoalOnline/src/response/warehouse.dart';
+import 'package:SoalOnline/src/state/home.dart';
 
 abstract class HomePresenterAbstract{
   set view(HomeState view){}

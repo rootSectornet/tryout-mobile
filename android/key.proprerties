@@ -1,4 +1,4 @@
 storePassword=root12345
 keyPassword=root12345
 keyAlias=key
-storeFile=E:\skripsi\frontend\skripsi\keystore.jks
+storeFile=E:\candahar\projeck\try out\apps\keystore.jks

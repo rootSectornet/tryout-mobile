@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:skripsi/parent/provider.dart';
-import 'package:skripsi/routes/routes.dart';
+import 'package:SoalOnline/parent/provider.dart';
+import 'package:SoalOnline/routes/routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return Provider(
           data: appState,
           child: MaterialApp(
-            title: 'Skripsi',
+            title: 'Soal Online',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: 'SFProDisplay',

@@ -1,5 +1,5 @@
 
-import 'package:skripsi/src/model/detail.dart';
+import 'package:SoalOnline/src/model/detail.dart';
 
 abstract class DetailState{
   void refreshData(DetailModel detailModel);

@@ -1,4 +1,4 @@
-import 'package:skripsi/src/model/login.dart';
+import 'package:SoalOnline/src/model/login.dart';
 
 abstract class LoginState{
   void refreshData(LoginModel loginModel);

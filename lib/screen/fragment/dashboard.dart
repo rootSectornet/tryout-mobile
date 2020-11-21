@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:skripsi/src/model/home.dart';
-import 'package:skripsi/src/presenter/home.dart';
-import 'package:skripsi/src/state/home.dart';
+import 'package:SoalOnline/src/model/home.dart';
+import 'package:SoalOnline/src/presenter/home.dart';
+import 'package:SoalOnline/src/state/home.dart';
 import 'package:toast/toast.dart';
 
 class Dashboard extends StatefulWidget {

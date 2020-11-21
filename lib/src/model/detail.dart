@@ -1,8 +1,8 @@
 
 // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:skripsi/src/response/detailpembelian.dart';
-import 'package:skripsi/src/response/detailpenjualan.dart';
+import 'package:SoalOnline/src/response/detailpembelian.dart';
+import 'package:SoalOnline/src/response/detailpenjualan.dart';
 
 class DetailModel{
   bool isloading = false;

@@ -1,6 +1,6 @@
 
 
-import 'package:skripsi/src/model/transaction.dart';
+import 'package:SoalOnline/src/model/transaction.dart';
 
 abstract class TransactionState{
   void refreshData(TransactionModel transactionModel);

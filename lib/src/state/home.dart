@@ -1,4 +1,4 @@
-import 'package:skripsi/src/model/home.dart';
+import 'package:SoalOnline/src/model/home.dart';
 
 abstract class HomeState{
   void refreshData(HomeModel homeModel);

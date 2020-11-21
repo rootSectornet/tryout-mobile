@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:skripsi/helper/paths.dart';
-import 'package:skripsi/helper/rijndael.dart';
-import 'package:skripsi/src/model/login.dart';
-import 'package:skripsi/src/model/user.dart';
-import 'package:skripsi/src/resources/session.dart';
-import 'package:skripsi/src/resources/userApi.dart';
-import 'package:skripsi/src/state/login.dart';
+import 'package:SoalOnline/helper/paths.dart';
+import 'package:SoalOnline/helper/rijndael.dart';
+import 'package:SoalOnline/src/model/login.dart';
+import 'package:SoalOnline/src/model/user.dart';
+import 'package:SoalOnline/src/resources/session.dart';
+import 'package:SoalOnline/src/resources/userApi.dart';
+import 'package:SoalOnline/src/state/login.dart';
 
 abstract class LoginPresenterAbstract{
   set view(LoginState view){}
@@ -32,31 +32,16 @@ class LoginPresenter implements LoginPresenterAbstract{
     this._loginModel.isloading = true;
     this._loginState.refreshData(this._loginModel);
     Map param = {
-      'username':username,
+      'email':username,
       'password':password
     };
     _userApi.login(json.encode(param))
-    .then((User res){
-      if(res == null){
+    .then((res){
+          Session.setId(res.dataLogin.dataMurid.id);
+          Session.setName(res.dataLogin.dataMurid.name);
           this._loginModel.isloading = false;
           this._loginState.refreshData(this._loginModel);
-          this._loginState.onError("Login Error");
-      }else{
-        if(res.status){
-          Session.setId(res.data.id);
-          Session.setName(res.data.name);
-          Session.setPassword(res.data.password);
-          Session.setIdWarehouse(res.data.idWarehouse);
-          Session.setLevel(res.data.level);
-          this._loginModel.isloading = false;
-          this._loginState.refreshData(this._loginModel);
-          this._loginState.onSuccess("${res.message}");
-        }else{
-          this._loginModel.isloading = false;
-          this._loginState.refreshData(this._loginModel);
-          this._loginState.onError("${res.message}");
-        }
-      }
+          this._loginState.onSuccess("yeh, Berhasil");
     }).catchError((onError){
           this._loginModel.isloading = false;
           this._loginState.refreshData(this._loginModel);

@@ -3,12 +3,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:skripsi/src/model/transaction.dart';
-import 'package:skripsi/src/model/warehouse.dart';
-import 'package:skripsi/src/resources/transactions.dart';
-import 'package:skripsi/src/resources/warehouseApi.dart';
-import 'package:skripsi/src/response/warehouse.dart';
-import 'package:skripsi/src/state/transaction.dart';
+import 'package:SoalOnline/src/model/transaction.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalOnline/src/resources/transactions.dart';
+import 'package:SoalOnline/src/resources/warehouseApi.dart';
+import 'package:SoalOnline/src/response/warehouse.dart';
+import 'package:SoalOnline/src/state/transaction.dart';
 
 abstract class TransactionPresenterAbstract{
   set view(TransactionState view){}

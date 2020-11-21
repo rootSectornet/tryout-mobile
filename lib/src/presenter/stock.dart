@@ -2,13 +2,13 @@
 
 import 'dart:convert';
 
-import 'package:skripsi/src/model/stock.dart';
-import 'package:skripsi/src/model/warehouse.dart';
-import 'package:skripsi/src/resources/productApi.dart';
-import 'package:skripsi/src/resources/warehouseApi.dart';
-import 'package:skripsi/src/response/products.dart';
-import 'package:skripsi/src/response/warehouse.dart';
-import 'package:skripsi/src/state/stock.dart';
+import 'package:SoalOnline/src/model/stock.dart';
+import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalOnline/src/resources/productApi.dart';
+import 'package:SoalOnline/src/resources/warehouseApi.dart';
+import 'package:SoalOnline/src/response/products.dart';
+import 'package:SoalOnline/src/response/warehouse.dart';
+import 'package:SoalOnline/src/state/stock.dart';
 
 abstract class StockPresenterAbstract{
   set view(StockState view){}

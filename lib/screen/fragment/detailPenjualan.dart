@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:skripsi/src/model/detail.dart';
-import 'package:skripsi/src/presenter/detail.dart';
-import 'package:skripsi/src/state/detail.dart';
+import 'package:SoalOnline/src/model/detail.dart';
+import 'package:SoalOnline/src/presenter/detail.dart';
+import 'package:SoalOnline/src/state/detail.dart';
 import 'package:toast/toast.dart';
 class DetailPembelian extends StatefulWidget {
   final int id;

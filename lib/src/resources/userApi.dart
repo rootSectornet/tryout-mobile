@@ -1,27 +1,34 @@
 // ignore: unused_import
+import 'package:SoalOnline/src/response/login.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
-import 'package:skripsi/src/model/user.dart';
+import 'package:SoalOnline/helper/paths.dart';
 // ignore: unused_import
-import 'package:skripsi/helper/paths.dart';
-// ignore: unused_import
-import 'package:skripsi/helper/rijndael.dart';
+import 'package:SoalOnline/helper/rijndael.dart';
 import 'dart:convert';
-class UserApi{
-    Client _client = new Client();
-    Map<String,String> _headers = {
-      'Content-type' : 'text/plain',
-      'Accept': 'text/plain',
-      };
-    Future<User> login(String data) async{
-      final response = await _client.post("${Paths.BASEURL}${Paths.LOGIN}",body:encryptAESCryptoJS(data,Paths.KEY),headers: _headers);
-      if(response.statusCode == 200){
-        print(json.decode(decryptAESCryptoJS(response.body, Paths.KEY)));
-        User user = User.fromJson(json.decode(decryptAESCryptoJS(response.body, Paths.KEY)));
-        return user;
-      }else{
-        return null;
-      }
 
+class UserApi {
+  Client _client = new Client();
+  Map<String, String> _headers = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+  };
+  // ignore: missing_return
+  Future<LoginResponse> login(String data) async {
+    final response = await _client.post("${Paths.BASEURL}${Paths.LOGIN}",
+        body: data, headers: _headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      print(res);
+      if (res['success']) {
+        LoginResponse loginResponse =
+            LoginResponse.fromJson(json.decode(response.body));
+        return loginResponse;
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet kamu error!");
     }
+  }
 }

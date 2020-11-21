@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:skripsi/src/resources/session.dart';
+import 'package:SoalOnline/src/resources/session.dart';
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
