@@ -34,17 +34,21 @@ class _HomeState extends State<Home> {
                         textStyle:
                             TextStyle(fontSize: 18, color: Color(0xffffffff)),
                       )),
-                  new Container(
-                      width: 50,
-                      height: 50,
-                      padding: EdgeInsets.all(10),
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff2D8EFF),
-                          image: new DecorationImage(
-                              fit: BoxFit.fill,
-                              image:
-                                  ExactAssetImage("assets/img/download.png"))))
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, "/profile_detail"),
+                    child: new Container(
+                        width: 50,
+                        height: 50,
+                        padding: EdgeInsets.all(10),
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xff2D8EFF),
+                            image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: ExactAssetImage(
+                                    "assets/img/download.png")))),
+                  )
                 ],
               ),
             ),
