@@ -449,7 +449,10 @@ class _ProfileDetailState extends State<ProfileDetail>
                           ),
                           Divider(),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, "/profile_info_layanan");
+                            },
                             child: Container(
                               height: 40,
                               child: Row(
