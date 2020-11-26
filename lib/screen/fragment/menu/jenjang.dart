@@ -1,3 +1,4 @@
+import 'package:SoalOnline/helper/utils.dart';
 import 'package:SoalOnline/src/model/jenjang.dart';
 import 'package:SoalOnline/src/presenter/jenjang.dart';
 import 'package:SoalOnline/src/state/jenjang.dart';
@@ -10,18 +11,23 @@ import 'dart:math' as math;
 import 'package:toast/toast.dart';
 
 class JenjangScreen extends StatefulWidget {
+  final TryoutCallback onTryoutgo;
+
+  const JenjangScreen({Key key, this.onTryoutgo}) : super(key: key);
   @override
-  _JenjangScreenState createState() => _JenjangScreenState();
+  _JenjangScreenState createState() => _JenjangScreenState(onTryoutgo);
 }
 
 class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
   JenjangModel _jenjangModel;
   JenjangPresenter _jenjangPresenter;
-  _JenjangScreenState() {
+  final TryoutCallback onTryoutgo;
+  _JenjangScreenState(this.onTryoutgo) {
     this._jenjangPresenter = new JenjangPresenter();
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     this._jenjangPresenter.view = this;
     this._jenjangPresenter.getData();
@@ -42,6 +48,10 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
               itemCount: this._jenjangModel.jenjangResponse.data.length,
               itemBuilder: (ctx, index) {
                 return InkWell(
+                  onTap: () {
+                    this.onTryoutgo(
+                        this._jenjangModel.jenjangResponse.data[index].id);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(3),
                     decoration: BoxDecoration(

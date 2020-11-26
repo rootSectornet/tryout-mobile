@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:SoalOnline/src/model/paket.dart';
+import 'package:SoalOnline/src/resources/jenjangApi.dart';
 import 'package:SoalOnline/src/resources/paketApi.dart';
 import 'package:SoalOnline/src/state/paket.dart';
 import 'package:intl/intl.dart';
@@ -8,12 +9,14 @@ import 'package:intl/intl.dart';
 abstract class PaketPresenterAbstract {
   set view(PaketState view) {}
   void getData() {}
+  void getJenjang() {}
 }
 
 class PaketPresenter implements PaketPresenterAbstract {
   PaketModel _paketModel = new PaketModel();
   PaketState _paketState;
   PaketApi _paketApi = new PaketApi();
+  JenjangApi _jenjangApi = new JenjangApi();
 
   @override
   // ignore: avoid_return_types_on_setters
@@ -49,6 +52,21 @@ class PaketPresenter implements PaketPresenterAbstract {
       this._paketState.refreshData(this._paketModel);
     }).catchError((err) {
       print(err.toString());
+      this._paketModel.isloading = false;
+      this._paketState.refreshData(this._paketModel);
+      this._paketState.onError(err.toString());
+    });
+  }
+
+  @override
+  void getJenjang() {
+    this._paketModel.isloading = true;
+    this._paketState.refreshData(this._paketModel);
+    this._jenjangApi.getJenjang().then((value) {
+      this._paketModel.jenjangResponse = value;
+      this._paketModel.isloading = false;
+      this._paketState.refreshData(this._paketModel);
+    }).catchError((err) {
       this._paketModel.isloading = false;
       this._paketState.refreshData(this._paketModel);
       this._paketState.onError(err.toString());

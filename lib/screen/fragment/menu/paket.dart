@@ -1,3 +1,4 @@
+import 'package:SoalOnline/helper/utils.dart';
 import 'package:SoalOnline/src/model/paket.dart';
 import 'package:SoalOnline/src/presenter/paket.dart';
 import 'package:SoalOnline/src/state/paket.dart';
@@ -6,20 +7,25 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
 
 class PaketScreen extends StatefulWidget {
+  final TryoutCallback onTryoutgo;
+  final bool isList;
+  const PaketScreen({Key key, this.onTryoutgo, this.isList}) : super(key: key);
   @override
-  _PaketScreenState createState() => _PaketScreenState();
+  _PaketScreenState createState() => _PaketScreenState(onTryoutgo, isList);
 }
 
 class _PaketScreenState extends State<PaketScreen> implements PaketState {
   // ignore: unused_field
   PaketModel _paketModel;
   PaketPresenter _paketPresenter;
-
-  _PaketScreenState() {
+  final TryoutCallback onTryoutgo;
+  final bool isList;
+  _PaketScreenState(this.onTryoutgo, this.isList) {
     this._paketPresenter = new PaketPresenter();
   }
 
@@ -28,6 +34,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
     super.initState();
     this._paketPresenter.view = this;
     this._paketPresenter.getData();
+    this._paketPresenter.getJenjang();
   }
 
   @override
@@ -151,91 +158,194 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                 ),
               ),
             )
-          : CarouselSlider.builder(
-              options: CarouselOptions(
-                height: 130,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(microseconds: 5000),
-                viewportFraction: 0.9,
-                aspectRatio: 2.0,
-              ),
-              itemCount: this._paketModel.pakets.length,
-              itemBuilder: (BuildContext context, int itemIndex) => Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff25509e),
-                        Color(0xff25509e),
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xffaaaaaa),
-                          blurRadius: 20,
-                          spreadRadius: -12)
-                    ],
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                  children: <Widget>[
-                    Image.asset("assets/img/paket.png", fit: BoxFit.fill),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Column(
+          : this.isList
+              ? ListView.builder(
+                  controller: ScrollController(),
+                  physics: ScrollPhysics(parent: PageScrollPhysics()),
+                  itemCount: this._paketModel.pakets.length,
+                  itemBuilder: (BuildContext context, int itemIndex) => InkWell(
+                    onTap: () {
+                      this.onTryoutgo(this._paketModel.pakets[itemIndex].id);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff25509e),
+                              Color(0xff25509e),
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xffaaaaaa),
+                                blurRadius: 20,
+                                spreadRadius: -12)
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Row(
                         children: <Widget>[
-                          AutoSizeText(
-                            this._paketModel.pakets[itemIndex].title,
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 14, color: Color(0xffffffff)),
-                            ),
-                            maxLines: 2,
-                          ),
+                          Image.asset("assets/img/paket.png", fit: BoxFit.fill),
                           SizedBox(
-                            height: 10,
+                            width: 10,
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Ionicons.timer_sharp,
-                                color: Colors.white54,
-                                size: 12,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                  "${this._paketModel.pakets[itemIndex].durasi} Jam",
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                AutoSizeText(
+                                  this._paketModel.pakets[itemIndex].title,
                                   style: GoogleFonts.poppins(
-                                      color: Colors.white54, fontSize: 12)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Ionicons.calendar_outline,
-                                color: Colors.white54,
-                                size: 12,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(this._paketModel.pakets[itemIndex].tanggal,
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.white54, fontSize: 12)),
-                            ],
-                          ),
+                                    textStyle: TextStyle(
+                                        fontSize: 14, color: Color(0xffffffff)),
+                                  ),
+                                  maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Ionicons.timer_sharp,
+                                      color: Colors.white54,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                        "${this._paketModel.pakets[itemIndex].durasi} Jam",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white54,
+                                            fontSize: 12)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Ionicons.calendar_outline,
+                                      color: Colors.white54,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                        this
+                                            ._paketModel
+                                            .pakets[itemIndex]
+                                            .tanggal,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white54,
+                                            fontSize: 12)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    )
-                  ],
+                    ),
+                  ),
+                )
+              : CarouselSlider.builder(
+                  options: CarouselOptions(
+                    height: 130,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(microseconds: 5000),
+                    viewportFraction: 0.9,
+                    aspectRatio: 2.0,
+                  ),
+                  itemCount: this._paketModel.pakets.length,
+                  itemBuilder: (BuildContext context, int itemIndex) => InkWell(
+                    onTap: () {
+                      this.onTryoutgo(this._paketModel.pakets[itemIndex].id);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff25509e),
+                              Color(0xff25509e),
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xffaaaaaa),
+                                blurRadius: 20,
+                                spreadRadius: -12)
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Row(
+                        children: <Widget>[
+                          Image.asset("assets/img/paket.png", fit: BoxFit.fill),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                AutoSizeText(
+                                  this._paketModel.pakets[itemIndex].title,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        fontSize: 14, color: Color(0xffffffff)),
+                                  ),
+                                  maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Ionicons.timer_sharp,
+                                      color: Colors.white54,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                        "${this._paketModel.pakets[itemIndex].durasi} Jam",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white54,
+                                            fontSize: 12)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Ionicons.calendar_outline,
+                                      color: Colors.white54,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                        this
+                                            ._paketModel
+                                            .pakets[itemIndex]
+                                            .tanggal,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white54,
+                                            fontSize: 12)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
     );
   }
 

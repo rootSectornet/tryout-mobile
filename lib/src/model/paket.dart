@@ -1,3 +1,5 @@
+import 'package:SoalOnline/src/response/jenjang.dart';
+
 class Paket {
   int id;
   String title;
@@ -10,4 +12,5 @@ class PaketModel {
   bool isloading = false;
   bool isSuccess = false;
   List<Paket> pakets = new List<Paket>();
+  JenjangResponse jenjangResponse = new JenjangResponse();
 }
