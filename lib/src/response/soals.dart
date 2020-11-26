@@ -1,10 +1,10 @@
-class TryoutDetailResponse {
+class SoalsResponse {
   bool success;
   List<Data> data;
 
-  TryoutDetailResponse({this.success, this.data});
+  SoalsResponse({this.success, this.data});
 
-  TryoutDetailResponse.fromJson(Map<String, dynamic> json) {
+  SoalsResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
       data = new List<Data>();
@@ -26,7 +26,7 @@ class TryoutDetailResponse {
 
 class Data {
   int id;
-  double nilai;
+  int nilai;
   String nama;
   int jumlahSoal;
   int totalBenar;

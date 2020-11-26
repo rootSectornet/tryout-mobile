@@ -1,5 +1,6 @@
 import 'package:SoalOnline/screen/fragment/menu/jenjang.dart';
 import 'package:SoalOnline/screen/fragment/menu/paket.dart';
+import 'package:SoalOnline/screen/tryout.dart';
 import 'package:SoalOnline/src/model/home.dart';
 import 'package:SoalOnline/src/presenter/home.dart';
 import 'package:SoalOnline/src/resources/session.dart';
@@ -402,5 +403,19 @@ class _HomeState extends State<Home> implements HomeState {
         );
       },
     );
+  }
+
+  @override
+  void toTryout(int idPaket, int idJenjang) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TryoutScreen(
+            key: Key("1"),
+            idPaket: idPaket,
+            idJenjang: idJenjang,
+            idTryout: 0,
+          ),
+        ));
   }
 }

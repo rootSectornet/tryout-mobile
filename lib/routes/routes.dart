@@ -9,6 +9,7 @@ import 'package:SoalOnline/screen/fragment/profile_tagihan.dart';
 import 'package:SoalOnline/screen/fragment/verifitaction.dart';
 import 'package:SoalOnline/screen/profile_detail.dart';
 import 'package:SoalOnline/screen/signup.dart';
+import 'package:SoalOnline/screen/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:SoalOnline/screen/home.dart';
 import 'package:SoalOnline/screen/login.dart';

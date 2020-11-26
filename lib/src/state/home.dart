@@ -7,4 +7,5 @@ abstract class HomeState {
   void onError(String error);
   void showJenjang(BuildContext context);
   void showPaket(BuildContext context);
+  void toTryout(int idPaket, int idJenjang);
 }

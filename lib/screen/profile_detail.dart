@@ -1,4 +1,5 @@
 import 'package:SoalOnline/screen/fragment/profil/total_nilai.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -133,29 +134,33 @@ class _ProfileDetailState extends State<ProfileDetail>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          AutoSizeText(
                             'Sepertinya profilmu ada yang kurang',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 12,
                             ),
+                            maxLines: 1,
+                            maxFontSize: 12,
+                            minFontSize: 9,
                           ),
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.red,
-                            disabledColor: Colors.red,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, "/profile_edit_profile");
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.white)),
-                            child: Text(
-                              'Lengkapi',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 10,
+                          Expanded(
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(1),
+                              color: Colors.red,
+                              disabledColor: Colors.red,
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, "/profile_edit_profile");
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.white)),
+                              child: Text(
+                                'Lengkapi',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
                               ),
                             ),
                           )

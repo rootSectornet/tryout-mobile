@@ -16,4 +16,7 @@ class Paths {
   static const String ENDPOINT_JENJANG = "cms/jenjang";
   static const String ENDPOINT_PAKET = "cms/paket";
   static const String ENDPOINT_HISTORY = "cms/HistoryTryout";
+  static const String ENDPOINT_TRYOUT = "cms/tryout";
+  static const String ENDPOINT_TRYOUT_MATPELS = "cms/tryoutdetails";
+  static const String ENDPOINT_TRYOUT_INFO = "cms/info";
 }
