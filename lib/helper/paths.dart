@@ -15,4 +15,5 @@ class Paths {
   static const String ENDPOINT_VERIFY = "cms/daftar";
   static const String ENDPOINT_JENJANG = "cms/jenjang";
   static const String ENDPOINT_PAKET = "cms/paket";
+  static const String ENDPOINT_HISTORY = "cms/HistoryTryout";
 }
