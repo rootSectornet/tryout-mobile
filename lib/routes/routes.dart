@@ -1,5 +1,6 @@
 import 'package:SoalOnline/screen/fragment/profile_detail_nilai.dart';
 import 'package:SoalOnline/screen/fragment/profile_edit_profile.dart';
+import 'package:SoalOnline/screen/fragment/profile_history.dart';
 import 'package:SoalOnline/screen/fragment/profile_info_app.dart';
 import 'package:SoalOnline/screen/fragment/profile_kebijakan_privacy.dart';
 import 'package:SoalOnline/screen/fragment/profile_nilai.dart';
@@ -25,4 +26,5 @@ final routes = {
   '/profile_tagihan': (BuildContext context) => new Tagihan(),
   '/profile_info_app': (BuildContext context) => new ProfileInfoApp(),
   '/profile_kebijakan_privacy': (BuildContext context) => new ProfilePrivacy(),
+  '/profile_history': (BuildContext context) => new ProfileHistory(),
 };

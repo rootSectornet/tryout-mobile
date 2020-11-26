@@ -355,7 +355,9 @@ class _ProfileDetailState extends State<ProfileDetail>
                           ),
                           Divider(),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, "/profile_history");
+                            },
                             child: Container(
                               height: 40,
                               child: Row(
