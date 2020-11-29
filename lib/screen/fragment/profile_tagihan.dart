@@ -1,10 +1,14 @@
-import 'package:SoalOnline/screen/fragment/profil/total_nilai.dart';
+import 'package:SoalOnline/screen/fragment/profil/kategori_tagihan.dart';
+import 'package:SoalOnline/screen/fragment/tagihan/lunas.dart';
+import 'package:SoalOnline/screen/fragment/tagihan/menungguPembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:SoalOnline/src/resources/session.dart';
+
+String selectedKategori = "Semua";
 
 class Tagihan extends StatefulWidget {
   @override
@@ -13,6 +17,7 @@ class Tagihan extends StatefulWidget {
 
 class TagihanState extends State<Tagihan> with SingleTickerProviderStateMixin {
   AnimationController _controller;
+  List<String> kategori = ["Semua", "Menunggu Pembayaran", "Lunas"];
   String nama = "";
   final formKey = GlobalKey<FormState>();
   void getName() {
@@ -45,32 +50,55 @@ class TagihanState extends State<Tagihan> with SingleTickerProviderStateMixin {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(top: 30, left: 20, right: 20),
-                child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                padding: EdgeInsets.only(left: 15, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop(true);
-                      },
-                      child: Icon(LineIcons.arrow_left),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 40),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop(true);
+                          },
+                          child: Icon(LineIcons.arrow_left),
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Tagihan Saya',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(
-                      height: 50,
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        "Daftar Transaksi",
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 )),
+            Container(
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              height: 50,
+              color: Color(0xffecedf2),
+              child: ListView.builder(
+                  itemCount: kategori.length,
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return KategoriTagihan(
+                      categorie: kategori[index],
+                      isSelected: selectedKategori == kategori[index],
+                      context: this,
+                    );
+                  }),
+            ),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.only(
-                top: 10,
+              padding: EdgeInsets.all(
+                20,
               ),
               width: MediaQuery.of(context).size.width,
               height: double.infinity,
@@ -78,105 +106,14 @@ class TagihanState extends State<Tagihan> with SingleTickerProviderStateMixin {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xffeeeeee),
-                              blurRadius: 7,
-                            )
-                          ]),
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('TRYOUT SD SEMESTER 2 2020'),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Rp20.000',
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.black, fontSize: 18)),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('bayar',
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.black, fontSize: 14)),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Container(
-                                      child: Icon(
-                                        Ionicons.chevron_forward_outline,
-                                        size: 14,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('TRYOUT SMP SEMESTER 2 2020'),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Rp20.000',
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.black, fontSize: 18)),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('bayar',
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.black, fontSize: 14)),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Container(
-                                      child: Icon(
-                                        Ionicons.chevron_forward_outline,
-                                        size: 14,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                        ],
-                      ),
-                    ),
+                    selectedKategori == 'Semua'
+                        ? MenungguPembayaran()
+                        : selectedKategori == 'Menunggu Pembayaran'
+                            ? MenungguPembayaran()
+                            : selectedKategori == 'Lunas'
+                                ? Lunas()
+                                : Container()
                   ],
                 ),
               ),

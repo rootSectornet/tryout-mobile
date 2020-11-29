@@ -20,4 +20,5 @@ class Paths {
   static const String ENDPOINT_TRYOUT_MATPELS = "cms/tryoutdetails";
   static const String ENDPOINT_TRYOUT_INFO = "cms/tryout/info";
   static const String ENDPOINT_TRYOUT_SOAL = "cms/tryout/soals";
+  static const String ENDPOINT_MURID = "cms/murid";
 }

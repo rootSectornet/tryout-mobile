@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 abstract class TotalNilaiPresenterAbstract {
   set view(TotalNilaiState view) {}
-  void getData() {}
+  void getData(int idMurid) {}
 }
 
 class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
@@ -26,12 +26,13 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
   }
 
   @override
-  void getData() {
+  void getData(idMurid) {
     // ignore: todo
     // TODO: implement getData
+    print(idMurid);
     this._totalNilaiModel.isloading = true;
     this._totalNilaiState.refreshData(this._totalNilaiModel);
-    this._historyTryoutApi.getHistoryTryouts().then((value) {
+    this._historyTryoutApi.getHistoryTryouts(idMurid).then((value) {
       value.dataTryout.forEach((element) {
         int t = 0;
         List<String> time = element.paket.waktuPengerjaan.split(" - ");

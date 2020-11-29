@@ -10,10 +10,9 @@ import 'dart:convert';
 class HistoryTryoutApi {
   // ignore: missing_return
   Client _client = new Client();
-  Future<HistoryTryoutResponse> getHistoryTryouts() async {
-    int id = await Session.getId();
+  Future<HistoryTryoutResponse> getHistoryTryouts(int idMurid) async {
     final response = await _client
-        .get("${Paths.BASEURL}${Paths.ENDPOINT_HISTORY}?id_murid=$id");
+        .get("${Paths.BASEURL}${Paths.ENDPOINT_HISTORY}?id_murid=$idMurid");
     if (response.statusCode == 200) {
       HistoryTryoutResponse paketResponse =
           HistoryTryoutResponse.fromJson(json.decode(response.body));

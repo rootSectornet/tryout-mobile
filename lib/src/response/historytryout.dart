@@ -90,11 +90,8 @@ class DataTryout {
         matpels.add(new Matpels.fromJson(v));
       });
     }
-    totalSoal = json['totalSoal'];
-    totalNilai = json['totalNilai'];
-    totalBenar = json['totalBenar'];
-    totalSalah = json['totalSalah'];
-    belumDikerjakan = json['belumDikerjakan'];
+    totalNilai = json['total_nilai'];
+    paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
   }
 
   Map<String, dynamic> toJson() {

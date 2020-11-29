@@ -1,6 +1,9 @@
+import 'package:SoalOnline/helper/getStorage.dart';
+import 'package:SoalOnline/screen/fragment/profil/profile_header.dart';
 import 'package:SoalOnline/screen/fragment/profil/total_nilai.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
@@ -79,96 +82,7 @@ class _ProfileDetailState extends State<ProfileDetail>
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            // onTap: () =>
-                            //     Navigator.pushNamed(context, "/profile_detail"),
-                            child: new Container(
-                                width: 80,
-                                height: 80,
-                                padding: EdgeInsets.all(10),
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xff2D8EFF),
-                                    image: new DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: ExactAssetImage(
-                                            "assets/img/download.png")))),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Container(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Tedi',
-                            style: GoogleFonts.poppins(
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            'Tedi@gmail.com',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Color(0xffaaaaaa),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, right: 5),
-                      width: MediaQuery.of(context).size.width,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AutoSizeText(
-                            'Sepertinya profilmu ada yang kurang',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                            ),
-                            maxLines: 1,
-                            maxFontSize: 12,
-                            minFontSize: 9,
-                          ),
-                          Expanded(
-                            child: RaisedButton(
-                              padding: EdgeInsets.all(1),
-                              color: Colors.red,
-                              disabledColor: Colors.red,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, "/profile_edit_profile");
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(color: Colors.white)),
-                              child: Text(
-                                'Lengkapi',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    ProfileHeader(),
                     SizedBox(
                       height: 20,
                     ),
@@ -530,8 +444,29 @@ class _ProfileDetailState extends State<ProfileDetail>
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
+                          Divider(),
+                          RaisedButton(
+                            padding: EdgeInsets.all(1),
+                            color: Colors.white,
+                            disabledColor: Colors.red,
+                            onPressed: () async {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.clear();
+                              GetStorage().erase();
+                              Navigator.pushNamed(context, "/");
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.red)),
+                            child: Text(
+                              'Logout',
+                              style: GoogleFonts.poppins(
+                                color: Colors.red,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           )
                         ],
                       ),

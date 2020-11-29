@@ -22,6 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> implements HomeState {
   HomeModel _homeModel;
   HomePresenter _homePresenter;
+  int idMurid;
   _HomeState() {
     this._homePresenter = new HomePresenter();
   }
@@ -32,6 +33,11 @@ class _HomeState extends State<Home> implements HomeState {
     Session.getName().then((value) {
       setState(() {
         this._homeModel.nama = value;
+      });
+    });
+    Session.getId().then((value) {
+      setState(() {
+        this.idMurid = value;
       });
     });
   }

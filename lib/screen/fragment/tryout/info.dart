@@ -10,9 +10,10 @@ class _TryoutInfoState extends State<TryoutInfo> {
   @override
   Widget build(BuildContext context) {
     final data = TryoutParent.of(context).tryoutModel;
-    var jumlahSoal = data.tryoutDetailResponse.data
-        .map((e) => e.jumlahSoal)
+    int nilais = data.tryoutDetailResponse.data
+        .map((item) => item.nilai)
         .reduce((value, element) => value + element);
+    var nilai = nilais / data.tryoutDetailResponse.data.length;
     return Container(
       width: MediaQuery.of(context).size.width,
       height: double.infinity,
@@ -90,7 +91,7 @@ class _TryoutInfoState extends State<TryoutInfo> {
                           height: 6,
                         ),
                         Text(
-                          "${jumlahSoal} Soal",
+                          "a Soal",
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
