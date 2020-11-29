@@ -26,7 +26,7 @@ class TryoutDetailResponse {
 
 class Data {
   int id;
-  double nilai;
+  int nilai;
   String nama;
   int jumlahSoal;
   int totalBenar;

@@ -59,7 +59,7 @@ class DataTryout {
         matpels.add(new Matpels.fromJson(v));
       });
     }
-    totalNilai = json['totalNilai'];
+    totalNilai = json['total_nilai'];
     paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
   }
 

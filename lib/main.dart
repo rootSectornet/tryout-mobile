@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:SoalOnline/parent/provider.dart';
 import 'package:SoalOnline/routes/routes.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -14,20 +16,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-          data: appState,
-          child: MaterialApp(
-            title: 'Soal Online',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'SFProDisplay',
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            routes: routes,
-          ),
+      data: appState,
+      child: MaterialApp(
+        title: 'Soal Online',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'SFProDisplay',
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        routes: routes,
+      ),
     );
   }
 }
+
 class AppState extends ValueNotifier {
   AppState(value) : super(value);
 }

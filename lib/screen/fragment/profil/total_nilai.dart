@@ -1,3 +1,4 @@
+import 'package:SoalOnline/helper/getStorage.dart';
 import 'package:SoalOnline/src/model/total_nilai.dart';
 import 'package:SoalOnline/src/presenter/paket.dart';
 import 'package:SoalOnline/src/presenter/total_nilai.dart';
@@ -7,6 +8,7 @@ import 'package:SoalOnline/src/state/total_nilai.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -20,6 +22,7 @@ class TotalNilaiScreen extends StatefulWidget {
 class _TotalNilaiScreenState extends State<TotalNilaiScreen>
     implements TotalNilaiState {
   // ignore: unused_field
+  int idMurid;
   TotalNilaiModel _totalNilaiModel;
   TotalNilaiPresenter _totalNilaiPresenter;
 
@@ -27,20 +30,11 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
     this._totalNilaiPresenter = new TotalNilaiPresenter();
   }
 
-  int idMurid;
-  void getId() {
-    Session.getId().then((value) {
-      setState(() {
-        this.idMurid = value;
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     this._totalNilaiPresenter.view = this;
-    this._totalNilaiPresenter.getData();
+    this._totalNilaiPresenter.getData(GetStorage().read(ID_MURID));
   }
 
   @override
