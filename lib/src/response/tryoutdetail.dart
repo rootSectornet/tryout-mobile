@@ -26,7 +26,8 @@ class TryoutDetailResponse {
 
 class Data {
   int id;
-  double nilai;
+  int nilai;
+  int idmatpel;
   String nama;
   int jumlahSoal;
   int totalBenar;
@@ -35,6 +36,7 @@ class Data {
   Data(
       {this.id,
       this.nilai,
+      this.idmatpel,
       this.nama,
       this.jumlahSoal,
       this.totalBenar,
@@ -43,6 +45,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nilai = json['nilai'];
+    idmatpel = json['idmatpel'];
     nama = json['nama'];
     jumlahSoal = json['jumlah_soal'];
     totalBenar = json['totalBenar'];
@@ -53,6 +56,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['nilai'] = this.nilai;
+    data['idmatpel'] = this.idmatpel;
     data['nama'] = this.nama;
     data['jumlah_soal'] = this.jumlahSoal;
     data['totalBenar'] = this.totalBenar;

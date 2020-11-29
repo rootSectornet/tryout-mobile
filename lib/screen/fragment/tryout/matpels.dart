@@ -13,6 +13,8 @@ class _TryoutMatpelsScreenState extends State<TryoutMatpelsScreen> {
   @override
   Widget build(BuildContext context) {
     final data = TryoutParent.of(context).tryoutModel;
+    print(data.tryoutDetailResponse.data);
+    print("matpels");
     return Container(
       width: MediaQuery.of(context).size.width,
       height: double.infinity,

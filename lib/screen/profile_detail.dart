@@ -44,9 +44,11 @@ class _ProfileDetailState extends State<ProfileDetail>
         width: MediaQuery.of(context).size.width,
         height: double.infinity,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+                padding:
+                    EdgeInsets.only(top: 35, left: 20, right: 15, bottom: 0),
                 child: Row(
                   children: [
                     InkWell(
@@ -494,8 +496,11 @@ class _ProfileDetailState extends State<ProfileDetail>
                           ),
                           Divider(),
                           InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, "/profile_info_app");
+                            onTap: () async {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.clear();
+                              Navigator.pushNamed(context, "/");
                             },
                             child: Container(
                               height: 40,
@@ -507,52 +512,26 @@ class _ProfileDetailState extends State<ProfileDetail>
                                     child: Row(
                                       children: [
                                         Icon(
-                                          Ionicons.save,
-                                          color: Colors.black,
+                                          Ionicons.log_out,
+                                          color: Colors.red,
                                           size: 12,
                                         ),
                                         SizedBox(
                                           width: 5,
                                         ),
-                                        Text('Info Aplikasi',
+                                        Text('Keluar',
                                             style: GoogleFonts.poppins(
-                                                color: Colors.black,
+                                                color: Colors.red,
                                                 fontSize: 18)),
                                       ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Icon(
-                                      Ionicons.chevron_forward_outline,
-                                      size: 14,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          Divider(),
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.white,
-                            disabledColor: Colors.red,
-                            onPressed: () async {
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              preferences.clear();
-                              Navigator.pushNamed(context, "/");
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.red)),
-                            child: Text(
-                              'Logout',
-                              style: GoogleFonts.poppins(
-                                color: Colors.red,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          SizedBox(
+                            height: 20,
                           )
                         ],
                       ),

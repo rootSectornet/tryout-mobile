@@ -28,39 +28,73 @@ class DataTryout {
   int id;
   String codeAkses;
   int idMurid;
-  int idPaket;
-  bool status;
+  Null idGuru;
   String tgl;
-  List<Matpels> matpels;
-  Null totalNilai;
+  bool status;
+  String jenjang;
+  int idPaket;
+  String createdAt;
+  String updatedAt;
+  Tingkat tingkat;
   Paket paket;
+  Null guru;
+  Murid murid;
+  List<Matpels> matpels;
+  int totalSoal;
+  int totalNilai;
+  int totalBenar;
+  int totalSalah;
+  int belumDikerjakan;
 
   DataTryout(
       {this.id,
       this.codeAkses,
       this.idMurid,
-      this.idPaket,
-      this.status,
+      this.idGuru,
       this.tgl,
+      this.status,
+      this.jenjang,
+      this.idPaket,
+      this.createdAt,
+      this.updatedAt,
+      this.tingkat,
+      this.paket,
+      this.guru,
+      this.murid,
       this.matpels,
+      this.totalSoal,
       this.totalNilai,
-      this.paket});
+      this.totalBenar,
+      this.totalSalah,
+      this.belumDikerjakan});
 
   DataTryout.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     codeAkses = json['code_akses'];
     idMurid = json['id_murid'];
-    idPaket = json['id_paket'];
-    status = json['status'];
+    idGuru = json['id_guru'];
     tgl = json['tgl'];
+    status = json['status'];
+    jenjang = json['jenjang'];
+    idPaket = json['id_paket'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    tingkat =
+        json['tingkat'] != null ? new Tingkat.fromJson(json['tingkat']) : null;
+    paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
+    guru = json['guru'];
+    murid = json['murid'] != null ? new Murid.fromJson(json['murid']) : null;
     if (json['matpels'] != null) {
       matpels = new List<Matpels>();
       json['matpels'].forEach((v) {
         matpels.add(new Matpels.fromJson(v));
       });
     }
+    totalSoal = json['totalSoal'];
     totalNilai = json['totalNilai'];
-    paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
+    totalBenar = json['totalBenar'];
+    totalSalah = json['totalSalah'];
+    belumDikerjakan = json['belumDikerjakan'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,96 +102,56 @@ class DataTryout {
     data['id'] = this.id;
     data['code_akses'] = this.codeAkses;
     data['id_murid'] = this.idMurid;
-    data['id_paket'] = this.idPaket;
-    data['status'] = this.status;
+    data['id_guru'] = this.idGuru;
     data['tgl'] = this.tgl;
-    if (this.matpels != null) {
-      data['matpels'] = this.matpels.map((v) => v.toJson()).toList();
+    data['status'] = this.status;
+    data['jenjang'] = this.jenjang;
+    data['id_paket'] = this.idPaket;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    if (this.tingkat != null) {
+      data['tingkat'] = this.tingkat.toJson();
     }
-    data['totalNilai'] = this.totalNilai;
     if (this.paket != null) {
       data['paket'] = this.paket.toJson();
     }
+    data['guru'] = this.guru;
+    if (this.murid != null) {
+      data['murid'] = this.murid.toJson();
+    }
+    if (this.matpels != null) {
+      data['matpels'] = this.matpels.map((v) => v.toJson()).toList();
+    }
+    data['totalSoal'] = this.totalSoal;
+    data['totalNilai'] = this.totalNilai;
+    data['totalBenar'] = this.totalBenar;
+    data['totalSalah'] = this.totalSalah;
+    data['belumDikerjakan'] = this.belumDikerjakan;
     return data;
   }
 }
 
-class Matpels {
-  int idMatpel;
-  int nilai;
-  bool status;
-  String matpel;
-  List<Soals> soals;
-
-  Matpels({this.idMatpel, this.nilai, this.status, this.matpel, this.soals});
-
-  Matpels.fromJson(Map<String, dynamic> json) {
-    idMatpel = json['id_matpel'];
-    nilai = json['nilai'];
-    status = json['status'];
-    matpel = json['matpel'];
-    if (json['soals'] != null) {
-      soals = new List<Soals>();
-      json['soals'].forEach((v) {
-        soals.add(new Soals.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id_matpel'] = this.idMatpel;
-    data['nilai'] = this.nilai;
-    data['status'] = this.status;
-    data['matpel'] = this.matpel;
-    if (this.soals != null) {
-      data['soals'] = this.soals.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Soals {
+class Tingkat {
   int id;
-  String soal;
-  bool isEssay;
-  String pembahasan;
-  bool status;
-  Null filename;
-  String jawabanUser;
-  String jawabanBenar;
+  String jenjang;
+  String createdAt;
+  String updatedAt;
 
-  Soals(
-      {this.id,
-      this.soal,
-      this.isEssay,
-      this.pembahasan,
-      this.status,
-      this.filename,
-      this.jawabanUser,
-      this.jawabanBenar});
+  Tingkat({this.id, this.jenjang, this.createdAt, this.updatedAt});
 
-  Soals.fromJson(Map<String, dynamic> json) {
+  Tingkat.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    soal = json['soal'];
-    isEssay = json['isEssay'];
-    pembahasan = json['pembahasan'];
-    status = json['status'];
-    filename = json['filename'];
-    jawabanUser = json['jawaban_user'];
-    jawabanBenar = json['jawaban_benar'];
+    jenjang = json['jenjang'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['soal'] = this.soal;
-    data['isEssay'] = this.isEssay;
-    data['pembahasan'] = this.pembahasan;
-    data['status'] = this.status;
-    data['filename'] = this.filename;
-    data['jawaban_user'] = this.jawabanUser;
-    data['jawaban_benar'] = this.jawabanBenar;
+    data['jenjang'] = this.jenjang;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
@@ -167,14 +161,24 @@ class Paket {
   String namaPaket;
   String waktuPengerjaan;
   String tanggalSelesai;
+  String createdAt;
+  String updatedAt;
 
-  Paket({this.id, this.namaPaket, this.waktuPengerjaan, this.tanggalSelesai});
+  Paket(
+      {this.id,
+      this.namaPaket,
+      this.waktuPengerjaan,
+      this.tanggalSelesai,
+      this.createdAt,
+      this.updatedAt});
 
   Paket.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namaPaket = json['nama_paket'];
     waktuPengerjaan = json['waktu_pengerjaan'];
     tanggalSelesai = json['tanggal_selesai'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -183,6 +187,106 @@ class Paket {
     data['nama_paket'] = this.namaPaket;
     data['waktu_pengerjaan'] = this.waktuPengerjaan;
     data['tanggal_selesai'] = this.tanggalSelesai;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Murid {
+  int id;
+  String name;
+  String email;
+  String password;
+  String phone;
+  String tglLahir;
+  String kelamin;
+  String alamat;
+  int idSekolah;
+  Null picture;
+  String createdAt;
+  String updatedAt;
+
+  Murid(
+      {this.id,
+      this.name,
+      this.email,
+      this.password,
+      this.phone,
+      this.tglLahir,
+      this.kelamin,
+      this.alamat,
+      this.idSekolah,
+      this.picture,
+      this.createdAt,
+      this.updatedAt});
+
+  Murid.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    password = json['password'];
+    phone = json['phone'];
+    tglLahir = json['tgl_lahir'];
+    kelamin = json['kelamin'];
+    alamat = json['alamat'];
+    idSekolah = json['id_sekolah'];
+    picture = json['picture'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['phone'] = this.phone;
+    data['tgl_lahir'] = this.tglLahir;
+    data['kelamin'] = this.kelamin;
+    data['alamat'] = this.alamat;
+    data['id_sekolah'] = this.idSekolah;
+    data['picture'] = this.picture;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Matpels {
+  int id;
+  int nilai;
+  String nama;
+  int jumlahSoal;
+  int totalBenar;
+  int totalSalah;
+
+  Matpels(
+      {this.id,
+      this.nilai,
+      this.nama,
+      this.jumlahSoal,
+      this.totalBenar,
+      this.totalSalah});
+
+  Matpels.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nilai = json['nilai'];
+    nama = json['nama'];
+    jumlahSoal = json['jumlah_soal'];
+    totalBenar = json['totalBenar'];
+    totalSalah = json['totalSalah'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nilai'] = this.nilai;
+    data['nama'] = this.nama;
+    data['jumlah_soal'] = this.jumlahSoal;
+    data['totalBenar'] = this.totalBenar;
+    data['totalSalah'] = this.totalSalah;
     return data;
   }
 }

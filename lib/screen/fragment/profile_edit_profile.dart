@@ -100,7 +100,6 @@ class EditProfileState extends State<EditProfile>
                 )),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.only(top: 40),
               width: MediaQuery.of(context).size.width,
               height: double.infinity,
               color: Color(0xffecedf2),
@@ -109,7 +108,6 @@ class EditProfileState extends State<EditProfile>
                 child: Column(
                   children: [
                     Container(
-                      height: 600,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: Colors.white,

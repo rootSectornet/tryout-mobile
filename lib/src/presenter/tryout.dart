@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:SoalOnline/src/model/tryout.dart';
 import 'package:SoalOnline/src/resources/TryoutApi.dart';
 import 'package:SoalOnline/src/resources/session.dart';
 import 'package:SoalOnline/src/state/tryout.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 abstract class TryoutPresenterAbstract {
@@ -44,15 +47,25 @@ class TryoutPresenter implements TryoutPresenterAbstract {
       this._tryoutModel.idTryout = v;
       this._tryoutApi.getMatpels(v).then((value) {
         this._tryoutModel.tryoutDetailResponse = value;
-        this._tryoutModel.isloading = false;
-        this._tryoutState.refreshData(this._tryoutModel);
+        this._tryoutApi.getInfo(v).then((c) {
+          this._tryoutModel.tryoutInfoResponse = c;
+          this._tryoutModel.isloading = false;
+          this._tryoutState.refreshData(this._tryoutModel);
+        }).catchError((onError) {
+          print(onError.toString());
+          print("info");
+          this._tryoutModel.isloading = false;
+          this._tryoutState.refreshData(this._tryoutModel);
+        });
       }).catchError((onError) {
         print(onError.toString());
+        print("save mt");
         this._tryoutModel.isloading = false;
         this._tryoutState.refreshData(this._tryoutModel);
       });
     }).catchError((onError) {
       print(onError.toString());
+      print("save");
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
     });
@@ -69,6 +82,7 @@ class TryoutPresenter implements TryoutPresenterAbstract {
       this._tryoutState.refreshData(this._tryoutModel);
     }).catchError((onError) {
       print(onError.toString());
+      print("matpels");
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
     });
@@ -76,15 +90,20 @@ class TryoutPresenter implements TryoutPresenterAbstract {
 
   @override
   void getInfo(int idTryout) {
+    print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     this._tryoutModel.isloading = true;
     this._tryoutModel.idTryout = idTryout;
     this._tryoutState.refreshData(this._tryoutModel);
     this._tryoutApi.getInfo(idTryout).then((value) {
+      print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      print(jsonEncode(value));
+      print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       this._tryoutModel.tryoutInfoResponse = value;
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
     }).catchError((onError) {
       print(onError.toString());
+      print("info");
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
     });

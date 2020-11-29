@@ -1,5 +1,6 @@
 import 'package:SoalOnline/src/response/tryoutdetail.dart';
 import 'package:SoalOnline/src/response/tryoutinfo.dart';
+import 'package:SoalOnline/src/response/tryoutsoal.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
 import 'package:SoalOnline/helper/paths.dart';
@@ -16,6 +17,7 @@ class TryoutApi {
     if (response.statusCode == 200) {
       Map<String, dynamic> res = jsonDecode(response.body);
       print(res);
+      print("ENDPOINT_TRYOUT");
       if (res['success']) {
         return res['data'];
       } else {
@@ -32,10 +34,12 @@ class TryoutApi {
         .get("${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_MATPELS}?id_tryout=$id");
     if (response.statusCode == 200) {
       Map<String, dynamic> res = jsonDecode(response.body);
+      print(res);
+      print("ENDPOINT_TRYOUT_MATPELS");
       if (res['success']) {
-        TryoutDetailResponse jenjangResponse =
+        TryoutDetailResponse tryoutDetailResponse =
             TryoutDetailResponse.fromJson(json.decode(response.body));
-        return jenjangResponse;
+        return tryoutDetailResponse;
       } else {
         Future.error("${res['data']}");
       }
@@ -50,6 +54,9 @@ class TryoutApi {
         .get("${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_INFO}?id=$id");
     if (response.statusCode == 200) {
       Map<String, dynamic> res = jsonDecode(response.body);
+      print(id);
+      print(res);
+      print("getInfo");
       if (res['success']) {
         TryoutInfoResponse tryoutInfoResponse =
             TryoutInfoResponse.fromJson(json.decode(response.body));
@@ -59,6 +66,36 @@ class TryoutApi {
       }
     } else {
       Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalResponse> getSoal(
+      // ignore: non_constant_identifier_names
+      int id_matpel,
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_SOAL}?id_matpel=$id_matpel&id_tryout_detail=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalResponse tryoutSoalResponse =
+              TryoutSoalResponse.fromJson(json.decode(response.body));
+          return tryoutSoalResponse;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
     }
   }
 }
