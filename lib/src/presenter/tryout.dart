@@ -45,8 +45,10 @@ class TryoutPresenter implements TryoutPresenterAbstract {
     };
     this._tryoutApi.saveTryout(body).then((v) {
       this._tryoutModel.idTryout = v;
+      this._tryoutState.refreshData(this._tryoutModel);
       this._tryoutApi.getMatpels(v).then((value) {
         this._tryoutModel.tryoutDetailResponse = value;
+        this._tryoutState.refreshData(this._tryoutModel);
         this._tryoutApi.getInfo(v).then((c) {
           this._tryoutModel.tryoutInfoResponse = c;
           this._tryoutModel.isloading = false;
