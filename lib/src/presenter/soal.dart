@@ -6,6 +6,8 @@ abstract class SoalPresenterAbstract {
   set view(SoalState view) {}
   void getSoal(int idmatpel, int idTryoutDetail) {}
   void selected(int index) {}
+  void jawab(int index) {}
+  void kumpulkan() {}
 }
 
 class SoalPresenter implements SoalPresenterAbstract {
@@ -41,6 +43,53 @@ class SoalPresenter implements SoalPresenterAbstract {
   @override
   void selected(int index) {
     this._soalModel.currentIndex = index;
+    this._soalState.refreshData(this._soalModel);
+  }
+
+  @override
+  void jawab(int index) {
+    this
+            ._soalModel
+            .tryoutSoalResponse
+            .dataTryout[this._soalModel.currentIndex]
+            .jawabanUser =
+        this
+            ._soalModel
+            .tryoutSoalResponse
+            .dataTryout[this._soalModel.currentIndex]
+            .choice[index]
+            .choice;
+    this
+        ._soalModel
+        .tryoutSoalResponse
+        .dataTryout[this._soalModel.currentIndex]
+        .status = true;
+    int totalSoal = this._soalModel.tryoutSoalResponse.dataTryout.length;
+    if ((this._soalModel.currentIndex + 1) < totalSoal) {
+      this._soalModel.currentIndex++;
+    }
+    this._soalState.refreshData(this._soalModel);
+  }
+
+  @override
+  void kumpulkan() {
+    this._soalModel.isloading = true;
+    this._soalState.refreshData(this._soalModel);
+    this._soalModel.tryoutSoalResponse.dataTryout.forEach((element) {
+      if (element.jawabanUser != null && element.status) {
+        print(element.jawabanUser);
+        Map<String, String> body = <String, String>{
+          "id_tryoutDetail": this._soalModel.idTryoutDetail.toString(),
+          "id_soal": element.id.toString(),
+          "jawaban_user": element.jawabanUser,
+        };
+        this._tryoutApi.kumpulkan(body).then((value) {
+          print(value);
+        });
+      }
+    });
+    this._soalState.onSuccess("selesai");
+    this._soalModel.isloading = false;
     this._soalState.refreshData(this._soalModel);
   }
 }

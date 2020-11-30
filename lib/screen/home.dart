@@ -413,6 +413,7 @@ class _HomeState extends State<Home> implements HomeState {
 
   @override
   void toTryout(int idPaket, int idJenjang) {
+    Navigator.pop(context);
     Navigator.push(
         context,
         MaterialPageRoute(

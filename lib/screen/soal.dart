@@ -46,7 +46,8 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: this._soalModel.isloading
+      body: this._soalModel.isloading ||
+              this._soalModel.tryoutSoalResponse.dataTryout == null
           ? Loading()
           : Column(
               mainAxisSize: MainAxisSize.min,
@@ -91,7 +92,9 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                           RaisedButton(
                             padding: EdgeInsets.all(1),
                             color: Colors.transparent,
-                            onPressed: () {},
+                            onPressed: () {
+                              showAlertDialog(context);
+                            },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 side:
@@ -139,10 +142,16 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                 padding: const EdgeInsets.all(4),
                                 child: RaisedButton(
                                   padding: EdgeInsets.all(1),
-                                  color:
-                                      this._soalModel.currentIndex == itemIndex
-                                          ? Colors.white
-                                          : Colors.transparent,
+                                  color: this._soalModel.currentIndex ==
+                                              itemIndex ||
+                                          this
+                                                  ._soalModel
+                                                  .tryoutSoalResponse
+                                                  .dataTryout[itemIndex]
+                                                  .jawabanUser !=
+                                              null
+                                      ? Colors.white
+                                      : Colors.transparent,
                                   onPressed: () {
                                     this._soalPresenter.selected(itemIndex);
                                   },
@@ -155,7 +164,13 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                     '${itemIndex + 1}',
                                     style: GoogleFonts.poppins(
                                       color: this._soalModel.currentIndex ==
-                                              itemIndex
+                                                  itemIndex ||
+                                              this
+                                                      ._soalModel
+                                                      .tryoutSoalResponse
+                                                      .dataTryout[itemIndex]
+                                                      .jawabanUser !=
+                                                  null
                                           ? Colors.black
                                           : Colors.white,
                                       fontSize: 12,
@@ -224,6 +239,9 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                               itemBuilder:
                                   (BuildContext context, int choiceIndex) {
                                 return InkWell(
+                                  onTap: () {
+                                    this._soalPresenter.jawab(choiceIndex);
+                                  },
                                   hoverColor: Colors.red,
                                   highlightColor: Colors.red,
                                   splashColor: Colors.red,
@@ -232,16 +250,51 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                     padding: EdgeInsets.all(8),
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0, 2),
-                                            blurRadius: 1,
-                                            spreadRadius: 0)
-                                      ],
-                                    ),
+                                        color: this
+                                                    ._soalModel
+                                                    .tryoutSoalResponse
+                                                    .dataTryout[this
+                                                        ._soalModel
+                                                        .currentIndex]
+                                                    .jawabanUser ==
+                                                this
+                                                    ._soalModel
+                                                    .tryoutSoalResponse
+                                                    .dataTryout[this
+                                                        ._soalModel
+                                                        .currentIndex]
+                                                    .choice[choiceIndex]
+                                                    .choice
+                                            ? Color(0xff25509e)
+                                            : Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black26,
+                                              offset: Offset(0, 2),
+                                              blurRadius: 1,
+                                              spreadRadius: 0)
+                                        ],
+                                        border: this
+                                                    ._soalModel
+                                                    .tryoutSoalResponse
+                                                    .dataTryout[this
+                                                        ._soalModel
+                                                        .currentIndex]
+                                                    .jawabanUser ==
+                                                this
+                                                    ._soalModel
+                                                    .tryoutSoalResponse
+                                                    .dataTryout[this
+                                                        ._soalModel
+                                                        .currentIndex]
+                                                    .choice[choiceIndex]
+                                                    .choice
+                                            ? Border.all(
+                                                color: Colors.blue, width: 1)
+                                            : Border.all(
+                                                color: Colors.transparent,
+                                                width: 0)),
                                     child: Row(
                                       children: [
                                         AutoSizeText(
@@ -250,7 +303,23 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                               .choiceNumber[choiceIndex],
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color: Colors.black,
+                                            color: this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
+                                                            ._soalModel
+                                                            .currentIndex]
+                                                        .jawabanUser ==
+                                                    this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
+                                                            ._soalModel
+                                                            .currentIndex]
+                                                        .choice[choiceIndex]
+                                                        .choice
+                                                ? Colors.white
+                                                : Colors.black,
                                           ),
                                           maxFontSize: 14,
                                           maxLines: 10,
@@ -274,7 +343,23 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                               softWrap: true,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.black,
+                                                color: this
+                                                            ._soalModel
+                                                            .tryoutSoalResponse
+                                                            .dataTryout[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .jawabanUser ==
+                                                        this
+                                                            ._soalModel
+                                                            .tryoutSoalResponse
+                                                            .dataTryout[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .choice[choiceIndex]
+                                                            .choice
+                                                    ? Colors.white
+                                                    : Colors.black,
                                               )),
                                         ),
                                       ],
@@ -292,6 +377,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
               ],
             ),
       drawer: Drawer(
+<<<<<<< HEAD
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,6 +389,18 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                       child: Center(child: CircularProgressIndicator()),
                     )
                   : Container(
+=======
+        child: this._soalModel.isloading ||
+                this._soalModel.tryoutSoalResponse.dataTryout == null
+            ? Loading()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Container(
+>>>>>>> 3e9c71e84a57c293352c027f9f7fa5afe73adc3d
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -339,6 +437,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                             ),
                           ),
                         ],
+<<<<<<< HEAD
                       ),
                     ),
               padding: EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -402,6 +501,68 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                         })),
           ],
         ),
+=======
+                      ),
+                    ),
+                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff25509e),
+                          Color(0xff25509e),
+                        ],
+                        begin: const FractionalOffset(0.0, 0.0),
+                        end: const FractionalOffset(1.0, 0.0),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: GridView.builder(
+                          padding: EdgeInsets.all(10),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 6,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
+                          shrinkWrap: true,
+                          primary: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: this
+                              ._soalModel
+                              .tryoutSoalResponse
+                              .dataTryout
+                              .length,
+                          itemBuilder: (ctx, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: RaisedButton(
+                                padding: EdgeInsets.all(1),
+                                color: this._soalModel.currentIndex == index
+                                    ? Color(0xff25509e)
+                                    : Colors.grey,
+                                onPressed: () {
+                                  this._soalPresenter.selected(index);
+                                },
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(
+                                        color: Colors.white, width: 1)),
+                                child: Text(
+                                  '${index + 1}',
+                                  style: GoogleFonts.poppins(
+                                    color: this._soalModel.currentIndex == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            );
+                          })),
+                ],
+              ),
+>>>>>>> 3e9c71e84a57c293352c027f9f7fa5afe73adc3d
       ),
     );
   }
@@ -417,6 +578,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   void onSuccess(String success) {
     Toast.show("$success", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    Navigator.pop(context);
   }
 
   @override
@@ -424,5 +586,38 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     setState(() {
       this._soalModel = soalModel;
     });
+  }
+
+  // ignore: unused_element
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Batal"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Kumpulkan"),
+      onPressed: () {
+        this._soalPresenter.kumpulkan();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Kumpulkan"),
+      content: Text("Kamu sudah yakin sama semua jawaban kamu?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

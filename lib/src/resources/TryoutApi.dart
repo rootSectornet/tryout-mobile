@@ -1,7 +1,7 @@
 import 'package:SoalOnline/src/response/tryoutdetail.dart';
 import 'package:SoalOnline/src/response/tryoutinfo.dart';
 import 'package:SoalOnline/src/response/tryoutsoal.dart';
-import 'package:http/http.dart' show Client;
+import 'package:http/http.dart' show Client, MultipartRequest;
 // ignore: unused_import
 import 'package:SoalOnline/helper/paths.dart';
 // ignore: unused_import
@@ -96,6 +96,18 @@ class TryoutApi {
       print(err);
       print("sdsdsd");
       Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<bool> kumpulkan(Map<String, String> data) async {
+    var uri = Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_KUMPULKAN}");
+    var request = MultipartRequest('POST', uri)..fields.addAll(data);
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Future.error("Yah, Internet Kamu error!");
     }
   }
 }

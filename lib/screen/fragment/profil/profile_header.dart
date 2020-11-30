@@ -1,6 +1,7 @@
 import 'package:SoalOnline/helper/getStorage.dart';
 import 'package:SoalOnline/src/model/profile.dart';
 import 'package:SoalOnline/src/presenter/profile_header.dart';
+import 'package:SoalOnline/src/resources/session.dart';
 import 'package:SoalOnline/src/state/profile_header.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,9 @@ class _ProfileHeaderState extends State<ProfileHeader>
     super.initState();
     this._profileHeaderPresenter.view = this;
     print(GetStorage().read(ID_MURID));
-    this._profileHeaderPresenter.getData(GetStorage().read(ID_MURID));
+    Session.getId().then((value) {
+      this._profileHeaderPresenter.getData(value);
+    });
     if (Profile().checkIfAnyIsNull()) {
       kosong = true;
     }
