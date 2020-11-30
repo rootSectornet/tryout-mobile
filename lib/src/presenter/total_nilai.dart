@@ -37,6 +37,10 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
         int t = 0;
         List<String> time = element.paket.waktuPengerjaan.split(" - ");
         int nilai = element.matpels[t].nilai;
+        int totalSoal = element.totalSoal;
+        int totalBenar = element.totalBenar;
+        int totalSalah = element.totalSalah;
+        int belumDikerjakan = element.belumDikerjakan;
         DateTime akhir = DateTime.parse("2020-11-20 " + time[1]);
         DateTime awal = DateTime.parse("2020-11-20 " + time[0]);
         var durasi = akhir.hour - awal.hour;
@@ -44,11 +48,17 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
             .format(DateTime.parse(element.paket.tanggalSelesai))
             .toString();
         this._totalNilaiModel.pakets.add(new TotalNilai(
-            id: element.id,
-            title: element.paket.namaPaket,
-            durasi: durasi.toString(),
-            tanggal: tanggal,
-            nilai: nilai));
+              id: element.id,
+              title: element.paket.namaPaket,
+              durasi: durasi.toString(),
+              tanggal: tanggal,
+              nilai: nilai,
+              totalSoal: totalSoal,
+              totalBenar: totalBenar,
+              totalSalah: totalSalah,
+              belumDikerjakan: belumDikerjakan,
+              namaJenjang: element.tingkat.jenjang,
+            ));
         t++;
       });
       this._totalNilaiModel.isloading = false;

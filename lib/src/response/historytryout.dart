@@ -28,7 +28,7 @@ class DataTryout {
   int id;
   String codeAkses;
   int idMurid;
-  Null idGuru;
+  int idGuru;
   String tgl;
   bool status;
   String jenjang;
@@ -90,8 +90,11 @@ class DataTryout {
         matpels.add(new Matpels.fromJson(v));
       });
     }
-    totalNilai = json['total_nilai'];
-    paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
+    totalSoal = json['totalSoal'];
+    totalNilai = json['totalNilai'];
+    totalBenar = json['totalBenar'];
+    totalSalah = json['totalSalah'];
+    belumDikerjakan = json['belumDikerjakan'];
   }
 
   Map<String, dynamic> toJson() {
@@ -198,7 +201,7 @@ class Murid {
   String phone;
   String tglLahir;
   String kelamin;
-  String alamat;
+  Null alamat;
   int idSekolah;
   Null picture;
   String createdAt;
@@ -254,6 +257,7 @@ class Murid {
 class Matpels {
   int id;
   int nilai;
+  int idmatpel;
   String nama;
   int jumlahSoal;
   int totalBenar;
@@ -262,6 +266,7 @@ class Matpels {
   Matpels(
       {this.id,
       this.nilai,
+      this.idmatpel,
       this.nama,
       this.jumlahSoal,
       this.totalBenar,
@@ -270,6 +275,7 @@ class Matpels {
   Matpels.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nilai = json['nilai'];
+    idmatpel = json['idmatpel'];
     nama = json['nama'];
     jumlahSoal = json['jumlah_soal'];
     totalBenar = json['totalBenar'];
@@ -280,6 +286,7 @@ class Matpels {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['nilai'] = this.nilai;
+    data['idmatpel'] = this.idmatpel;
     data['nama'] = this.nama;
     data['jumlah_soal'] = this.jumlahSoal;
     data['totalBenar'] = this.totalBenar;

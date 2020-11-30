@@ -1,4 +1,5 @@
 import 'package:SoalOnline/helper/getStorage.dart';
+import 'package:SoalOnline/screen/fragment/profile_nilai.dart';
 import 'package:SoalOnline/src/model/total_nilai.dart';
 import 'package:SoalOnline/src/presenter/paket.dart';
 import 'package:SoalOnline/src/presenter/total_nilai.dart';
@@ -167,7 +168,11 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
             itemCount: this._totalNilaiModel.pakets.length,
             itemBuilder: (BuildContext context, int itemIndex) => InkWell(
               onTap: () {
-                Navigator.pushNamed(context, "/profile_nilai");
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => ProfileNilai(),
+                //     ));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,

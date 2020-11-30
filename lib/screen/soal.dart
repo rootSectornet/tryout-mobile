@@ -298,44 +298,49 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             DrawerHeader(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text("$matpel",
-                        style: GoogleFonts.poppins(
-                          textStyle:
-                              TextStyle(fontSize: 18, color: Color(0xffffffff)),
-                        )),
-                    Text(
-                        "${this._soalModel.tryoutSoalResponse.dataTryout.length} Soal",
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontSize: 12, color: Colors.white60))),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    RaisedButton(
-                      padding: EdgeInsets.all(1),
-                      color: Colors.transparent,
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.white, width: 2)),
-                      child: Text(
-                        'Kumpulkan',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
+              child: this._soalModel.isloading
+                  ? Container(
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text("$matpel",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 18, color: Color(0xffffffff)),
+                              )),
+                          Text(
+                              "${this._soalModel.tryoutSoalResponse.dataTryout.length} Soal",
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 12, color: Colors.white60))),
+                          SizedBox(
+                            height: 35,
+                          ),
+                          RaisedButton(
+                            padding: EdgeInsets.all(1),
+                            color: Colors.transparent,
+                            onPressed: () {},
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side:
+                                    BorderSide(color: Colors.white, width: 2)),
+                            child: Text(
+                              'Kumpulkan',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
               padding: EdgeInsets.only(top: 20, left: 20, right: 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -349,44 +354,52 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
               ),
             ),
             Expanded(
-                child: GridView.builder(
-                    padding: EdgeInsets.all(10),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 6,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10),
-                    shrinkWrap: true,
-                    primary: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount:
-                        this._soalModel.tryoutSoalResponse.dataTryout.length,
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(1),
-                          color: this._soalModel.currentIndex == index
-                              ? Color(0xff25509e)
-                              : Colors.grey,
-                          onPressed: () {
-                            this._soalPresenter.selected(index);
-                          },
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              side: BorderSide(color: Colors.white, width: 1)),
-                          child: Text(
-                            '${index + 1}',
-                            style: GoogleFonts.poppins(
+                child: this._soalModel.isloading
+                    ? Container(
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    : GridView.builder(
+                        padding: EdgeInsets.all(10),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 6,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                        shrinkWrap: true,
+                        primary: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: this
+                            ._soalModel
+                            .tryoutSoalResponse
+                            .dataTryout
+                            .length,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(1),
                               color: this._soalModel.currentIndex == index
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 12,
+                                  ? Color(0xff25509e)
+                                  : Colors.grey,
+                              onPressed: () {
+                                this._soalPresenter.selected(index);
+                              },
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: BorderSide(
+                                      color: Colors.white, width: 1)),
+                              child: Text(
+                                '${index + 1}',
+                                style: GoogleFonts.poppins(
+                                  color: this._soalModel.currentIndex == index
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    })),
+                          );
+                        })),
           ],
         ),
       ),

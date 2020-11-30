@@ -277,7 +277,7 @@ class _ProfileDetailState extends State<ProfileDetail>
                           Divider(),
                           InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, "/profile_history");
+                              Navigator.pushNamed(context, "/profile_nilai");
                             },
                             child: Container(
                               height: 40,
@@ -414,6 +414,7 @@ class _ProfileDetailState extends State<ProfileDetail>
                               SharedPreferences preferences =
                                   await SharedPreferences.getInstance();
                               preferences.clear();
+                              GetStorage().erase();
                               Navigator.pushNamed(context, "/");
                             },
                             child: Container(
@@ -444,30 +445,30 @@ class _ProfileDetailState extends State<ProfileDetail>
                               ),
                             ),
                           ),
-                          Divider(),
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.white,
-                            disabledColor: Colors.red,
-                            onPressed: () async {
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              preferences.clear();
-                              GetStorage().erase();
-                              Navigator.pushNamed(context, "/");
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.red)),
-                            child: Text(
-                              'Logout',
-                              style: GoogleFonts.poppins(
-                                color: Colors.red,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
+                          // Divider(),
+                          // RaisedButton(
+                          //   padding: EdgeInsets.all(1),
+                          //   color: Colors.white,
+                          //   disabledColor: Colors.red,
+                          //   onPressed: () async {
+                          //     SharedPreferences preferences =
+                          //         await SharedPreferences.getInstance();
+                          //     preferences.clear();
+                          //     GetStorage().erase();
+                          //     Navigator.pushNamed(context, "/");
+                          //   },
+                          //   shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(18.0),
+                          //       side: BorderSide(color: Colors.red)),
+                          //   child: Text(
+                          //     'Logout',
+                          //     style: GoogleFonts.poppins(
+                          //       color: Colors.red,
+                          //       fontSize: 10,
+                          //       fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     )
