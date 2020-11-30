@@ -59,11 +59,7 @@ class _TryoutScreenState extends State<TryoutScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-        body: _tryoutModel.isloading
-=======
         body: this._tryoutModel.isloading
->>>>>>> 3e9c71e84a57c293352c027f9f7fa5afe73adc3d
             ? Loading()
             : Container(
                 width: MediaQuery.of(context).size.width,
@@ -228,16 +224,12 @@ class _TryoutScreenState extends State<TryoutScreen>
                                                     .data[index]
                                                     .nama,
                                               ),
-<<<<<<< HEAD
-                                            ));
-=======
                                             )).then((value) {
                                           this._tryoutPresenter.getMatpels(
                                               this._tryoutModel.idTryout);
                                           this._tryoutPresenter.getInfo(
                                               this._tryoutModel.idTryout);
                                         });
->>>>>>> 3e9c71e84a57c293352c027f9f7fa5afe73adc3d
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(10),
