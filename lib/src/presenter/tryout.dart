@@ -80,8 +80,17 @@ class TryoutPresenter implements TryoutPresenterAbstract {
     this._tryoutState.refreshData(this._tryoutModel);
     this._tryoutApi.getMatpels(idTryout).then((value) {
       this._tryoutModel.tryoutDetailResponse = value;
-      this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
+      this._tryoutApi.getInfo(idTryout).then((c) {
+        this._tryoutModel.tryoutInfoResponse = c;
+        this._tryoutModel.isloading = false;
+        this._tryoutState.refreshData(this._tryoutModel);
+      }).catchError((onError) {
+        print(onError.toString());
+        print("info");
+        this._tryoutModel.isloading = false;
+        this._tryoutState.refreshData(this._tryoutModel);
+      });
     }).catchError((onError) {
       print(onError.toString());
       print("matpels");

@@ -1,6 +1,7 @@
 import 'package:SoalOnline/screen/fragment/menu/jenjang.dart';
 import 'package:SoalOnline/screen/fragment/menu/paket.dart';
 import 'package:SoalOnline/screen/fragment/report.dart';
+import 'package:SoalOnline/screen/fragment/report/progress.dart';
 import 'package:SoalOnline/screen/tryout.dart';
 import 'package:SoalOnline/src/model/home.dart';
 import 'package:SoalOnline/src/presenter/home.dart';
@@ -100,6 +101,7 @@ class _HomeState extends State<Home> implements HomeState {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      ProgressScreen(),
                       SizedBox(
                         height: 20,
                       ),

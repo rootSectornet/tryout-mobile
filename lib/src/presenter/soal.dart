@@ -72,24 +72,24 @@ class SoalPresenter implements SoalPresenterAbstract {
   }
 
   @override
-  void kumpulkan() {
+  void kumpulkan() async {
     this._soalModel.isloading = true;
     this._soalState.refreshData(this._soalModel);
-    this._soalModel.tryoutSoalResponse.dataTryout.forEach((element) {
-      if (element.jawabanUser != null && element.status) {
+    await Future.forEach(this._soalModel.tryoutSoalResponse.dataTryout,
+        (element) async {
+      if (element.jawabanUser != null) {
         print(element.jawabanUser);
         Map<String, String> body = <String, String>{
           "id_tryoutDetail": this._soalModel.idTryoutDetail.toString(),
           "id_soal": element.id.toString(),
           "jawaban_user": element.jawabanUser,
         };
-        this._tryoutApi.kumpulkan(body).then((value) {
-          print(value);
-        });
+        var a = await this._tryoutApi.kumpulkan(body);
+        print(a);
       }
     });
-    this._soalState.onSuccess("selesai");
     this._soalModel.isloading = false;
     this._soalState.refreshData(this._soalModel);
+    this._soalState.onSuccess("selesai");
   }
 }

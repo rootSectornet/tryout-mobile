@@ -37,7 +37,7 @@ class DataTryout {
   String updatedAt;
   Tingkat tingkat;
   Paket paket;
-  Null guru;
+  var guru;
   Murid murid;
   List<Matpels> matpels;
   int totalSoal;
@@ -201,9 +201,9 @@ class Murid {
   String phone;
   String tglLahir;
   String kelamin;
-  Null alamat;
+  var alamat;
   int idSekolah;
-  Null picture;
+  var picture;
   String createdAt;
   String updatedAt;
 
@@ -256,7 +256,7 @@ class Murid {
 
 class Matpels {
   int id;
-  int nilai;
+  var nilai;
   int idmatpel;
   String nama;
   int jumlahSoal;

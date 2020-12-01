@@ -3,6 +3,7 @@ import 'package:SoalOnline/screen/fragment/loading.dart';
 import 'package:SoalOnline/screen/fragment/tryout/info.dart';
 import 'package:SoalOnline/screen/fragment/tryout/matpels.dart';
 import 'package:SoalOnline/screen/fragment/widget/clipath.dart';
+import 'package:SoalOnline/screen/matpeldone.dart';
 import 'package:SoalOnline/screen/notfound.dart';
 import 'package:SoalOnline/screen/soal.dart';
 import 'package:SoalOnline/src/model/tryout.dart';
@@ -52,14 +53,15 @@ class _TryoutScreenState extends State<TryoutScreen>
       this._tryoutPresenter.save(this.idPaket, this.idJenjang);
     } else {
       this._tryoutPresenter.getMatpels(this.idTryout);
-      this._tryoutPresenter.getInfo(this.idTryout);
+      // this._tryoutPresenter.getInfo(this.idTryout);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: this._tryoutModel.isloading
+        body: this._tryoutModel.isloading ||
+                this._tryoutModel.tryoutInfoResponse.dataTryout.paket == null
             ? Loading()
             : Container(
                 width: MediaQuery.of(context).size.width,
@@ -111,19 +113,7 @@ class _TryoutScreenState extends State<TryoutScreen>
                               top: 90,
                               left: 35,
                               child: Text(
-                                this
-                                            ._tryoutModel
-                                            .tryoutInfoResponse
-                                            .dataTryout
-                                            .paket !=
-                                        null
-                                    ? this
-                                        ._tryoutModel
-                                        .tryoutInfoResponse
-                                        .dataTryout
-                                        .paket
-                                        .namaPaket
-                                    : "-",
+                                "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -201,35 +191,59 @@ class _TryoutScreenState extends State<TryoutScreen>
                                       .data
                                       .length,
                                   itemBuilder: (ctx, index) {
+                                    var total = this
+                                            ._tryoutModel
+                                            .tryoutDetailResponse
+                                            .data[index]
+                                            .totalBenar +
+                                        this
+                                            ._tryoutModel
+                                            .tryoutDetailResponse
+                                            .data[index]
+                                            .totalSalah;
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => SoalScreen(
-                                                key: Key("Soal$index"),
-                                                idMatpel: this
-                                                    ._tryoutModel
-                                                    .tryoutDetailResponse
-                                                    .data[index]
-                                                    .idmatpel,
-                                                idtryoutdetail: this
-                                                    ._tryoutModel
-                                                    .tryoutDetailResponse
-                                                    .data[index]
-                                                    .id,
-                                                matpel: this
-                                                    ._tryoutModel
-                                                    .tryoutDetailResponse
-                                                    .data[index]
-                                                    .nama,
-                                              ),
-                                            )).then((value) {
-                                          this._tryoutPresenter.getMatpels(
-                                              this._tryoutModel.idTryout);
-                                          this._tryoutPresenter.getInfo(
-                                              this._tryoutModel.idTryout);
-                                        });
+                                        if (total ==
+                                            this
+                                                ._tryoutModel
+                                                .tryoutDetailResponse
+                                                .data[index]
+                                                .jumlahSoal) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MatpelDoneScreen()));
+                                        } else {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SoalScreen(
+                                                  key: Key("Soal$index"),
+                                                  idMatpel: this
+                                                      ._tryoutModel
+                                                      .tryoutDetailResponse
+                                                      .data[index]
+                                                      .idmatpel,
+                                                  idtryoutdetail: this
+                                                      ._tryoutModel
+                                                      .tryoutDetailResponse
+                                                      .data[index]
+                                                      .id,
+                                                  matpel: this
+                                                      ._tryoutModel
+                                                      .tryoutDetailResponse
+                                                      .data[index]
+                                                      .nama,
+                                                ),
+                                              )).then((value) {
+                                            this._tryoutPresenter.getMatpels(
+                                                this._tryoutModel.idTryout);
+                                            this._tryoutPresenter.getInfo(
+                                                this._tryoutModel.idTryout);
+                                          });
+                                        }
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(10),
@@ -292,7 +306,11 @@ class _TryoutScreenState extends State<TryoutScreen>
                       Center(
                         child: InkWell(
                           splashColor: Color(0xff7474BF),
-                          onTap: () {},
+                          onTap: () {
+                            this
+                                ._tryoutPresenter
+                                .getMatpels(this._tryoutModel.idTryout);
+                          },
                           child: Container(
                             margin: EdgeInsets.only(top: 50.0),
                             height: 43,
@@ -310,7 +328,7 @@ class _TryoutScreenState extends State<TryoutScreen>
                                     BorderRadius.all(Radius.circular(10))),
                             child: Center(
                               child: Text(
-                                "Selesai",
+                                "Refresh",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),

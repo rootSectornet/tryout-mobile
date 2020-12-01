@@ -169,7 +169,7 @@ class Murid {
   String kelamin;
   String alamat;
   int idSekolah;
-  Null picture;
+  var picture;
   String createdAt;
   String updatedAt;
 

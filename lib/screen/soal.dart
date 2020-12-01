@@ -496,8 +496,6 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
 
   @override
   void onSuccess(String success) {
-    Toast.show("$success", context,
-        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     Navigator.pop(context);
   }
 
@@ -520,6 +518,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     Widget continueButton = FlatButton(
       child: Text("Kumpulkan"),
       onPressed: () {
+        Navigator.pop(context);
         this._soalPresenter.kumpulkan();
       },
     );

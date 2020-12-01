@@ -54,6 +54,7 @@ dependencies:
   skeleton_text: ^1.0.0
   toast: ^0.1.5
   tuple: ^1.0.3
+  percent_indicator: ^2.1.8
 
 dev_dependencies:
   flutter_test:

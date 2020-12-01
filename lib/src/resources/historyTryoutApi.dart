@@ -10,13 +10,19 @@ import 'dart:convert';
 class HistoryTryoutApi {
   // ignore: missing_return
   Client _client = new Client();
+  // ignore: missing_return
   Future<HistoryTryoutResponse> getHistoryTryouts(int idMurid) async {
     final response = await _client
         .get("${Paths.BASEURL}${Paths.ENDPOINT_HISTORY}?id_murid=$idMurid");
     if (response.statusCode == 200) {
-      HistoryTryoutResponse paketResponse =
-          HistoryTryoutResponse.fromJson(json.decode(response.body));
-      return paketResponse;
+      Map<String, dynamic> res = jsonDecode(response.body);
+      if (res['success']) {
+        HistoryTryoutResponse paketResponse =
+            HistoryTryoutResponse.fromJson(json.decode(response.body));
+        return paketResponse;
+      } else {
+        Future.error("${res['data']}");
+      }
     } else {
       Future.error("Yah, Internet Kamu error!");
     }

@@ -52,6 +52,9 @@ class TryoutApi {
   Future<TryoutInfoResponse> getInfo(int id) async {
     final response = await _client
         .get("${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_INFO}?id=$id");
+    print(id);
+    print(response.body);
+    print("getInfo");
     if (response.statusCode == 200) {
       Map<String, dynamic> res = jsonDecode(response.body);
       print(id);
