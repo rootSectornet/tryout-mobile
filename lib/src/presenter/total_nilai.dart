@@ -36,7 +36,7 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
       value.dataTryout.forEach((element) {
         int t = 0;
         List<String> time = element.paket.waktuPengerjaan.split(" - ");
-        int nilai = element.matpels[t].nilai;
+        String nilai = element.totalNilai;
         int totalSoal = element.totalSoal;
         int totalBenar = element.totalBenar;
         int totalSalah = element.totalSalah;

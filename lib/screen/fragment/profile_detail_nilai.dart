@@ -18,7 +18,7 @@ class ProfileDetailNilai extends StatefulWidget {
   final int totalSalah;
   final int totalDilewati;
   final int totalSoal;
-  final int totalNilai;
+  final String totalNilai;
 
   const ProfileDetailNilai(
       {Key key,

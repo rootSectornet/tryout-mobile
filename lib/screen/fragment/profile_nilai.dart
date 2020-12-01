@@ -47,51 +47,51 @@ class ProfileNilaiState extends State<ProfileNilai>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: this._totalNilaiModel.isloading
-          ? Container(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: double.infinity,
+        child: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(top: 30, left: 20, right: 20),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Icon(LineIcons.arrow_left),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Nilai',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                )),
+            Expanded(
+                child: Container(
+              padding: EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width,
               height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                      padding: EdgeInsets.only(top: 30, left: 20, right: 20),
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop(true);
-                            },
-                            child: Icon(LineIcons.arrow_left),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Nilai',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      )),
-                  Expanded(
-                      child: Container(
-                    padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width,
-                    height: double.infinity,
-                    color: Color(0xffecedf2),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
+              color: Color(0xffecedf2),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: this._totalNilaiModel.isloading
+                          ? Container(
+                              child: Center(child: CircularProgressIndicator()),
+                            )
+                          : ListView.builder(
                               itemCount: this._totalNilaiModel.pakets.length,
                               scrollDirection: Axis.vertical,
                               primary: false,
@@ -112,7 +112,7 @@ class ProfileNilaiState extends State<ProfileNilai>
                                       )
                                     ]),
                                 padding: EdgeInsets.all(10),
-                                child: Row(
+                                child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -222,112 +222,12 @@ class ProfileNilaiState extends State<ProfileNilai>
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 100,
-                                            ),
-                                            RaisedButton(
-                                              padding: EdgeInsets.all(1),
-                                              color: Colors.blue,
-                                              disabledColor: Colors.white,
-                                              onPressed: () async {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProfileDetailNilai(
-                                                        idTryout: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .id,
-                                                        namaTryout: this
-                                                                ._totalNilaiModel
-                                                                .pakets[
-                                                                    itemIndex]
-                                                                .title +
-                                                            ' ' +
-                                                            this
-                                                                ._totalNilaiModel
-                                                                .pakets[
-                                                                    itemIndex]
-                                                                .namaJenjang,
-                                                        totalBenar: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .totalBenar,
-                                                        totalSalah: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .totalSalah,
-                                                        totalDilewati: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .belumDikerjakan,
-                                                        totalNilai: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .nilai,
-                                                        totalSoal: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .totalSoal,
-                                                      ),
-                                                    ));
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.0),
-                                                  side: BorderSide(
-                                                      color: Colors.blue)),
-                                              child: Text(
-                                                'Lihat Detail',
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            )
                                           ],
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(left: 10),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                      "SOAL : " +
-                                                          this
-                                                              ._totalNilaiModel
-                                                              .pakets[itemIndex]
-                                                              .totalSoal
-                                                              .toString(),
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 14)),
-                                                ],
-                                              ),
-                                            ),
-                                            // Container(
-                                            //   padding: EdgeInsets.only(left: 10),
-                                            //   child: Row(
-                                            //     children: [
-                                            //       Text("Lama Pengerjaan : -",
-                                            //           style: GoogleFonts.poppins(
-                                            //               color: Colors.black,
-                                            //               fontSize: 14)),
-                                            //     ],
-                                            //   ),
-                                            // ),
-                                          ],
-                                        ),
+
                                         // RaisedButton(
                                         //   padding: EdgeInsets.all(1),
                                         //   color: Colors.blue,
@@ -349,18 +249,112 @@ class ProfileNilaiState extends State<ProfileNilai>
                                         // )
                                       ],
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "SOAL : " +
+                                                      this
+                                                          ._totalNilaiModel
+                                                          .pakets[itemIndex]
+                                                          .totalSoal
+                                                          .toString(),
+                                                  style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        RaisedButton(
+                                          padding: EdgeInsets.all(1),
+                                          color: Colors.blue,
+                                          disabledColor: Colors.white,
+                                          onPressed: () async {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProfileDetailNilai(
+                                                    idTryout: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .id,
+                                                    namaTryout: this
+                                                            ._totalNilaiModel
+                                                            .pakets[itemIndex]
+                                                            .title +
+                                                        ' ' +
+                                                        this
+                                                            ._totalNilaiModel
+                                                            .pakets[itemIndex]
+                                                            .namaJenjang,
+                                                    totalBenar: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .totalBenar,
+                                                    totalSalah: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .totalSalah,
+                                                    totalDilewati: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .belumDikerjakan,
+                                                    totalNilai: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .nilai,
+                                                    totalSoal: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .totalSoal,
+                                                  ),
+                                                ));
+                                          },
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                              side: BorderSide(
+                                                  color: Colors.blue)),
+                                          child: Text(
+                                            'Lihat Detail',
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                        // Container(
+                                        //   padding: EdgeInsets.only(left: 10),
+                                        //   child: Row(
+                                        //     children: [
+                                        //       Text("Lama Pengerjaan : -",
+                                        //           style: GoogleFonts.poppins(
+                                        //               color: Colors.black,
+                                        //               fontSize: 14)),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
                     ),
-                  )),
-                ],
+                  ],
+                ),
               ),
-            ),
+            )),
+          ],
+        ),
+      ),
     );
   }
 

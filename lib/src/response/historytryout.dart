@@ -41,7 +41,7 @@ class DataTryout {
   Murid murid;
   List<Matpels> matpels;
   int totalSoal;
-  int totalNilai;
+  String totalNilai;
   int totalBenar;
   int totalSalah;
   int belumDikerjakan;
@@ -91,7 +91,7 @@ class DataTryout {
       });
     }
     totalSoal = json['totalSoal'];
-    totalNilai = json['totalNilai'];
+    totalNilai = json['totalNilai'].toString();
     totalBenar = json['totalBenar'];
     totalSalah = json['totalSalah'];
     belumDikerjakan = json['belumDikerjakan'];
