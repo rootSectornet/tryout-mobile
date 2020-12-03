@@ -35,7 +35,7 @@ class TotalNilaiDetailPresenter implements TotalNilaiDetailPresenterAbstract {
     print(idTryout);
     this._totalNilaiDetailModel.isloading = true;
     this._totalNilaiDetailState.refreshData(this._totalNilaiDetailModel);
-    this._tryoutDetailsApi.getTryoutDetails(idTryout).then((value) {
+    this._tryoutDetailsApi.getHistoryTryouts(idTryout).then((value) {
       value.data.forEach((element) {
         int t = 0;
         int id = element.id;
@@ -45,7 +45,7 @@ class TotalNilaiDetailPresenter implements TotalNilaiDetailPresenterAbstract {
         int jumlahSoal = element.jumlahSoal;
         int totalBenar = element.totalBenar;
         int totalSalah = element.totalSalah;
-        // int totalDilewati = element.jumlahSoal - (totalBenar + totalSalah);
+        int totalDilewati = element.jumlahSoal - (totalBenar + totalSalah);
 
         this._totalNilaiDetailModel.paketDetails.add(new TotalNilaiDetail(
             id: id,

@@ -1,6 +1,7 @@
 import 'package:SoalOnline/helper/getStorage.dart';
 import 'package:SoalOnline/screen/fragment/profil/total_nilai.dart';
 import 'package:SoalOnline/screen/fragment/profile_detail_nilai.dart';
+import 'package:SoalOnline/screen/fragment/report.dart';
 import 'package:SoalOnline/src/model/total_nilai.dart';
 import 'package:SoalOnline/src/presenter/total_nilai.dart';
 import 'package:SoalOnline/src/state/total_nilai.dart';
@@ -270,66 +271,59 @@ class ProfileNilaiState extends State<ProfileNilai>
                                             ],
                                           ),
                                         ),
-                                        RaisedButton(
-                                          padding: EdgeInsets.all(1),
-                                          color: Colors.blue,
-                                          disabledColor: Colors.white,
-                                          onPressed: () async {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfileDetailNilai(
-                                                    idTryout: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .id,
-                                                    namaTryout: this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .title +
-                                                        ' ' +
-                                                        this
-                                                            ._totalNilaiModel
-                                                            .pakets[itemIndex]
-                                                            .namaJenjang,
-                                                    totalBenar: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .totalBenar,
-                                                    totalSalah: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .totalSalah,
-                                                    totalDilewati: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .belumDikerjakan,
-                                                    totalNilai: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .nilai,
-                                                    totalSoal: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .totalSoal,
+                                        this
+                                                    ._totalNilaiModel
+                                                    .pakets[itemIndex]
+                                                    .sudahSelesai ==
+                                                0
+                                            ? Text('Belum Dikerjakan')
+                                            : RaisedButton(
+                                                padding: EdgeInsets.all(1),
+                                                color: Colors.blue,
+                                                disabledColor: Colors.white,
+                                                onPressed: () async {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ReportApp(
+                                                                idTryout: this
+                                                                    ._totalNilaiModel
+                                                                    .pakets[
+                                                                        itemIndex]
+                                                                    .id,
+                                                                namaPaket: this
+                                                                    ._totalNilaiModel
+                                                                    .pakets[
+                                                                        itemIndex]
+                                                                    .title,
+                                                                jenjang: this
+                                                                    ._totalNilaiModel
+                                                                    .pakets[
+                                                                        itemIndex]
+                                                                    .namaJenjang,
+                                                                tanggalPengerjaan: this
+                                                                    ._totalNilaiModel
+                                                                    .pakets[
+                                                                        itemIndex]
+                                                                    .tanggal,
+                                                              )));
+                                                },
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.0),
+                                                    side: BorderSide(
+                                                        color: Colors.blue)),
+                                                child: Text(
+                                                  'Lihat Detail',
+                                                  style: GoogleFonts.poppins(
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                ));
-                                          },
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              side: BorderSide(
-                                                  color: Colors.blue)),
-                                          child: Text(
-                                            'Lihat Detail',
-                                            style: GoogleFonts.poppins(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        )
+                                                ),
+                                              )
                                         // Container(
                                         //   padding: EdgeInsets.only(left: 10),
                                         //   child: Row(

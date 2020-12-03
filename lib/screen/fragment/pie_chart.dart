@@ -10,18 +10,28 @@ class OverallStat extends StatelessWidget {
         id: 'Overall Statistics',
         domainFn: (OverallStatModel overallstat, _) =>
             overallstat.namaPelajaran,
-        measureFn: (OverallStatModel overallstat, _) => overallstat.value,
+        measureFn: (OverallStatModel overallstat, _) => overallstat.nilai,
         labelAccessorFn: (OverallStatModel overallstat, _) =>
-            overallstat.value.toString(),
+            overallstat.nilai.toString(),
         colorFn: (OverallStatModel overallstat, _) =>
             charts.ColorUtil.fromDartColor(overallstat.color),
         data: [
-          OverallStatModel('PPKN', 23, Color(0xff40bad5)),
-          OverallStatModel('Matematika', 22, Color(0xffe8508b)),
-          OverallStatModel('IPA', 45, Color(0xfffe91ca)),
-          OverallStatModel('IPS', 18, Color(0xfff6d743)),
-          OverallStatModel('Bahasa Inggris', 6, Color(0xfff57b51)),
-          OverallStatModel('Bahasa Indonesia', 10, Color(0xff40bad5)),
+          OverallStatModel(
+              namaPelajaran: 'PPKN', nilai: 23, color: Color(0xff40bad5)),
+          OverallStatModel(
+              namaPelajaran: 'Matematika', nilai: 22, color: Color(0xffe8508b)),
+          OverallStatModel(
+              namaPelajaran: 'IPA', nilai: 45, color: Color(0xfffe91ca)),
+          OverallStatModel(
+              namaPelajaran: 'IPS', nilai: 18, color: Color(0xfff6d743)),
+          OverallStatModel(
+              namaPelajaran: 'Bahasa Inggris',
+              nilai: 6,
+              color: Color(0xfff57b51)),
+          OverallStatModel(
+              namaPelajaran: 'Bahasa Indonesia',
+              nilai: 10,
+              color: Color(0xff40bad5)),
         ])
   ];
 

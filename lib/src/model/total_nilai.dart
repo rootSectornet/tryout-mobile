@@ -15,6 +15,7 @@ class TotalNilai {
   int totalBenar;
   int totalSalah;
   int belumDikerjakan;
+  int sudahSelesai;
   TotalNilai(
       {this.id,
       this.title,
@@ -31,7 +32,8 @@ class TotalNilai {
       this.totalSoal,
       this.totalBenar,
       this.totalSalah,
-      this.belumDikerjakan});
+      this.belumDikerjakan,
+      this.sudahSelesai});
 }
 
 class TotalNilaiModel {

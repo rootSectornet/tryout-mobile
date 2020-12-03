@@ -15,7 +15,7 @@ class OverallStatWidget extends StatelessWidget {
         animate: animated,
         animationDuration: Duration(seconds: 1),
         defaultRenderer: charts.ArcRendererConfig(
-          arcWidth: 44,
+          arcWidth: 50,
           strokeWidthPx: 2,
           arcRendererDecorators: [
             charts.ArcLabelDecorator(

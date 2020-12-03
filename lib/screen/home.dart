@@ -1,3 +1,4 @@
+import 'package:SoalOnline/screen/fragment/menu/history.dart';
 import 'package:SoalOnline/screen/fragment/menu/jenjang.dart';
 import 'package:SoalOnline/screen/fragment/menu/paket.dart';
 import 'package:SoalOnline/screen/fragment/report.dart';
@@ -162,129 +163,21 @@ class _HomeState extends State<Home> implements HomeState {
                             child: Text("Lihat semua",
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 13,
                                     color: Color(0xff0066cc),
                                     wordSpacing: 4,
                                   ),
                                 )),
+                            onTap: () {
+                              Navigator.pushNamed(context, "/profile_nilai");
+                            },
                           )
                         ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ReportApp()));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Image.asset("assets/img/history.png",
-                                  fit: BoxFit.fill),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AutoSizeText(
-                                    "PaKet Semester 2 2020 SMP",
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff1f1f1f)),
-                                    ),
-                                    maxLines: 2,
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Ionicons.checkmark_circle,
-                                            size: 14,
-                                            color: Colors.green,
-                                          ),
-                                          Text(
-                                            "12",
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Color(0xff2b2b2b)),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Ionicons.close_circle,
-                                            size: 14,
-                                            color: Colors.red,
-                                          ),
-                                          Text(
-                                            "30",
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Color(0xff2b2b2b)),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Ionicons.remove_circle,
-                                            size: 14,
-                                            color: Color(0xff303030),
-                                          ),
-                                          Text(
-                                            "8",
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Color(0xff2b2b2b)),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Icon(
-                                Ionicons.chevron_forward,
-                                size: 24,
-                                color: Color(0xffe5e5e5),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
+                      HistoryWidget(),
                     ],
                   ),
                 ),

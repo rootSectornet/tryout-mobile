@@ -1,3 +1,5 @@
+import 'package:SoalOnline/src/model/overall_stat.dart';
+
 class TotalNilaiDetail {
   int id;
   int idMatpel;
@@ -23,4 +25,5 @@ class TotalNilaiDetailModel {
   bool isloading = false;
   bool isSuccess = false;
   List<TotalNilaiDetail> paketDetails = new List<TotalNilaiDetail>();
+  List<OverallStatModel> overallStat = new List<OverallStatModel>();
 }
