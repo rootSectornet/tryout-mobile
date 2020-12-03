@@ -1,4 +1,5 @@
 import 'package:SoalOnline/screen/fragment/loading.dart';
+import 'package:SoalOnline/screen/notfound.dart';
 import 'package:SoalOnline/src/model/soal.dart';
 import 'package:SoalOnline/src/presenter/soal.dart';
 import 'package:SoalOnline/src/state/soal.dart';
@@ -46,123 +47,106 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: this._soalModel.isloading ||
-              this._soalModel.tryoutSoalResponse.dataTryout == null
+      body: this._soalModel.isloading
           ? Loading()
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 3.69,
-                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff25509e),
-                        Color(0xff25509e),
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(
-                        height: 8,
+          : this._soalModel.tryoutSoalResponse.dataTryout.length == 0
+              ? NotFound(
+                  errors: 'Soal Belum Siap',
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 3.69,
+                      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xff25509e),
+                            Color(0xff25509e),
+                          ],
+                          begin: const FractionalOffset(0.0, 0.0),
+                          end: const FractionalOffset(1.0, 0.0),
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        // crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              _scaffoldKey.currentState.openDrawer();
-                            },
-                            child: Icon(
-                              LineIcons.bars,
-                              color: Colors.white,
-                              size: 24,
-                            ),
+                          SizedBox(
+                            height: 8,
                           ),
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.transparent,
-                            onPressed: () {
-                              showAlertDialog(context);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side:
-                                    BorderSide(color: Colors.white, width: 2)),
-                            child: Text(
-                              'Kumpulkan',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 10,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  _scaffoldKey.currentState.openDrawer();
+                                },
+                                child: Icon(
+                                  LineIcons.bars,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
                               ),
-                            ),
+                              RaisedButton(
+                                padding: EdgeInsets.all(1),
+                                color: Colors.transparent,
+                                onPressed: () {
+                                  showAlertDialog(context);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(
+                                        color: Colors.white, width: 2)),
+                                child: Text(
+                                  'Kumpulkan',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text("$matpel",
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontSize: 18, color: Color(0xffffffff)),
-                          )),
-                      Text(
-                          "${this._soalModel.tryoutSoalResponse.dataTryout.length} Soal",
-                          style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 12, color: Colors.white60))),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                            itemCount: this
-                                ._soalModel
-                                .tryoutSoalResponse
-                                .dataTryout
-                                .length,
-                            scrollDirection: Axis.horizontal,
-                            itemExtent: 30,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int itemIndex) {
-                              return Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: RaisedButton(
-                                  padding: EdgeInsets.all(1),
-                                  color: this._soalModel.currentIndex ==
-                                              itemIndex ||
-                                          this
-                                                  ._soalModel
-                                                  .tryoutSoalResponse
-                                                  .dataTryout[itemIndex]
-                                                  .jawabanUser !=
-                                              null
-                                      ? Colors.white
-                                      : Colors.transparent,
-                                  onPressed: () {
-                                    this._soalPresenter.selected(itemIndex);
-                                  },
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(
-                                          color: Colors.white, width: 1)),
-                                  child: Text(
-                                    '${itemIndex + 1}',
-                                    style: GoogleFonts.poppins(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text("$matpel",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 18, color: Color(0xffffffff)),
+                              )),
+                          Text(
+                              "${this._soalModel.tryoutSoalResponse.dataTryout.length} Soal",
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 12, color: Colors.white60))),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                itemCount: this
+                                    ._soalModel
+                                    .tryoutSoalResponse
+                                    .dataTryout
+                                    .length,
+                                scrollDirection: Axis.horizontal,
+                                itemExtent: 30,
+                                shrinkWrap: true,
+                                itemBuilder:
+                                    (BuildContext context, int itemIndex) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: RaisedButton(
+                                      padding: EdgeInsets.all(1),
                                       color: this._soalModel.currentIndex ==
                                                   itemIndex ||
                                               this
@@ -171,138 +155,109 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                       .dataTryout[itemIndex]
                                                       .jawabanUser !=
                                                   null
-                                          ? Colors.black
-                                          : Colors.white,
-                                      fontSize: 12,
+                                          ? Colors.white
+                                          : Colors.transparent,
+                                      onPressed: () {
+                                        this._soalPresenter.selected(itemIndex);
+                                      },
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          side: BorderSide(
+                                              color: Colors.white, width: 1)),
+                                      child: Text(
+                                        '${itemIndex + 1}',
+                                        style: GoogleFonts.poppins(
+                                          color: this._soalModel.currentIndex ==
+                                                      itemIndex ||
+                                                  this
+                                                          ._soalModel
+                                                          .tryoutSoalResponse
+                                                          .dataTryout[itemIndex]
+                                                          .jawabanUser !=
+                                                      null
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
+                                  );
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: double.infinity,
+                        padding: EdgeInsets.all(15),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          physics: ScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Html(
+                                data: this
+                                    ._soalModel
+                                    .tryoutSoalResponse
+                                    .dataTryout[this._soalModel.currentIndex]
+                                    .soal,
+                                style: {
+                                  "table": Style(
+                                    backgroundColor:
+                                        Color.fromARGB(0x50, 0xee, 0xee, 0xee),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: double.infinity,
-                    padding: EdgeInsets.all(15),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      physics: ScrollPhysics(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Html(
-                            data: this
-                                ._soalModel
-                                .tryoutSoalResponse
-                                .dataTryout[this._soalModel.currentIndex]
-                                .soal,
-                            style: {
-                              "table": Style(
-                                backgroundColor:
-                                    Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                                  "tr": Style(
+                                    border: Border(
+                                        bottom: BorderSide(color: Colors.grey)),
+                                  ),
+                                  "th": Style(
+                                    padding: EdgeInsets.all(6),
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  "td": Style(
+                                    padding: EdgeInsets.all(6),
+                                  ),
+                                  "p": Style(
+                                      fontFamily: 'serif',
+                                      textAlign: TextAlign.justify),
+                                },
                               ),
-                              "tr": Style(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.grey)),
-                              ),
-                              "th": Style(
-                                padding: EdgeInsets.all(6),
-                                backgroundColor: Colors.grey,
-                              ),
-                              "td": Style(
-                                padding: EdgeInsets.all(6),
-                              ),
-                              "p": Style(
-                                  fontFamily: 'serif',
-                                  textAlign: TextAlign.justify),
-                            },
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                              itemCount: this
-                                  ._soalModel
-                                  .tryoutSoalResponse
-                                  .dataTryout[this._soalModel.currentIndex]
-                                  .choice
-                                  .length,
-                              scrollDirection: Axis.vertical,
-                              primary: false,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder:
-                                  (BuildContext context, int choiceIndex) {
-                                return InkWell(
-                                  onTap: () {
-                                    this._soalPresenter.jawab(choiceIndex);
-                                  },
-                                  hoverColor: Colors.red,
-                                  highlightColor: Colors.red,
-                                  splashColor: Colors.red,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: EdgeInsets.all(8),
-                                    margin: EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                        color: this
-                                                    ._soalModel
-                                                    .tryoutSoalResponse
-                                                    .dataTryout[this
-                                                        ._soalModel
-                                                        .currentIndex]
-                                                    .jawabanUser ==
-                                                this
-                                                    ._soalModel
-                                                    .tryoutSoalResponse
-                                                    .dataTryout[this
-                                                        ._soalModel
-                                                        .currentIndex]
-                                                    .choice[choiceIndex]
-                                                    .choice
-                                            ? Color(0xff25509e)
-                                            : Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.black26,
-                                              offset: Offset(0, 2),
-                                              blurRadius: 1,
-                                              spreadRadius: 0)
-                                        ],
-                                        border: this
-                                                    ._soalModel
-                                                    .tryoutSoalResponse
-                                                    .dataTryout[this
-                                                        ._soalModel
-                                                        .currentIndex]
-                                                    .jawabanUser ==
-                                                this
-                                                    ._soalModel
-                                                    .tryoutSoalResponse
-                                                    .dataTryout[this
-                                                        ._soalModel
-                                                        .currentIndex]
-                                                    .choice[choiceIndex]
-                                                    .choice
-                                            ? Border.all(
-                                                color: Colors.blue, width: 1)
-                                            : Border.all(
-                                                color: Colors.transparent,
-                                                width: 0)),
-                                    child: Row(
-                                      children: [
-                                        AutoSizeText(
-                                          this
-                                              ._soalModel
-                                              .choiceNumber[choiceIndex],
-                                          style: TextStyle(
-                                            fontSize: 14,
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.builder(
+                                  itemCount: this
+                                      ._soalModel
+                                      .tryoutSoalResponse
+                                      .dataTryout[this._soalModel.currentIndex]
+                                      .choice
+                                      .length,
+                                  scrollDirection: Axis.vertical,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int choiceIndex) {
+                                    return InkWell(
+                                      onTap: () {
+                                        this._soalPresenter.jawab(choiceIndex);
+                                      },
+                                      hoverColor: Colors.red,
+                                      highlightColor: Colors.red,
+                                      splashColor: Colors.red,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        padding: EdgeInsets.all(8),
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
                                             color: this
                                                         ._soalModel
                                                         .tryoutSoalResponse
@@ -318,29 +273,44 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                             .currentIndex]
                                                         .choice[choiceIndex]
                                                         .choice
-                                                ? Colors.white
-                                                : Colors.black,
-                                          ),
-                                          maxFontSize: 14,
-                                          maxLines: 10,
-                                          softWrap: true,
-                                        ),
-                                        SizedBox(
-                                          width: 6,
-                                        ),
-                                        Expanded(
-                                          child: AutoSizeText(
+                                                ? Color(0xff25509e)
+                                                : Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.black26,
+                                                  offset: Offset(0, 2),
+                                                  blurRadius: 1,
+                                                  spreadRadius: 0)
+                                            ],
+                                            border: this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
+                                                            ._soalModel
+                                                            .currentIndex]
+                                                        .jawabanUser ==
+                                                    this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
+                                                            ._soalModel
+                                                            .currentIndex]
+                                                        .choice[choiceIndex]
+                                                        .choice
+                                                ? Border.all(
+                                                    color: Colors.blue,
+                                                    width: 1)
+                                                : Border.all(
+                                                    color: Colors.transparent,
+                                                    width: 0)),
+                                        child: Row(
+                                          children: [
+                                            AutoSizeText(
                                               this
                                                   ._soalModel
-                                                  .tryoutSoalResponse
-                                                  .dataTryout[this
-                                                      ._soalModel
-                                                      .currentIndex]
-                                                  .choice[choiceIndex]
-                                                  .choice,
-                                              maxFontSize: 14,
-                                              maxLines: 10,
-                                              softWrap: true,
+                                                  .choiceNumber[choiceIndex],
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: this
@@ -360,22 +330,63 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                             .choice
                                                     ? Colors.white
                                                     : Colors.black,
-                                              )),
+                                              ),
+                                              maxFontSize: 14,
+                                              maxLines: 10,
+                                              softWrap: true,
+                                            ),
+                                            SizedBox(
+                                              width: 6,
+                                            ),
+                                            Expanded(
+                                              child: AutoSizeText(
+                                                  this
+                                                      ._soalModel
+                                                      .tryoutSoalResponse
+                                                      .dataTryout[this
+                                                          ._soalModel
+                                                          .currentIndex]
+                                                      .choice[choiceIndex]
+                                                      .choice,
+                                                  maxFontSize: 14,
+                                                  maxLines: 10,
+                                                  softWrap: true,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: this
+                                                                ._soalModel
+                                                                .tryoutSoalResponse
+                                                                .dataTryout[this
+                                                                    ._soalModel
+                                                                    .currentIndex]
+                                                                .jawabanUser ==
+                                                            this
+                                                                ._soalModel
+                                                                .tryoutSoalResponse
+                                                                .dataTryout[this
+                                                                    ._soalModel
+                                                                    .currentIndex]
+                                                                .choice[
+                                                                    choiceIndex]
+                                                                .choice
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+                    )
+                  ],
+                ),
       drawer: Drawer(
         child: this._soalModel.isloading ||
                 this._soalModel.tryoutSoalResponse.dataTryout == null

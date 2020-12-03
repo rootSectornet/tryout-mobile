@@ -88,7 +88,13 @@ class NotFoundState extends State<NotFound>
                       height: 10,
                     ),
                     Container(
-                      child: Text(widget.errors),
+                      child: Text(
+                        widget.errors,
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ],
                 ),

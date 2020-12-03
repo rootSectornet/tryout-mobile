@@ -176,10 +176,7 @@ class ReportAppState extends State<ReportApp>
                                       onTap: () {
                                         setState(() {
                                           selectedPelajaran = "Semua";
-                                          print(this
-                                              ._totalNilaiDetailModel
-                                              .overallStat
-                                              .length);
+
                                           _overallStat = [
                                             charts.Series<OverallStatModel, String>(
                                                 id: 'all',

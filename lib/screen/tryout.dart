@@ -215,6 +215,11 @@ class _TryoutScreenState extends State<TryoutScreen>
                                                   builder: (context) =>
                                                       MatpelDoneScreen()));
                                         } else {
+                                          print(this
+                                              ._tryoutModel
+                                              .tryoutDetailResponse
+                                              .data[index]
+                                              .nama);
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
