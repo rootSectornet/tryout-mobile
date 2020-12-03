@@ -9,14 +9,15 @@ class OverallStatModel {
   int totalSalah;
   int totalDilewati;
 
-  OverallStatModel(
-      {this.namaPelajaran,
-      this.nilai,
-      this.color,
-      this.jumlahSoal,
-      this.totalBenar,
-      this.totalSalah,
-      this.totalDilewati});
+  OverallStatModel({
+    this.namaPelajaran,
+    this.nilai,
+    this.color,
+    this.jumlahSoal,
+    this.totalBenar,
+    this.totalSalah,
+    this.totalDilewati,
+  });
 }
 
 class OverallStatResponse {

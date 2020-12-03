@@ -176,7 +176,7 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                // margin: EdgeInsets.symmetric(horizontal: 5.0),
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -204,10 +204,13 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
                               color: Colors.black,
                               size: 12,
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(this._totalNilaiModel.pakets[itemIndex].title,
+                            Text(
+                                this._totalNilaiModel.pakets[itemIndex].title +
+                                    ' ' +
+                                    this
+                                        ._totalNilaiModel
+                                        .pakets[itemIndex]
+                                        .namaJenjang,
                                 style: GoogleFonts.poppins(
                                     color: Colors.black, fontSize: 14)),
                           ],

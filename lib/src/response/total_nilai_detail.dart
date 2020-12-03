@@ -44,7 +44,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nilai = json['nilai'];
+    nilai = json['nilai'].round();
     idmatpel = json['idmatpel'];
     nama = json['nama'];
     jumlahSoal = json['jumlah_soal'];

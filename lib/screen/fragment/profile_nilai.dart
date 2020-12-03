@@ -5,6 +5,7 @@ import 'package:SoalOnline/screen/fragment/report.dart';
 import 'package:SoalOnline/src/model/total_nilai.dart';
 import 'package:SoalOnline/src/presenter/total_nilai.dart';
 import 'package:SoalOnline/src/state/total_nilai.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,244 +101,168 @@ class ProfileNilaiState extends State<ProfileNilai>
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder:
                                   (BuildContext context, int itemIndex) =>
-                                      Container(
-                                height: 145,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xffeeeeee),
-                                        blurRadius: 7,
-                                      )
-                                    ]),
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Image.asset("assets/img/paket.png",
-                                    //     color: Colors.blue, fit: BoxFit.fill),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text(this
-                                                  ._totalNilaiModel
-                                                  .pakets[itemIndex]
-                                                  .title +
-                                              ' ' +
-                                              this
-                                                  ._totalNilaiModel
-                                                  .pakets[itemIndex]
-                                                  .namaJenjang),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(left: 10),
-                                              child: Row(
+                                      InkWell(
+                                onTap: () {
+                                  this
+                                              ._totalNilaiModel
+                                              .pakets[itemIndex]
+                                              .belumDikerjakan ==
+                                          0
+                                      ? Toast.show(
+                                          "soal ini belum dikerjakan", context,
+                                          duration: Toast.LENGTH_SHORT,
+                                          gravity: Toast.BOTTOM)
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ReportApp(
+                                                    idTryout: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .id,
+                                                    namaPaket: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .title,
+                                                    jenjang: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .namaJenjang,
+                                                    tanggalPengerjaan: this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .tanggal,
+                                                  )));
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5.0),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset("assets/img/history.png",
+                                          fit: BoxFit.fill),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            this
+                                                    ._totalNilaiModel
+                                                    .pakets[itemIndex]
+                                                    .title +
+                                                ' ' +
+                                                this
+                                                    ._totalNilaiModel
+                                                    .pakets[itemIndex]
+                                                    .namaJenjang,
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color(0xff1f1f1f)),
+                                            ),
+                                            maxLines: 2,
+                                          ),
+                                          SizedBox(
+                                            height: 4,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
                                                 children: [
                                                   Icon(
                                                     Ionicons.checkmark_circle,
+                                                    size: 14,
                                                     color: Colors.green,
-                                                    size: 16,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
                                                   ),
                                                   Text(
-                                                      this
-                                                          ._totalNilaiModel
-                                                          .pakets[itemIndex]
-                                                          .totalBenar
-                                                          .toString(),
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 14)),
+                                                    this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .totalBenar
+                                                        .toString(),
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Color(
+                                                              0xff2b2b2b)),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(left: 10),
-                                              child: Row(
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Row(
                                                 children: [
                                                   Icon(
-                                                    Ionicons
-                                                        .close_circle_outline,
+                                                    Ionicons.close_circle,
+                                                    size: 14,
                                                     color: Colors.red,
-                                                    size: 16,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
                                                   ),
                                                   Text(
-                                                      this
-                                                          ._totalNilaiModel
-                                                          .pakets[itemIndex]
-                                                          .totalSalah
-                                                          .toString(),
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 14)),
+                                                    this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .totalSalah
+                                                        .toString(),
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Color(
+                                                              0xff2b2b2b)),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(left: 10),
-                                              child: Row(
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Row(
                                                 children: [
                                                   Icon(
-                                                    Ionicons
-                                                        .remove_circle_outline,
-                                                    color: Colors.grey,
-                                                    size: 16,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
+                                                    Ionicons.remove_circle,
+                                                    size: 14,
+                                                    color: Color(0xff303030),
                                                   ),
                                                   Text(
-                                                      this
-                                                          ._totalNilaiModel
-                                                          .pakets[itemIndex]
-                                                          .belumDikerjakan
-                                                          .toString(),
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 14)),
+                                                    this
+                                                        ._totalNilaiModel
+                                                        .pakets[itemIndex]
+                                                        .belumDikerjakan
+                                                        .toString(),
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Color(
+                                                              0xff2b2b2b)),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        // RaisedButton(
-                                        //   padding: EdgeInsets.all(1),
-                                        //   color: Colors.blue,
-                                        //   disabledColor: Colors.white,
-                                        //   onPressed: () async {
-                                        //     print('test');
-                                        //   },
-                                        //   shape: RoundedRectangleBorder(
-                                        //       borderRadius: BorderRadius.circular(18.0),
-                                        //       side: BorderSide(color: Colors.blue)),
-                                        //   child: Text(
-                                        //     'Lihat Peringkat',
-                                        //     style: GoogleFonts.poppins(
-                                        //       color: Colors.white,
-                                        //       fontSize: 10,
-                                        //       fontWeight: FontWeight.bold,
-                                        //     ),
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  "SOAL : " +
-                                                      this
-                                                          ._totalNilaiModel
-                                                          .pakets[itemIndex]
-                                                          .totalSoal
-                                                          .toString(),
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.black,
-                                                      fontSize: 14)),
                                             ],
-                                          ),
-                                        ),
-                                        this
-                                                    ._totalNilaiModel
-                                                    .pakets[itemIndex]
-                                                    .sudahSelesai ==
-                                                0
-                                            ? Text('Belum Dikerjakan')
-                                            : RaisedButton(
-                                                padding: EdgeInsets.all(1),
-                                                color: Colors.blue,
-                                                disabledColor: Colors.white,
-                                                onPressed: () async {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ReportApp(
-                                                                idTryout: this
-                                                                    ._totalNilaiModel
-                                                                    .pakets[
-                                                                        itemIndex]
-                                                                    .id,
-                                                                namaPaket: this
-                                                                    ._totalNilaiModel
-                                                                    .pakets[
-                                                                        itemIndex]
-                                                                    .title,
-                                                                jenjang: this
-                                                                    ._totalNilaiModel
-                                                                    .pakets[
-                                                                        itemIndex]
-                                                                    .namaJenjang,
-                                                                tanggalPengerjaan: this
-                                                                    ._totalNilaiModel
-                                                                    .pakets[
-                                                                        itemIndex]
-                                                                    .tanggal,
-                                                              )));
-                                                },
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16.0),
-                                                    side: BorderSide(
-                                                        color: Colors.blue)),
-                                                child: Text(
-                                                  'Lihat Detail',
-                                                  style: GoogleFonts.poppins(
-                                                    color: Colors.white,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              )
-                                        // Container(
-                                        //   padding: EdgeInsets.only(left: 10),
-                                        //   child: Row(
-                                        //     children: [
-                                        //       Text("Lama Pengerjaan : -",
-                                        //           style: GoogleFonts.poppins(
-                                        //               color: Colors.black,
-                                        //               fontSize: 14)),
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                      ],
-                                    ),
-                                  ],
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Icon(
+                                        Ionicons.chevron_forward,
+                                        size: 24,
+                                        color: Color(0xffe5e5e5),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

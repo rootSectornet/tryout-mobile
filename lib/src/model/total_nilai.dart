@@ -10,7 +10,7 @@ class TotalNilai {
   int jumlahSoalMatpel;
   int totalBenarMatpel;
   int totalSalahMatpel;
-  String nilai;
+  int nilai;
   int totalSoal;
   int totalBenar;
   int totalSalah;

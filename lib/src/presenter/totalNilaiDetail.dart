@@ -41,7 +41,7 @@ class TotalNilaiDetailPresenter implements TotalNilaiDetailPresenterAbstract {
         int id = element.id;
         int idMatpel = element.idmatpel;
         String namaMatpel = element.nama;
-        int nilai = element.nilai;
+        int nilai = element.nilai.round();
         int jumlahSoal = element.jumlahSoal;
         int totalBenar = element.totalBenar;
         int totalSalah = element.totalSalah;

@@ -36,10 +36,10 @@ class ReportPresenter implements ReportPresenterAbstract {
     this._historyTryoutApi.getHistoryTryouts(idMurid).then((value) {
       value.data.forEach((element) {
         int t = 0;
-
         int totalBenar = element.totalBenar;
         int totalSalah = element.totalSalah;
         int totalDilewati = element.jumlahSoal - (totalBenar + totalSalah);
+        int length = t;
         this._totalNilaiModel.paketDetails.add(new TotalNilaiDetail(
             id: element.id,
             namaMatpel: element.nama,
@@ -49,12 +49,13 @@ class ReportPresenter implements ReportPresenterAbstract {
             totalDilewati: totalDilewati,
             nilai: element.nilai));
         this._totalNilaiModel.overallStat.add(new OverallStatModel(
-            namaPelajaran: element.nama,
-            jumlahSoal: element.jumlahSoal,
-            totalBenar: element.totalBenar,
-            totalSalah: element.totalSalah,
-            totalDilewati: totalDilewati,
-            nilai: element.nilai));
+              namaPelajaran: element.nama,
+              jumlahSoal: element.jumlahSoal,
+              totalBenar: element.totalBenar,
+              totalSalah: element.totalSalah,
+              totalDilewati: totalDilewati,
+              nilai: element.nilai,
+            ));
         t++;
       });
       this._totalNilaiModel.isloading = false;
