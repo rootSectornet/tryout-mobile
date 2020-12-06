@@ -110,7 +110,9 @@ class _MatpelDoneScreenState extends State<MatpelDoneScreen> {
                 height: 15,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/pembayaran_info");
+                },
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),

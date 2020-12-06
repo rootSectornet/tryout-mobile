@@ -1,3 +1,4 @@
+import 'package:SoalOnline/screen/fragment/pembayaran_detail.dart';
 import 'package:SoalOnline/screen/fragment/profile_detail_nilai.dart';
 import 'package:SoalOnline/screen/fragment/profile_edit_profile.dart';
 import 'package:SoalOnline/screen/fragment/profile_history.dart';
@@ -7,6 +8,9 @@ import 'package:SoalOnline/screen/fragment/profile_kebijakan_privacy.dart';
 import 'package:SoalOnline/screen/fragment/profile_nilai.dart';
 import 'package:SoalOnline/screen/fragment/profile_tagihan.dart';
 import 'package:SoalOnline/screen/fragment/verifitaction.dart';
+import 'package:SoalOnline/screen/fragment/pembayaran_list.dart';
+import 'package:SoalOnline/screen/onboarding_page.dart';
+import 'package:SoalOnline/screen/pembayaran_info.dart';
 import 'package:SoalOnline/screen/profile_detail.dart';
 import 'package:SoalOnline/screen/signup.dart';
 import 'package:SoalOnline/screen/tryout.dart';
@@ -16,7 +20,8 @@ import 'package:SoalOnline/screen/login.dart';
 import 'package:SoalOnline/screen/landing_page.dart';
 
 final routes = {
-  '/': (BuildContext context) => new LandingScreen(),
+  '/': (BuildContext context) => new OnBoarding(),
+  '/landing': (BuildContext context) => new LandingScreen(),
   '/login': (BuildContext context) => new Login(),
   '/signup': (BuildContext context) => new SignUp(),
   '/verify': (BuildContext context) => new VerificationScreen(),
@@ -30,4 +35,7 @@ final routes = {
   '/profile_kebijakan_privacy': (BuildContext context) => new ProfilePrivacy(),
   '/profile_history': (BuildContext context) => new ProfileHistory(),
   '/profile_info_layanan': (BuildContext context) => new ProfileInfoLayanan(),
+  '/pembayaran_info': (BuildContext context) => new PembayaranInfo(),
+  '/pembayaran_list': (BuildContext context) => new PembayaranList(),
+  '/pembayaran_detail': (BuildContext context) => new PembayaranDetail(),
 };

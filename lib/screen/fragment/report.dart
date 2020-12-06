@@ -510,7 +510,10 @@ class ReportAppState extends State<ReportApp>
                                   padding: EdgeInsets.all(10),
                                   color: Colors.blue,
                                   disabledColor: Colors.red,
-                                  onPressed: () async {},
+                                  onPressed: () async {
+                                    Navigator.pushNamed(
+                                        context, "/pembayaran_info");
+                                  },
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(18.0)),
