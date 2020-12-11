@@ -1,24 +1,21 @@
-
-
 import 'dart:convert';
 
-import 'package:SoalOnline/src/model/stock.dart';
-import 'package:SoalOnline/src/model/warehouse.dart';
-import 'package:SoalOnline/src/resources/productApi.dart';
-import 'package:SoalOnline/src/resources/warehouseApi.dart';
-import 'package:SoalOnline/src/response/products.dart';
-import 'package:SoalOnline/src/response/warehouse.dart';
-import 'package:SoalOnline/src/state/stock.dart';
+import 'package:SoalUjian/src/model/stock.dart';
+import 'package:SoalUjian/src/model/warehouse.dart';
+import 'package:SoalUjian/src/resources/productApi.dart';
+import 'package:SoalUjian/src/resources/warehouseApi.dart';
+import 'package:SoalUjian/src/response/products.dart';
+import 'package:SoalUjian/src/response/warehouse.dart';
+import 'package:SoalUjian/src/state/stock.dart';
 
-abstract class StockPresenterAbstract{
-  set view(StockState view){}
-  void getAllData(){}
-  void getData(WarehouseMod w){}
-  void getWarehouse(){}
+abstract class StockPresenterAbstract {
+  set view(StockState view) {}
+  void getAllData() {}
+  void getData(WarehouseMod w) {}
+  void getWarehouse() {}
 }
 
-class StockPresenter implements StockPresenterAbstract{
-
+class StockPresenter implements StockPresenterAbstract {
   StockModel _stockModel = new StockModel();
   StockState _stockState;
   ProductApi _productApi = new ProductApi();
@@ -37,28 +34,25 @@ class StockPresenter implements StockPresenterAbstract{
   void getData(WarehouseMod w) async {
     // ignore: todo
     // TODO: implement getData
-    Map param = {
-      'id_warehouse':w.id
-    };
+    Map param = {'id_warehouse': w.id};
     this._stockModel.isloading = true;
     this._stockModel.idWarehouse = w.id;
     this._stockModel.wareouseName = w.name;
     this._stockState.refreshData(this._stockModel);
-    _productApi.getStock(json.encode(param))
-    .then((Product value){
-      if(value.status){
+    _productApi.getStock(json.encode(param)).then((Product value) {
+      if (value.status) {
         this._stockModel.stocks = value;
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-      }else{
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-          this._stockState.onError("no data");
+        this._stockModel.isloading = false;
+        this._stockState.refreshData(this._stockModel);
+      } else {
+        this._stockModel.isloading = false;
+        this._stockState.refreshData(this._stockModel);
+        this._stockState.onError("no data");
       }
-    }).catchError((onError){
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-          this._stockState.onError("$onError");
+    }).catchError((onError) {
+      this._stockModel.isloading = false;
+      this._stockState.refreshData(this._stockModel);
+      this._stockState.onError("$onError");
     });
   }
 
@@ -68,21 +62,20 @@ class StockPresenter implements StockPresenterAbstract{
     // TODO: implement getAllData
     this._stockModel.isloading = true;
     this._stockState.refreshData(this._stockModel);
-    _productApi.getAllWarehouse()
-    .then((Product value){
-      if(value.status){
+    _productApi.getAllWarehouse().then((Product value) {
+      if (value.status) {
         this._stockModel.stocks = value;
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-      }else{
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-          this._stockState.onError("no data");
+        this._stockModel.isloading = false;
+        this._stockState.refreshData(this._stockModel);
+      } else {
+        this._stockModel.isloading = false;
+        this._stockState.refreshData(this._stockModel);
+        this._stockState.onError("no data");
       }
-    }).catchError((onError){
-          this._stockModel.isloading = false;
-          this._stockState.refreshData(this._stockModel);
-          this._stockState.onError("$onError");
+    }).catchError((onError) {
+      this._stockModel.isloading = false;
+      this._stockState.refreshData(this._stockModel);
+      this._stockState.onError("$onError");
     });
   }
 
@@ -90,19 +83,17 @@ class StockPresenter implements StockPresenterAbstract{
   void getWarehouse() {
     // ignore: todo
     // TODO: implement getWarehouse
-    _warehouseApi.getWarehouse()
-    .then((Warehouse value) {
-      if(value.status){
+    _warehouseApi.getWarehouse().then((Warehouse value) {
+      if (value.status) {
         this._stockModel.warehouse = null;
         value.data.forEach((element) {
-          this._stockModel.warehouses.add(
-            new WarehouseMod(element.id, element.name)
-          );
+          this
+              ._stockModel
+              .warehouses
+              .add(new WarehouseMod(element.id, element.name));
         });
         this._stockState.refreshData(this._stockModel);
       }
     });
   }
-
-
 }

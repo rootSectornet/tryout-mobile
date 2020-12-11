@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/model/history.dart';
+import 'package:SoalUjian/src/model/history.dart';
 
 abstract class HistoryState {
   void refreshData(HistoryModel historyModel);

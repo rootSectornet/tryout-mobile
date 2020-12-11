@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:SoalOnline/src/model/stock.dart';
-import 'package:SoalOnline/src/model/warehouse.dart';
-import 'package:SoalOnline/src/presenter/stock.dart';
-import 'package:SoalOnline/src/state/stock.dart';
+import 'package:SoalUjian/src/model/stock.dart';
+import 'package:SoalUjian/src/model/warehouse.dart';
+import 'package:SoalUjian/src/presenter/stock.dart';
+import 'package:SoalUjian/src/state/stock.dart';
 import 'package:toast/toast.dart';
+
 class Stock extends StatefulWidget {
   @override
   _StockState createState() => _StockState();
@@ -17,14 +18,14 @@ class _StockState extends State<Stock> implements StockState {
   StockModel _stockModel;
   StockPresenter _stockPresenter;
 
-  _StockState(){
-      _stockPresenter=new StockPresenter();
+  _StockState() {
+    _stockPresenter = new StockPresenter();
   }
 
   @override
   void initState() {
     super.initState();
-    this._stockPresenter.view=this;
+    this._stockPresenter.view = this;
     this._stockPresenter.getWarehouse();
     this._stockPresenter.getAllData();
   }
@@ -33,7 +34,6 @@ class _StockState extends State<Stock> implements StockState {
   void dispose() {
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,73 +73,97 @@ class _StockState extends State<Stock> implements StockState {
                     ),
                     InkWell(
                       child: new Container(
-                          width: 50,
-                          height: 50,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                          ),
-                          child: Center(child: Icon(Icons.filter_list,size: 40,)),
+                        width: 50,
+                        height: 50,
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
                         ),
-                        onTap: ()=>{
-                          SelectDialog.showModal<WarehouseMod>(
-                            context,
-                            label: "Pilih Warehouse",
-                            selectedValue: this._stockModel.warehouse,
-                            showSearchBox: false,
-                            items: this._stockModel.warehouses,
-                            itemBuilder: (BuildContext ctx,WarehouseMod data,isSelected){
-                              return Padding(padding: EdgeInsets.all(10),child: Text(data.name));
-                            },
-                            onChange: (WarehouseMod selected) {
-                              setState(() {
-                                this._stockPresenter.getData(selected);
-                              });
-                            },
-                          )
-                        },
+                        child: Center(
+                            child: Icon(
+                          Icons.filter_list,
+                          size: 40,
+                        )),
+                      ),
+                      onTap: () => {
+                        SelectDialog.showModal<WarehouseMod>(
+                          context,
+                          label: "Pilih Warehouse",
+                          selectedValue: this._stockModel.warehouse,
+                          showSearchBox: false,
+                          items: this._stockModel.warehouses,
+                          itemBuilder: (BuildContext ctx, WarehouseMod data,
+                              isSelected) {
+                            return Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text(data.name));
+                          },
+                          onChange: (WarehouseMod selected) {
+                            setState(() {
+                              this._stockPresenter.getData(selected);
+                            });
+                          },
+                        )
+                      },
                     )
                   ],
                 ),
               ),
               Expanded(
-                child:  this._stockModel.isloading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black),)) : Container(
-                  padding: EdgeInsets.only(top:0,bottom: 10),
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: this._stockModel.stocks.data != null ? this._stockModel.stocks.data.length : 0,
-                    itemBuilder: (BuildContext context,int index){
-                      return InkWell(
-                        child: Container(
-                          height: 80,
-                          padding: EdgeInsets.only(top: 10,left:10,right:10,bottom: 10),
-                          margin: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25)
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(this._stockModel.stocks.data[index].nama,style: TextStyle(color: Colors.black,fontSize: 18),),
-                              Badge(
-                                elevation: 0,
-                                badgeColor: Color(0xff2D8EFF),
-                                shape: BadgeShape.circle,
-                                padding: EdgeInsets.all(7),
-                                badgeContent: Text(
-                                  this._stockModel.stocks.data[index].jumlah.toString(),
-                                  style: TextStyle(color: Colors.white),
+                child: this._stockModel.isloading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      ))
+                    : Container(
+                        padding: EdgeInsets.only(top: 0, bottom: 10),
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: this._stockModel.stocks.data != null
+                              ? this._stockModel.stocks.data.length
+                              : 0,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              child: Container(
+                                height: 80,
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 10, right: 10, bottom: 10),
+                                margin: EdgeInsets.only(top: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      this._stockModel.stocks.data[index].nama,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                    ),
+                                    Badge(
+                                      elevation: 0,
+                                      badgeColor: Color(0xff2D8EFF),
+                                      shape: BadgeShape.circle,
+                                      padding: EdgeInsets.all(7),
+                                      badgeContent: Text(
+                                        this
+                                            ._stockModel
+                                            .stocks
+                                            .data[index]
+                                            .jumlah
+                                            .toString(),
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      ),
               )
             ],
           ),
@@ -148,18 +172,20 @@ class _StockState extends State<Stock> implements StockState {
 
   @override
   void onError(String error) {
-      Toast.show("$error", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
-    }
-    @override
-    void onSuccess(String success) {
-      Toast.show("$success", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
-    }
-    @override
-    void refreshData(StockModel stockModel) {
-      setState(() {
-        this._stockModel = stockModel;
-      });
+    Toast.show("$error", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+  }
+
+  @override
+  void onSuccess(String success) {
+    Toast.show("$success", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+  }
+
+  @override
+  void refreshData(StockModel stockModel) {
+    setState(() {
+      this._stockModel = stockModel;
+    });
   }
 }
-
-

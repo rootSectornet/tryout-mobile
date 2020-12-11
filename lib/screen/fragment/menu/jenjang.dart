@@ -1,7 +1,7 @@
-import 'package:SoalOnline/helper/utils.dart';
-import 'package:SoalOnline/src/model/jenjang.dart';
-import 'package:SoalOnline/src/presenter/jenjang.dart';
-import 'package:SoalOnline/src/state/jenjang.dart';
+import 'package:SoalUjian/helper/utils.dart';
+import 'package:SoalUjian/src/model/jenjang.dart';
+import 'package:SoalUjian/src/presenter/jenjang.dart';
+import 'package:SoalUjian/src/state/jenjang.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';

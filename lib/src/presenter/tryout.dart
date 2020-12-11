@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:SoalOnline/src/model/tryout.dart';
-import 'package:SoalOnline/src/resources/TryoutApi.dart';
-import 'package:SoalOnline/src/resources/session.dart';
-import 'package:SoalOnline/src/state/tryout.dart';
+import 'package:SoalUjian/src/model/tryout.dart';
+import 'package:SoalUjian/src/resources/TryoutApi.dart';
+import 'package:SoalUjian/src/resources/session.dart';
+import 'package:SoalUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

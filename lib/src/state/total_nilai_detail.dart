@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/model/total_nilai_detail.dart';
+import 'package:SoalUjian/src/model/total_nilai_detail.dart';
 
 abstract class TotalNilaiDetailState {
   void refreshData(TotalNilaiDetailModel totalNilaiDetailModel);

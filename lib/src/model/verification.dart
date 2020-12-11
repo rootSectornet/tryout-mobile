@@ -1,6 +1,6 @@
-import 'package:SoalOnline/src/response/verifications.dart';
+import 'package:SoalUjian/src/response/verifications.dart';
 
-class VerificationModel{
+class VerificationModel {
   bool isloading = false;
   bool isSuccess = false;
   String code = "";

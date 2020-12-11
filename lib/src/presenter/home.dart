@@ -1,5 +1,5 @@
-import 'package:SoalOnline/src/model/home.dart';
-import 'package:SoalOnline/src/state/home.dart';
+import 'package:SoalUjian/src/model/home.dart';
+import 'package:SoalUjian/src/state/home.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class HomePresenterAbstract {

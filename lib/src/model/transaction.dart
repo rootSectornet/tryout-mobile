@@ -1,11 +1,10 @@
-
 // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:SoalOnline/src/model/warehouse.dart';
-import 'package:SoalOnline/src/response/pembelian.dart';
-import 'package:SoalOnline/src/response/penjualan.dart';
+import 'package:SoalUjian/src/model/warehouse.dart';
+import 'package:SoalUjian/src/response/pembelian.dart';
+import 'package:SoalUjian/src/response/penjualan.dart';
 
-class TransactionModel{
+class TransactionModel {
   bool isloading = false;
   bool isSuccess = false;
   int idWarehouse = 0;

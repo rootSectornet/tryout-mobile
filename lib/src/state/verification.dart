@@ -1,7 +1,6 @@
+import 'package:SoalUjian/src/model/verification.dart';
 
-import 'package:SoalOnline/src/model/verification.dart';
-
-abstract class VerificationState{
+abstract class VerificationState {
   void refreshData(VerificationModel verificationModel);
   void onSuccess(String success);
   void onError(String error);

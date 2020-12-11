@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:SoalOnline/helper/utils.dart';
-import 'package:SoalOnline/screen/tryout.dart';
-import 'package:SoalOnline/src/model/history.dart';
-import 'package:SoalOnline/src/presenter/history.dart';
-import 'package:SoalOnline/src/resources/session.dart';
-import 'package:SoalOnline/src/state/history.dart';
+import 'package:SoalUjian/helper/utils.dart';
+import 'package:SoalUjian/screen/tryout.dart';
+import 'package:SoalUjian/src/model/history.dart';
+import 'package:SoalUjian/src/presenter/history.dart';
+import 'package:SoalUjian/src/resources/session.dart';
+import 'package:SoalUjian/src/state/history.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

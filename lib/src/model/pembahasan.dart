@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:SoalUjian/src/response/tryoutsoal.dart';
 
-class JawabanTemp {
+class Pembahasan {
   int idTryoutDetail = 0;
   int idSoal = 0;
   String jawaban;
 }
 
-class SoalModel {
+class PembahasanModel {
   bool isloading = false;
   bool isSuccess = false;
   int idmatpel = 0;
@@ -18,7 +18,7 @@ class SoalModel {
   int idSoal = 0;
   int currentIndex = 0;
   String jawaban;
-  List<JawabanTemp> jawabanTemp = new List<JawabanTemp>();
+  List<Pembahasan> pembahasan = new List<Pembahasan>();
   TryoutSoalResponse tryoutSoalResponse = new TryoutSoalResponse();
   List<String> choiceNumber = ["A.", "B.", "C.", "D."];
 }

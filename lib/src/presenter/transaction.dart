@@ -1,25 +1,22 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:SoalOnline/src/model/transaction.dart';
-import 'package:SoalOnline/src/model/warehouse.dart';
-import 'package:SoalOnline/src/resources/transactions.dart';
-import 'package:SoalOnline/src/resources/warehouseApi.dart';
-import 'package:SoalOnline/src/response/warehouse.dart';
-import 'package:SoalOnline/src/state/transaction.dart';
+import 'package:SoalUjian/src/model/transaction.dart';
+import 'package:SoalUjian/src/model/warehouse.dart';
+import 'package:SoalUjian/src/resources/transactions.dart';
+import 'package:SoalUjian/src/resources/warehouseApi.dart';
+import 'package:SoalUjian/src/response/warehouse.dart';
+import 'package:SoalUjian/src/state/transaction.dart';
 
-abstract class TransactionPresenterAbstract{
-  set view(TransactionState view){}
-  set tabControl(TabController tabController){}
-  void setWarehouse(WarehouseMod w){}
-  void getWarehouse(){}
-  void getAllData(){}
+abstract class TransactionPresenterAbstract {
+  set view(TransactionState view) {}
+  set tabControl(TabController tabController) {}
+  void setWarehouse(WarehouseMod w) {}
+  void getWarehouse() {}
+  void getAllData() {}
 }
 
-class TransactionPresenter implements TransactionPresenterAbstract{
-
+class TransactionPresenter implements TransactionPresenterAbstract {
   TransactionModel _transactionModel = new TransactionModel();
   TransactionState _transactionState;
   TransactionApi _transactionApi = new TransactionApi();
@@ -38,14 +35,14 @@ class TransactionPresenter implements TransactionPresenterAbstract{
   void getWarehouse() {
     // ignore: todo
     // TODO: implement getWarehouse
-    _warehouseApi.getWarehouse()
-    .then((Warehouse value) {
-      if(value.status){
+    _warehouseApi.getWarehouse().then((Warehouse value) {
+      if (value.status) {
         this._transactionModel.warehouse = null;
         value.data.forEach((element) {
-          this._transactionModel.warehouses.add(
-            new WarehouseMod(element.id, element.name)
-          );
+          this
+              ._transactionModel
+              .warehouses
+              .add(new WarehouseMod(element.id, element.name));
         });
         this._transactionState.refreshData(this._transactionModel);
       }
@@ -66,11 +63,11 @@ class TransactionPresenter implements TransactionPresenterAbstract{
     this._transactionModel.warehouse = w;
     this._transactionModel.wareouseName = w.name;
     this._transactionModel.idWarehouse = w.id;
-    Map paramPenjualan = {
-      'id_warehouse':w.id
-    };
-    this._transactionModel.penjualan = await _transactionApi.getPenjualan(json.encode(paramPenjualan));
-    this._transactionModel.pembelian = await _transactionApi.getPembelian(json.encode(paramPenjualan));
+    Map paramPenjualan = {'id_warehouse': w.id};
+    this._transactionModel.penjualan =
+        await _transactionApi.getPenjualan(json.encode(paramPenjualan));
+    this._transactionModel.pembelian =
+        await _transactionApi.getPembelian(json.encode(paramPenjualan));
     this._transactionState.refreshData(this._transactionModel);
     this._transactionModel.isloading = false;
     this._transactionState.refreshData(this._transactionModel);
@@ -80,15 +77,13 @@ class TransactionPresenter implements TransactionPresenterAbstract{
   void getAllData() async {
     this._transactionModel.isloading = true;
     this._transactionState.refreshData(this._transactionModel);
-    Map paramPenjualan = {
-      'id_warehouse':'ALL'
-    };
-    this._transactionModel.penjualan = await _transactionApi.getPenjualan(json.encode(paramPenjualan));
-    this._transactionModel.pembelian = await _transactionApi.getPembelian(json.encode(paramPenjualan));
+    Map paramPenjualan = {'id_warehouse': 'ALL'};
+    this._transactionModel.penjualan =
+        await _transactionApi.getPenjualan(json.encode(paramPenjualan));
+    this._transactionModel.pembelian =
+        await _transactionApi.getPembelian(json.encode(paramPenjualan));
     this._transactionState.refreshData(this._transactionModel);
     this._transactionModel.isloading = false;
     this._transactionState.refreshData(this._transactionModel);
   }
-
-
 }

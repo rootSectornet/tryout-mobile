@@ -1,7 +1,6 @@
+import 'package:SoalUjian/src/model/detail.dart';
 
-import 'package:SoalOnline/src/model/detail.dart';
-
-abstract class DetailState{
+abstract class DetailState {
   void refreshData(DetailModel detailModel);
   void onSuccess(String success);
   void onError(String error);

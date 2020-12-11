@@ -1,14 +1,14 @@
-import 'package:SoalOnline/parent/tryout.dart';
-import 'package:SoalOnline/screen/fragment/loading.dart';
-import 'package:SoalOnline/screen/fragment/tryout/info.dart';
-import 'package:SoalOnline/screen/fragment/tryout/matpels.dart';
-import 'package:SoalOnline/screen/fragment/widget/clipath.dart';
-import 'package:SoalOnline/screen/matpeldone.dart';
-import 'package:SoalOnline/screen/notfound.dart';
-import 'package:SoalOnline/screen/soal.dart';
-import 'package:SoalOnline/src/model/tryout.dart';
-import 'package:SoalOnline/src/presenter/tryout.dart';
-import 'package:SoalOnline/src/state/tryout.dart';
+import 'package:SoalUjian/parent/tryout.dart';
+import 'package:SoalUjian/screen/fragment/loading.dart';
+import 'package:SoalUjian/screen/fragment/tryout/info.dart';
+import 'package:SoalUjian/screen/fragment/tryout/matpels.dart';
+import 'package:SoalUjian/screen/fragment/widget/clipath.dart';
+import 'package:SoalUjian/screen/matpeldone.dart';
+import 'package:SoalUjian/screen/notfound.dart';
+import 'package:SoalUjian/screen/soal.dart';
+import 'package:SoalUjian/src/model/tryout.dart';
+import 'package:SoalUjian/src/presenter/tryout.dart';
+import 'package:SoalUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -213,7 +213,23 @@ class _TryoutScreenState extends State<TryoutScreen>
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      MatpelDoneScreen()));
+                                                      MatpelDoneScreen(
+                                                        idMatpel: this
+                                                            ._tryoutModel
+                                                            .tryoutDetailResponse
+                                                            .data[index]
+                                                            .idmatpel,
+                                                        idtryoutdetail: this
+                                                            ._tryoutModel
+                                                            .tryoutDetailResponse
+                                                            .data[index]
+                                                            .id,
+                                                        matpel: this
+                                                            ._tryoutModel
+                                                            .tryoutDetailResponse
+                                                            .data[index]
+                                                            .nama,
+                                                      )));
                                         } else {
                                           print(this
                                               ._tryoutModel

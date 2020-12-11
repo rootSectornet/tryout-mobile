@@ -1,9 +1,9 @@
 // ignore: unused_import
-import 'package:SoalOnline/src/response/jenjang.dart';
+import 'package:SoalUjian/src/response/jenjang.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
 // ignore: unused_import
-import 'package:SoalOnline/helper/paths.dart';
+import 'package:SoalUjian/helper/paths.dart';
 import 'dart:convert';
 
 class JenjangApi {

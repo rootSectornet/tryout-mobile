@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:SoalOnline/src/model/overall_stat.dart';
-import 'package:SoalOnline/src/model/total_nilai.dart';
-import 'package:SoalOnline/src/model/total_nilai_detail.dart';
-import 'package:SoalOnline/src/resources/tryoutDetailApi.dart';
-import 'package:SoalOnline/src/state/report.dart';
+import 'package:SoalUjian/src/model/overall_stat.dart';
+import 'package:SoalUjian/src/model/total_nilai.dart';
+import 'package:SoalUjian/src/model/total_nilai_detail.dart';
+import 'package:SoalUjian/src/resources/tryoutDetailApi.dart';
+import 'package:SoalUjian/src/state/report.dart';
 import 'package:intl/intl.dart';
 
 abstract class ReportPresenterAbstract {

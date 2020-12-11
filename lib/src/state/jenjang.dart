@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/model/jenjang.dart';
+import 'package:SoalUjian/src/model/jenjang.dart';
 
 abstract class JenjangState {
   void refreshData(JenjangModel jenjangModel);

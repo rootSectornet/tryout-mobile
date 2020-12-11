@@ -1,8 +1,6 @@
+import 'package:SoalUjian/src/model/transaction.dart';
 
-
-import 'package:SoalOnline/src/model/transaction.dart';
-
-abstract class TransactionState{
+abstract class TransactionState {
   void refreshData(TransactionModel transactionModel);
   void onSuccess(String success);
   void onError(String error);

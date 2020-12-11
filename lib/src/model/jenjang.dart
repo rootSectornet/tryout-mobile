@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/response/jenjang.dart';
+import 'package:SoalUjian/src/response/jenjang.dart';
 
 class JenjangModel {
   bool isloading = false;

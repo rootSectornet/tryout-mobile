@@ -1,7 +1,6 @@
+import 'package:SoalUjian/src/model/stock.dart';
 
-import 'package:SoalOnline/src/model/stock.dart';
-
-abstract class StockState{
+abstract class StockState {
   void refreshData(StockModel stockModel);
   void onSuccess(String success);
   void onError(String error);

@@ -1,8 +1,8 @@
-import 'package:SoalOnline/helper/getStorage.dart';
-import 'package:SoalOnline/src/model/profile.dart';
-import 'package:SoalOnline/src/presenter/profile_header.dart';
-import 'package:SoalOnline/src/resources/session.dart';
-import 'package:SoalOnline/src/state/profile_header.dart';
+import 'package:SoalUjian/helper/getStorage.dart';
+import 'package:SoalUjian/src/model/profile.dart';
+import 'package:SoalUjian/src/presenter/profile_header.dart';
+import 'package:SoalUjian/src/resources/session.dart';
+import 'package:SoalUjian/src/state/profile_header.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';

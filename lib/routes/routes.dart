@@ -1,23 +1,23 @@
-import 'package:SoalOnline/screen/fragment/pembayaran_detail.dart';
-import 'package:SoalOnline/screen/fragment/profile_detail_nilai.dart';
-import 'package:SoalOnline/screen/fragment/profile_edit_profile.dart';
-import 'package:SoalOnline/screen/fragment/profile_history.dart';
-import 'package:SoalOnline/screen/fragment/profile_info_app.dart';
-import 'package:SoalOnline/screen/fragment/profile_info_layanan.dart';
-import 'package:SoalOnline/screen/fragment/profile_kebijakan_privacy.dart';
-import 'package:SoalOnline/screen/fragment/profile_nilai.dart';
-import 'package:SoalOnline/screen/fragment/profile_tagihan.dart';
-import 'package:SoalOnline/screen/fragment/verifitaction.dart';
-import 'package:SoalOnline/screen/fragment/pembayaran_list.dart';
-import 'package:SoalOnline/screen/onboarding_page.dart';
-import 'package:SoalOnline/screen/pembayaran_info.dart';
-import 'package:SoalOnline/screen/profile_detail.dart';
-import 'package:SoalOnline/screen/signup.dart';
-import 'package:SoalOnline/screen/tryout.dart';
+import 'package:SoalUjian/screen/fragment/pembayaran_detail.dart';
+import 'package:SoalUjian/screen/fragment/profile_detail_nilai.dart';
+import 'package:SoalUjian/screen/fragment/profile_edit_profile.dart';
+import 'package:SoalUjian/screen/fragment/profile_history.dart';
+import 'package:SoalUjian/screen/fragment/profile_info_app.dart';
+import 'package:SoalUjian/screen/fragment/profile_info_layanan.dart';
+import 'package:SoalUjian/screen/fragment/profile_kebijakan_privacy.dart';
+import 'package:SoalUjian/screen/fragment/profile_nilai.dart';
+import 'package:SoalUjian/screen/fragment/profile_tagihan.dart';
+import 'package:SoalUjian/screen/fragment/verifitaction.dart';
+import 'package:SoalUjian/screen/fragment/pembayaran_list.dart';
+import 'package:SoalUjian/screen/onboarding_page.dart';
+import 'package:SoalUjian/screen/pembayaran_info.dart';
+import 'package:SoalUjian/screen/profile_detail.dart';
+import 'package:SoalUjian/screen/signup.dart';
+import 'package:SoalUjian/screen/tryout.dart';
 import 'package:flutter/material.dart';
-import 'package:SoalOnline/screen/home.dart';
-import 'package:SoalOnline/screen/login.dart';
-import 'package:SoalOnline/screen/landing_page.dart';
+import 'package:SoalUjian/screen/home.dart';
+import 'package:SoalUjian/screen/login.dart';
+import 'package:SoalUjian/screen/landing_page.dart';
 
 final routes = {
   '/': (BuildContext context) => new OnBoarding(),

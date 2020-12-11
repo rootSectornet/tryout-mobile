@@ -1,10 +1,9 @@
-
-import 'package:SoalOnline/src/response/products.dart';
-import 'package:SoalOnline/src/response/warehouse.dart';
+import 'package:SoalUjian/src/response/products.dart';
+import 'package:SoalUjian/src/response/warehouse.dart';
 // ignore: unused_import
-import 'package:SoalOnline/src/model/warehouse.dart';
+import 'package:SoalUjian/src/model/warehouse.dart';
 
-class StockModel{
+class StockModel {
   bool isloading = false;
   bool isSuccess = false;
   int idWarehouse = 0;

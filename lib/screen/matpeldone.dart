@@ -1,8 +1,16 @@
+import 'package:SoalUjian/screen/pembahasan.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
 class MatpelDoneScreen extends StatefulWidget {
+  final int idtryoutdetail;
+  final int idMatpel;
+  final String matpel;
+
+  const MatpelDoneScreen(
+      {Key key, this.idtryoutdetail, this.idMatpel, this.matpel})
+      : super(key: key);
   @override
   _MatpelDoneScreenState createState() => _MatpelDoneScreenState();
 }
@@ -111,7 +119,14 @@ class _MatpelDoneScreenState extends State<MatpelDoneScreen> {
               ),
               RaisedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/pembayaran_info");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PembahasanScreen(
+                                idMatpel: widget.idMatpel,
+                                idtryoutdetail: widget.idtryoutdetail,
+                                matpel: widget.matpel,
+                              )));
                 },
                 color: Colors.white,
                 shape: RoundedRectangleBorder(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'package:SoalOnline/screen/fragment/report/pie_chart.dart';
-import 'package:SoalOnline/src/model/overall_stat.dart';
+import 'package:SoalUjian/screen/fragment/report/pie_chart.dart';
+import 'package:SoalUjian/src/model/overall_stat.dart';
 
 class OverallStat extends StatelessWidget {
   static List<charts.Series<OverallStatModel, String>> _overallStat = [

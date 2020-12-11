@@ -1,9 +1,13 @@
 import 'package:SoalUjian/screen/fragment/loading.dart';
 import 'package:SoalUjian/screen/notfound.dart';
+import 'package:SoalUjian/src/model/pembahasan.dart';
 import 'package:SoalUjian/src/model/soal.dart';
+import 'package:SoalUjian/src/presenter/pembahasan.dart';
 import 'package:SoalUjian/src/presenter/soal.dart';
+import 'package:SoalUjian/src/state/pembahasan.dart';
 import 'package:SoalUjian/src/state/soal.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
@@ -12,35 +16,37 @@ import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
 
-class SoalScreen extends StatefulWidget {
+class PembahasanScreen extends StatefulWidget {
   final int idtryoutdetail;
   final int idMatpel;
   final String matpel;
 
-  const SoalScreen({Key key, this.idtryoutdetail, this.idMatpel, this.matpel})
+  const PembahasanScreen(
+      {Key key, this.idtryoutdetail, this.idMatpel, this.matpel})
       : super(key: key);
   @override
-  _SoalScreenState createState() =>
-      _SoalScreenState(idtryoutdetail, idMatpel, matpel);
+  _PembahasanScreenState createState() =>
+      _PembahasanScreenState(idtryoutdetail, idMatpel, matpel);
 }
 
-class _SoalScreenState extends State<SoalScreen> implements SoalState {
+class _PembahasanScreenState extends State<PembahasanScreen>
+    implements PembahasanState {
   final int idtryoutdetail;
   final int idMatpel;
   final String matpel;
   // ignore: unused_field
-  SoalModel _soalModel;
-  SoalPresenter _soalPresenter;
+  PembahasanModel _soalModel;
+  PembahasanPresenter _soalPresenter;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  _SoalScreenState(this.idtryoutdetail, this.idMatpel, this.matpel) {
-    this._soalPresenter = new SoalPresenter();
+  _PembahasanScreenState(this.idtryoutdetail, this.idMatpel, this.matpel) {
+    this._soalPresenter = new PembahasanPresenter();
   }
 
   @override
   // ignore: must_call_super
   void initState() {
     this._soalPresenter.view = this;
-    this._soalPresenter.getSoal(idMatpel, idtryoutdetail);
+    this._soalPresenter.getPembahasan(idMatpel, idtryoutdetail);
   }
 
   @override
@@ -93,24 +99,24 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                   size: 24,
                                 ),
                               ),
-                              RaisedButton(
-                                padding: EdgeInsets.all(1),
-                                color: Colors.transparent,
-                                onPressed: () {
-                                  showAlertDialog(context);
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(
-                                        color: Colors.white, width: 2)),
-                                child: Text(
-                                  'Kumpulkan',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
+                              // RaisedButton(
+                              //   padding: EdgeInsets.all(1),
+                              //   color: Colors.transparent,
+                              //   onPressed: () {
+                              //     showAlertDialog(context);
+                              //   },
+                              //   shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(18.0),
+                              //       side: BorderSide(
+                              //           color: Colors.white, width: 2)),
+                              //   child: Text(
+                              //     'Kumpulkan',
+                              //     style: GoogleFonts.poppins(
+                              //       color: Colors.white,
+                              //       fontSize: 10,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(
@@ -126,68 +132,134 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                               style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       fontSize: 12, color: Colors.white60))),
+                          Text("No : " + '${this._soalModel.currentIndex + 1}',
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 12, color: Colors.white60))),
                           SizedBox(
                             height: 15,
                           ),
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView.builder(
-                                itemCount: this
-                                    ._soalModel
-                                    .tryoutSoalResponse
-                                    .dataTryout
-                                    .length,
-                                scrollDirection: Axis.horizontal,
-                                itemExtent: 30,
-                                shrinkWrap: true,
-                                itemBuilder:
-                                    (BuildContext context, int itemIndex) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: RaisedButton(
-                                      padding: EdgeInsets.all(1),
-                                      color: this._soalModel.currentIndex ==
-                                                  itemIndex ||
-                                              this
-                                                      ._soalModel
-                                                      .tryoutSoalResponse
-                                                      .dataTryout[itemIndex]
-                                                      .jawabanUser !=
-                                                  null
-                                          ? Colors.white
-                                          : Colors.transparent,
-                                      onPressed: () {
-                                        this._soalPresenter.selected(itemIndex);
-                                      },
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          side: BorderSide(
-                                              color: Colors.white, width: 1)),
-                                      child: Text(
-                                        '${itemIndex + 1}',
-                                        style: GoogleFonts.poppins(
-                                          color: this._soalModel.currentIndex ==
-                                                      itemIndex ||
-                                                  this
-                                                          ._soalModel
-                                                          .tryoutSoalResponse
-                                                          .dataTryout[itemIndex]
-                                                          .jawabanUser !=
-                                                      null
-                                              ? Colors.black
-                                              : Colors.white,
-                                          fontSize: 12,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              this._soalModel.currentIndex == 0
+                                  ? Container()
+                                  : Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: RaisedButton(
+                                        padding: EdgeInsets.all(1),
+                                        color: Colors.white,
+                                        disabledColor: Colors.red,
+                                        onPressed: () {
+                                          this._soalPresenter.selected(
+                                              this._soalModel.currentIndex - 1);
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.white)),
+                                        child: Text(
+                                          'Prev',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                            ),
+                              this._soalModel.currentIndex + 1 ==
+                                      this
+                                          ._soalModel
+                                          .tryoutSoalResponse
+                                          .dataTryout
+                                          .length
+                                  ? Container()
+                                  : Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: RaisedButton(
+                                        padding: EdgeInsets.all(1),
+                                        color: Colors.white,
+                                        disabledColor: Colors.red,
+                                        onPressed: () {
+                                          this._soalPresenter.selected(
+                                              this._soalModel.currentIndex + 1);
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.white)),
+                                        child: Text(
+                                          'Next',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                            ],
                           )
+                          // Expanded(
+                          //   child: Container(
+                          //     width: MediaQuery.of(context).size.width,
+                          //     child: ListView.builder(
+                          //       itemCount: this
+                          //           ._soalModel
+                          //           .tryoutSoalResponse
+                          //           .dataTryout
+                          //           .length,
+                          //       scrollDirection: Axis.horizontal,
+                          //       itemExtent: 30,
+                          //       shrinkWrap: true,
+                          //       itemBuilder:
+                          //           (BuildContext context, int itemIndex) {
+                          //         return Padding(
+                          //           padding: const EdgeInsets.all(4),
+                          //           child: RaisedButton(
+                          //             padding: EdgeInsets.all(1),
+                          //             color: this._soalModel.currentIndex ==
+                          //                         itemIndex ||
+                          //                     this
+                          //                             ._soalModel
+                          //                             .tryoutSoalResponse
+                          //                             .dataTryout[itemIndex]
+                          //                             .jawabanUser !=
+                          //                         null
+                          //                 ? Colors.white
+                          //                 : Colors.transparent,
+                          //             onPressed: () {
+                          //               this._soalPresenter.selected(itemIndex);
+                          //             },
+                          //             elevation: 0,
+                          //             shape: RoundedRectangleBorder(
+                          //                 borderRadius:
+                          //                     BorderRadius.circular(100),
+                          //                 side: BorderSide(
+                          //                     color: Colors.white, width: 1)),
+                          //             child: Text(
+                          //               '${itemIndex + 1}',
+                          //               style: GoogleFonts.poppins(
+                          //                 color: this._soalModel.currentIndex ==
+                          //                             itemIndex ||
+                          //                         this
+                          //                                 ._soalModel
+                          //                                 .tryoutSoalResponse
+                          //                                 .dataTryout[itemIndex]
+                          //                                 .jawabanUser !=
+                          //                             null
+                          //                     ? Colors.black
+                          //                     : Colors.white,
+                          //                 fontSize: 12,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         );
+                          //       },
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -229,6 +301,59 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                       textAlign: TextAlign.justify),
                                 },
                               ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              this
+                                          ._soalModel
+                                          .tryoutSoalResponse
+                                          .dataTryout[
+                                              this._soalModel.currentIndex]
+                                          .jawabanBenar ==
+                                      this
+                                          ._soalModel
+                                          .tryoutSoalResponse
+                                          .dataTryout[
+                                              this._soalModel.currentIndex]
+                                          .jawabanUser
+                                  ? Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Text(
+                                        'jawabanmu benar',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14, color: Colors.blue),
+                                      ),
+                                    )
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Text.rich(
+                                        TextSpan(children: [
+                                          TextSpan(
+                                            text: "Jawabanmu Salah\n\n",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                color: Colors.red),
+                                          ),
+                                          TextSpan(
+                                              text: "Jawaban yang benar: \n"),
+                                          TextSpan(
+                                            text: this
+                                                ._soalModel
+                                                .tryoutSoalResponse
+                                                .dataTryout[this
+                                                    ._soalModel
+                                                    .currentIndex]
+                                                .jawabanBenar,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                color: Color(0xff2b2b2b)),
+                                          )
+                                        ]),
+                                      ),
+                                    ),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
@@ -246,7 +371,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                       (BuildContext context, int choiceIndex) {
                                     return InkWell(
                                       onTap: () {
-                                        this._soalPresenter.jawab(choiceIndex);
+                                        // this._soalPresenter.jawab(choiceIndex);
                                       },
                                       hoverColor: Colors.red,
                                       highlightColor: Colors.red,
@@ -264,17 +389,27 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                         .dataTryout[this
                                                             ._soalModel
                                                             .currentIndex]
-                                                        .jawabanUser ==
-                                                    this
-                                                        ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
                                                         .choice[choiceIndex]
-                                                        .choice
-                                                ? Color(0xff25509e)
-                                                : Colors.white,
+                                                        .isTrue ==
+                                                    true
+                                                ? Colors.green
+                                                : this
+                                                            ._soalModel
+                                                            .tryoutSoalResponse
+                                                            .dataTryout[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .jawabanUser ==
+                                                        this
+                                                            ._soalModel
+                                                            .tryoutSoalResponse
+                                                            .dataTryout[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .choice[choiceIndex]
+                                                            .choice
+                                                    ? Colors.red
+                                                    : Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             boxShadow: [
@@ -294,17 +429,12 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                     this
                                                         ._soalModel
                                                         .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
+                                                        .dataTryout[
+                                                            this._soalModel.currentIndex]
                                                         .choice[choiceIndex]
                                                         .choice
-                                                ? Border.all(
-                                                    color: Colors.blue,
-                                                    width: 1)
-                                                : Border.all(
-                                                    color: Colors.transparent,
-                                                    width: 0)),
+                                                ? Border.all(color: Colors.blue, width: 1)
+                                                : Border.all(color: Colors.transparent, width: 0)),
                                         child: Row(
                                           children: [
                                             AutoSizeText(
@@ -379,7 +509,39 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                     );
                                   },
                                 ),
-                              )
+                              ),
+                              this
+                                          ._soalModel
+                                          .tryoutSoalResponse
+                                          .dataTryout[
+                                              this._soalModel.currentIndex]
+                                          .pembahasan ==
+                                      null
+                                  ? Container()
+                                  : CachedNetworkImage(
+                                      imageUrl: "http://103.41.207.247:3000/" +
+                                          this
+                                              ._soalModel
+                                              .tryoutSoalResponse
+                                              .dataTryout[
+                                                  this._soalModel.currentIndex]
+                                              .pembahasan,
+                                      height: 85,
+                                      width: MediaQuery.of(context).size.width,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) =>
+                                          new CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          new Icon(Icons.error),
+                                    ),
                             ],
                           ),
                         ),
@@ -417,22 +579,22 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                           SizedBox(
                             height: 35,
                           ),
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.transparent,
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side:
-                                    BorderSide(color: Colors.white, width: 2)),
-                            child: Text(
-                              'Kumpulkan',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
+                          // RaisedButton(
+                          //   padding: EdgeInsets.all(1),
+                          //   color: Colors.transparent,
+                          //   onPressed: () {},
+                          //   shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(18.0),
+                          //       side:
+                          //           BorderSide(color: Colors.white, width: 2)),
+                          //   child: Text(
+                          //     'Kumpulkan',
+                          //     style: GoogleFonts.poppins(
+                          //       color: Colors.white,
+                          //       fontSize: 10,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -511,43 +673,43 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   }
 
   @override
-  void refreshData(SoalModel soalModel) {
+  void refreshData(PembahasanModel soalModel) {
     setState(() {
       this._soalModel = soalModel;
     });
   }
 
   // ignore: unused_element
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text("Batal"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = FlatButton(
-      child: Text("Kumpulkan"),
-      onPressed: () {
-        Navigator.pop(context);
-        this._soalPresenter.kumpulkan();
-      },
-    );
+  // showAlertDialog(BuildContext context) {
+  //   // set up the buttons
+  //   Widget cancelButton = FlatButton(
+  //     child: Text("Batal"),
+  //     onPressed: () {
+  //       Navigator.pop(context);
+  //     },
+  //   );
+  //   Widget continueButton = FlatButton(
+  //     child: Text("Kumpulkan"),
+  //     onPressed: () {
+  //       Navigator.pop(context);
+  //       this._soalPresenter.kumpulkan();
+  //     },
+  //   );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Kumpulkan"),
-      content: Text("Kamu sudah yakin sama semua jawaban kamu?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // set up the AlertDialog
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text("Kumpulkan"),
+  //     content: Text("Kamu sudah yakin sama semua jawaban kamu?"),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 }

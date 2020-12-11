@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:SoalOnline/helper/paths.dart';
-import 'package:SoalOnline/helper/rijndael.dart';
-import 'package:SoalOnline/src/model/login.dart';
-import 'package:SoalOnline/src/model/user.dart';
-import 'package:SoalOnline/src/resources/session.dart';
-import 'package:SoalOnline/src/resources/userApi.dart';
-import 'package:SoalOnline/src/state/login.dart';
-import 'package:SoalOnline/helper/getStorage.dart' as constants;
+import 'package:SoalUjian/helper/paths.dart';
+import 'package:SoalUjian/helper/rijndael.dart';
+import 'package:SoalUjian/src/model/login.dart';
+import 'package:SoalUjian/src/model/user.dart';
+import 'package:SoalUjian/src/resources/session.dart';
+import 'package:SoalUjian/src/resources/userApi.dart';
+import 'package:SoalUjian/src/state/login.dart';
+import 'package:SoalUjian/helper/getStorage.dart' as constants;
 import 'package:get_storage/get_storage.dart';
 
 abstract class LoginPresenterAbstract {

@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/model/tryout.dart';
+import 'package:SoalUjian/src/model/tryout.dart';
 
 abstract class TryoutState {
   void refreshData(TryoutModel tryoutModel);

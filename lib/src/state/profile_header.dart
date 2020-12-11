@@ -1,4 +1,4 @@
-import 'package:SoalOnline/src/model/profile.dart';
+import 'package:SoalUjian/src/model/profile.dart';
 
 abstract class ProfileHeaderState {
   void refreshData(ProfileModel paketModel);
