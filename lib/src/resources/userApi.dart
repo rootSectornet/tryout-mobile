@@ -1,10 +1,10 @@
 // ignore: unused_import
-import 'package:SoalUjian/src/response/login.dart';
+import 'package:TesUjian/src/response/login.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
-import 'package:SoalUjian/helper/paths.dart';
+import 'package:TesUjian/helper/paths.dart';
 // ignore: unused_import
-import 'package:SoalUjian/helper/rijndael.dart';
+import 'package:TesUjian/helper/rijndael.dart';
 import 'dart:convert';
 
 class UserApi {

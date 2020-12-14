@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/paket.dart';
-import 'package:SoalUjian/src/resources/jenjangApi.dart';
-import 'package:SoalUjian/src/resources/paketApi.dart';
-import 'package:SoalUjian/src/state/paket.dart';
+import 'package:TesUjian/src/model/paket.dart';
+import 'package:TesUjian/src/resources/jenjangApi.dart';
+import 'package:TesUjian/src/resources/paketApi.dart';
+import 'package:TesUjian/src/state/paket.dart';
 import 'package:intl/intl.dart';
 
 abstract class PaketPresenterAbstract {

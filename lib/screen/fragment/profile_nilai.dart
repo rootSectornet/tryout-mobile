@@ -1,10 +1,10 @@
-import 'package:SoalUjian/helper/getStorage.dart';
-import 'package:SoalUjian/screen/fragment/profil/total_nilai.dart';
-import 'package:SoalUjian/screen/fragment/profile_detail_nilai.dart';
-import 'package:SoalUjian/screen/fragment/report.dart';
-import 'package:SoalUjian/src/model/total_nilai.dart';
-import 'package:SoalUjian/src/presenter/total_nilai.dart';
-import 'package:SoalUjian/src/state/total_nilai.dart';
+import 'package:TesUjian/helper/getStorage.dart';
+import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
+import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
+import 'package:TesUjian/screen/fragment/report.dart';
+import 'package:TesUjian/src/model/total_nilai.dart';
+import 'package:TesUjian/src/presenter/total_nilai.dart';
+import 'package:TesUjian/src/state/total_nilai.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
 
 class ProfileNilai extends StatefulWidget {

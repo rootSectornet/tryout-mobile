@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/total_nilai.dart';
+import 'package:TesUjian/src/model/total_nilai.dart';
 
 abstract class TotalNilaiState {
   void refreshData(TotalNilaiModel paketModel);

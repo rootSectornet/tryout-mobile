@@ -1,11 +1,11 @@
-import 'package:SoalUjian/src/model/verification.dart';
-import 'package:SoalUjian/src/presenter/verification.dart';
-import 'package:SoalUjian/src/state/verification.dart';
+import 'package:TesUjian/src/model/verification.dart';
+import 'package:TesUjian/src/presenter/verification.dart';
+import 'package:TesUjian/src/state/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:SoalUjian/src/resources/session.dart';
-import 'package:SoalUjian/screen/fragment/loading.dart';
+import 'package:TesUjian/src/resources/session.dart';
+import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:toast/toast.dart';
 
 class VerificationScreen extends StatefulWidget {

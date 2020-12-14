@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/parent/provider.dart';
-import 'package:SoalUjian/routes/routes.dart';
+import 'package:TesUjian/parent/provider.dart';
+import 'package:TesUjian/routes/routes.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {

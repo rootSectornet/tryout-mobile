@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/history.dart';
-import 'package:SoalUjian/src/resources/historyTryoutApi.dart';
-import 'package:SoalUjian/src/resources/paketApi.dart';
-import 'package:SoalUjian/src/state/history.dart';
-import 'package:SoalUjian/src/state/paket.dart';
+import 'package:TesUjian/src/model/history.dart';
+import 'package:TesUjian/src/resources/historyTryoutApi.dart';
+import 'package:TesUjian/src/resources/paketApi.dart';
+import 'package:TesUjian/src/state/history.dart';
+import 'package:TesUjian/src/state/paket.dart';
 
 abstract class HistoryPresenterAbstract {
   set view(HistoryState view) {}

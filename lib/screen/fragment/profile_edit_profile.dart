@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:SoalUjian/helper/getStorage.dart';
-// import 'package:SoalUjian/screen/fragment/profile_edit_profile_detail.dart';
-import 'package:SoalUjian/screen/fragment/selectsekolah.dart';
-import 'package:SoalUjian/src/model/profile.dart';
-import 'package:SoalUjian/src/presenter/profile_header.dart';
-import 'package:SoalUjian/src/state/profile_header.dart';
+import 'package:TesUjian/helper/getStorage.dart';
+// import 'package:TesUjian/screen/fragment/profile_edit_profile_detail.dart';
+import 'package:TesUjian/screen/fragment/selectsekolah.dart';
+import 'package:TesUjian/src/model/profile.dart';
+import 'package:TesUjian/src/presenter/profile_header.dart';
+import 'package:TesUjian/src/state/profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
 
 class EditProfile extends StatefulWidget {

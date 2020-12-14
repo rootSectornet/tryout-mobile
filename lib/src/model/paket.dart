@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/response/jenjang.dart';
+import 'package:TesUjian/src/response/jenjang.dart';
 
 class Paket {
   int id;

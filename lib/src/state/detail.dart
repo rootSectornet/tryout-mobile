@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/detail.dart';
+import 'package:TesUjian/src/model/detail.dart';
 
 abstract class DetailState {
   void refreshData(DetailModel detailModel);

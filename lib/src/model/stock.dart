@@ -1,7 +1,7 @@
-import 'package:SoalUjian/src/response/products.dart';
-import 'package:SoalUjian/src/response/warehouse.dart';
+import 'package:TesUjian/src/response/products.dart';
+import 'package:TesUjian/src/response/warehouse.dart';
 // ignore: unused_import
-import 'package:SoalUjian/src/model/warehouse.dart';
+import 'package:TesUjian/src/model/warehouse.dart';
 
 class StockModel {
   bool isloading = false;

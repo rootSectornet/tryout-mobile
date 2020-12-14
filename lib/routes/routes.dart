@@ -1,24 +1,24 @@
-import 'package:SoalUjian/screen/fragment/pembayaran_detail.dart';
-import 'package:SoalUjian/screen/fragment/profile_detail_nilai.dart';
-import 'package:SoalUjian/screen/fragment/profile_edit_profile.dart';
-import 'package:SoalUjian/screen/fragment/profile_history.dart';
-import 'package:SoalUjian/screen/fragment/profile_info_app.dart';
-import 'package:SoalUjian/screen/fragment/profile_info_layanan.dart';
-import 'package:SoalUjian/screen/fragment/profile_kebijakan_privacy.dart';
-import 'package:SoalUjian/screen/fragment/profile_nilai.dart';
-import 'package:SoalUjian/screen/fragment/profile_syarat_ketentuan.dart';
-import 'package:SoalUjian/screen/fragment/profile_tagihan.dart';
-import 'package:SoalUjian/screen/fragment/verifitaction.dart';
-import 'package:SoalUjian/screen/fragment/pembayaran_list.dart';
-import 'package:SoalUjian/screen/onboarding_page.dart';
-import 'package:SoalUjian/screen/pembayaran_info.dart';
-import 'package:SoalUjian/screen/profile_detail.dart';
-import 'package:SoalUjian/screen/signup.dart';
-import 'package:SoalUjian/screen/tryout.dart';
+import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
+import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
+import 'package:TesUjian/screen/fragment/profile_edit_profile.dart';
+import 'package:TesUjian/screen/fragment/profile_history.dart';
+import 'package:TesUjian/screen/fragment/profile_info_app.dart';
+import 'package:TesUjian/screen/fragment/profile_info_layanan.dart';
+import 'package:TesUjian/screen/fragment/profile_kebijakan_privacy.dart';
+import 'package:TesUjian/screen/fragment/profile_nilai.dart';
+import 'package:TesUjian/screen/fragment/profile_syarat_ketentuan.dart';
+import 'package:TesUjian/screen/fragment/profile_tagihan.dart';
+import 'package:TesUjian/screen/fragment/verifitaction.dart';
+import 'package:TesUjian/screen/fragment/pembayaran_list.dart';
+import 'package:TesUjian/screen/onboarding_page.dart';
+import 'package:TesUjian/screen/pembayaran_info.dart';
+import 'package:TesUjian/screen/profile_detail.dart';
+import 'package:TesUjian/screen/signup.dart';
+import 'package:TesUjian/screen/tryout.dart';
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/screen/home.dart';
-import 'package:SoalUjian/screen/login.dart';
-import 'package:SoalUjian/screen/landing_page.dart';
+import 'package:TesUjian/screen/home.dart';
+import 'package:TesUjian/screen/login.dart';
+import 'package:TesUjian/screen/landing_page.dart';
 
 final routes = {
   '/': (BuildContext context) => new OnBoarding(),

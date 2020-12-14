@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:SoalUjian/src/model/profile.dart';
-import 'package:SoalUjian/src/resources/daftarApi.dart';
-import 'package:SoalUjian/src/resources/profileApi.dart';
-import 'package:SoalUjian/src/resources/sekolahApi.dart';
-import 'package:SoalUjian/src/state/profile_header.dart';
+import 'package:TesUjian/src/model/profile.dart';
+import 'package:TesUjian/src/resources/daftarApi.dart';
+import 'package:TesUjian/src/resources/profileApi.dart';
+import 'package:TesUjian/src/resources/sekolahApi.dart';
+import 'package:TesUjian/src/state/profile_header.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:intl/intl.dart';
 

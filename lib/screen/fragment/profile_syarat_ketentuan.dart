@@ -1,10 +1,10 @@
-import 'package:SoalUjian/screen/fragment/profil/total_nilai.dart';
+import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 
 class ProfileSyaratKetentuan extends StatefulWidget {
   @override
@@ -91,7 +91,7 @@ class ProfileSyaratKetentuanState extends State<ProfileSyaratKetentuan>
                       padding:
                           EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
                       child: Text(
-                        'SoalUjian adalah platform belajar online dimana siswa bisa mengakses berbagai konten materi pelajaran ataupun materi keahlian atau pengetahuan lainnya. Aplikasi dan situs Soal Ujian dikelola oleh PT. Logamindo Teknologi (“Kami”), suatu perseroan terbatas yang didirikan berdasarkan hukum Indonesia.',
+                        'TesUjian adalah platform belajar online dimana siswa bisa mengakses berbagai konten materi pelajaran ataupun materi keahlian atau pengetahuan lainnya. Aplikasi dan situs Soal Ujian dikelola oleh PT. Logamindo Teknologi (“Kami”), suatu perseroan terbatas yang didirikan berdasarkan hukum Indonesia.',
                         textAlign: TextAlign.justify,
                       ),
                     ),

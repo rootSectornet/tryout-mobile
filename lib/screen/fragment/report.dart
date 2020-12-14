@@ -1,17 +1,17 @@
-import 'package:SoalUjian/screen/fragment/profile_tagihan.dart';
-import 'package:SoalUjian/screen/fragment/report/kategori_report.dart';
-import 'package:SoalUjian/screen/fragment/report/pie_chart.dart';
-import 'package:SoalUjian/screen/fragment/report/pie_detail_chart.dart';
-import 'package:SoalUjian/src/model/overall_stat.dart';
-import 'package:SoalUjian/src/model/total_nilai_detail.dart';
-import 'package:SoalUjian/src/presenter/report.dart';
-import 'package:SoalUjian/src/presenter/totalNilaiDetail.dart';
-import 'package:SoalUjian/src/state/report.dart';
-import 'package:SoalUjian/src/state/total_nilai_detail.dart';
+import 'package:TesUjian/screen/fragment/profile_tagihan.dart';
+import 'package:TesUjian/screen/fragment/report/kategori_report.dart';
+import 'package:TesUjian/screen/fragment/report/pie_chart.dart';
+import 'package:TesUjian/screen/fragment/report/pie_detail_chart.dart';
+import 'package:TesUjian/src/model/overall_stat.dart';
+import 'package:TesUjian/src/model/total_nilai_detail.dart';
+import 'package:TesUjian/src/presenter/report.dart';
+import 'package:TesUjian/src/presenter/totalNilaiDetail.dart';
+import 'package:TesUjian/src/state/report.dart';
+import 'package:TesUjian/src/state/total_nilai_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:toast/toast.dart';
 

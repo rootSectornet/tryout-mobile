@@ -1,7 +1,7 @@
 // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/src/response/detailpembelian.dart';
-import 'package:SoalUjian/src/response/detailpenjualan.dart';
+import 'package:TesUjian/src/response/detailpembelian.dart';
+import 'package:TesUjian/src/response/detailpenjualan.dart';
 
 class DetailModel {
   bool isloading = false;

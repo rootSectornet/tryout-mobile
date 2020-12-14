@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/transaction.dart';
+import 'package:TesUjian/src/model/transaction.dart';
 
 abstract class TransactionState {
   void refreshData(TransactionModel transactionModel);

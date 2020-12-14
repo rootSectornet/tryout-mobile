@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:SoalUjian/src/response/sekolah.dart';
+import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:flutter/material.dart';
 
 class SignUpModel {

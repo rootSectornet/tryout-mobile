@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/profile.dart';
+import 'package:TesUjian/src/model/profile.dart';
 
 abstract class ProfileHeaderState {
   void refreshData(ProfileModel paketModel);

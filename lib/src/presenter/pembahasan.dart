@@ -1,8 +1,8 @@
-import 'package:SoalUjian/src/model/pembahasan.dart';
-import 'package:SoalUjian/src/model/soal.dart';
-import 'package:SoalUjian/src/resources/TryoutApi.dart';
-import 'package:SoalUjian/src/state/pembahasan.dart';
-import 'package:SoalUjian/src/state/soal.dart';
+import 'package:TesUjian/src/model/pembahasan.dart';
+import 'package:TesUjian/src/model/soal.dart';
+import 'package:TesUjian/src/resources/TryoutApi.dart';
+import 'package:TesUjian/src/state/pembahasan.dart';
+import 'package:TesUjian/src/state/soal.dart';
 
 abstract class PembahasanPresenterAbstract {
   set view(PembahasanState view) {}

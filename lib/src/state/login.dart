@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/login.dart';
+import 'package:TesUjian/src/model/login.dart';
 
 abstract class LoginState {
   void refreshData(LoginModel loginModel);

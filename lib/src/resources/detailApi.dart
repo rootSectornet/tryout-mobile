@@ -1,13 +1,13 @@
 // ignore: unused_import
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
-import 'package:SoalUjian/src/model/user.dart';
+import 'package:TesUjian/src/model/user.dart';
 // ignore: unused_import
-import 'package:SoalUjian/helper/paths.dart';
+import 'package:TesUjian/helper/paths.dart';
 // ignore: unused_import
-import 'package:SoalUjian/helper/rijndael.dart';
-import 'package:SoalUjian/src/response/detailpembelian.dart';
-import 'package:SoalUjian/src/response/detailpenjualan.dart';
+import 'package:TesUjian/helper/rijndael.dart';
+import 'package:TesUjian/src/response/detailpembelian.dart';
+import 'package:TesUjian/src/response/detailpenjualan.dart';
 import 'dart:convert';
 
 class DetailApi {

@@ -1,12 +1,12 @@
-import 'package:SoalUjian/screen/fragment/profil/kategori_tagihan.dart';
-import 'package:SoalUjian/screen/fragment/tagihan/lunas.dart';
-import 'package:SoalUjian/screen/fragment/tagihan/menungguPembayaran.dart';
+import 'package:TesUjian/screen/fragment/profil/kategori_tagihan.dart';
+import 'package:TesUjian/screen/fragment/tagihan/lunas.dart';
+import 'package:TesUjian/screen/fragment/tagihan/menungguPembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 
 String selectedKategori = "Semua";
 

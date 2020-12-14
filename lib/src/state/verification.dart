@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/verification.dart';
+import 'package:TesUjian/src/model/verification.dart';
 
 abstract class VerificationState {
   void refreshData(VerificationModel verificationModel);

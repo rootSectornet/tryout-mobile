@@ -1,8 +1,8 @@
-import 'package:SoalUjian/screen/fragment/loading.dart';
-import 'package:SoalUjian/screen/notfound.dart';
-import 'package:SoalUjian/src/model/soal.dart';
-import 'package:SoalUjian/src/presenter/soal.dart';
-import 'package:SoalUjian/src/state/soal.dart';
+import 'package:TesUjian/screen/fragment/loading.dart';
+import 'package:TesUjian/screen/notfound.dart';
+import 'package:TesUjian/src/model/soal.dart';
+import 'package:TesUjian/src/presenter/soal.dart';
+import 'package:TesUjian/src/state/soal.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

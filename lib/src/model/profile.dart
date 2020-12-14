@@ -1,5 +1,5 @@
-import 'package:SoalUjian/src/response/daftar.dart';
-import 'package:SoalUjian/src/response/sekolah.dart';
+import 'package:TesUjian/src/response/daftar.dart';
+import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:flutter/material.dart';
 
 class Profile {

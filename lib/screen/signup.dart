@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/screen/fragment/selectsekolah.dart';
-import 'package:SoalUjian/src/model/signup.dart';
-import 'package:SoalUjian/src/presenter/signup.dart';
-import 'package:SoalUjian/src/state/signup.dart';
+import 'package:TesUjian/screen/fragment/selectsekolah.dart';
+import 'package:TesUjian/src/model/signup.dart';
+import 'package:TesUjian/src/presenter/signup.dart';
+import 'package:TesUjian/src/state/signup.dart';
 import 'package:circle_button/circle_button.dart';
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/screen/fragment/loading.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/screen/fragment/loading.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';

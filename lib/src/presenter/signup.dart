@@ -1,6 +1,6 @@
-import 'package:SoalUjian/src/model/signup.dart';
-import 'package:SoalUjian/src/resources/sekolahApi.dart';
-import 'package:SoalUjian/src/state/signup.dart';
+import 'package:TesUjian/src/model/signup.dart';
+import 'package:TesUjian/src/resources/sekolahApi.dart';
+import 'package:TesUjian/src/state/signup.dart';
 import 'package:intl/intl.dart';
 
 abstract class SignUpPresenterAbstract {
