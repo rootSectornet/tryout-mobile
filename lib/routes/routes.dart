@@ -6,6 +6,7 @@ import 'package:SoalUjian/screen/fragment/profile_info_app.dart';
 import 'package:SoalUjian/screen/fragment/profile_info_layanan.dart';
 import 'package:SoalUjian/screen/fragment/profile_kebijakan_privacy.dart';
 import 'package:SoalUjian/screen/fragment/profile_nilai.dart';
+import 'package:SoalUjian/screen/fragment/profile_syarat_ketentuan.dart';
 import 'package:SoalUjian/screen/fragment/profile_tagihan.dart';
 import 'package:SoalUjian/screen/fragment/verifitaction.dart';
 import 'package:SoalUjian/screen/fragment/pembayaran_list.dart';
@@ -35,6 +36,8 @@ final routes = {
   '/profile_kebijakan_privacy': (BuildContext context) => new ProfilePrivacy(),
   '/profile_history': (BuildContext context) => new ProfileHistory(),
   '/profile_info_layanan': (BuildContext context) => new ProfileInfoLayanan(),
+  '/profile_syarat_ketentuan': (BuildContext context) =>
+      new ProfileSyaratKetentuan(),
   '/pembayaran_info': (BuildContext context) => new PembayaranInfo(),
   '/pembayaran_list': (BuildContext context) => new PembayaranList(),
   '/pembayaran_detail': (BuildContext context) => new PembayaranDetail(),

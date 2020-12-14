@@ -368,6 +368,48 @@ class _ProfileDetailState extends State<ProfileDetail>
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, "/profile_syarat_ketentuan");
+                            },
+                            child: Container(
+                              height: 40,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Ionicons.document_attach,
+                                          color: Colors.black,
+                                          size: 12,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text('Syarat Dan Ketentuan',
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Icon(
+                                      Ionicons.chevron_forward_outline,
+                                      size: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           Divider(),
                           InkWell(
                             onTap: () {
