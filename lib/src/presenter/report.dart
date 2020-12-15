@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/overall_stat.dart';
-import 'package:SoalUjian/src/model/total_nilai.dart';
-import 'package:SoalUjian/src/model/total_nilai_detail.dart';
-import 'package:SoalUjian/src/resources/tryoutDetailApi.dart';
-import 'package:SoalUjian/src/state/report.dart';
+import 'package:TesUjian/src/model/overall_stat.dart';
+import 'package:TesUjian/src/model/total_nilai.dart';
+import 'package:TesUjian/src/model/total_nilai_detail.dart';
+import 'package:TesUjian/src/resources/tryoutDetailApi.dart';
+import 'package:TesUjian/src/state/report.dart';
 import 'package:intl/intl.dart';
 
 abstract class ReportPresenterAbstract {

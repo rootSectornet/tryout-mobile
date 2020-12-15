@@ -1,9 +1,9 @@
-import 'package:SoalUjian/src/response/tryoutdetail.dart';
-import 'package:SoalUjian/src/response/tryoutinfo.dart';
-import 'package:SoalUjian/src/response/tryoutsoal.dart';
+import 'package:TesUjian/src/response/tryoutdetail.dart';
+import 'package:TesUjian/src/response/tryoutinfo.dart';
+import 'package:TesUjian/src/response/tryoutsoal.dart';
 import 'package:http/http.dart' show Client, MultipartRequest;
 // ignore: unused_import
-import 'package:SoalUjian/helper/paths.dart';
+import 'package:TesUjian/helper/paths.dart';
 // ignore: unused_import
 import 'dart:convert';
 

@@ -1,17 +1,17 @@
 // ignore: unused_import
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
-import 'package:SoalUjian/src/model/user.dart';
+import 'package:TesUjian/src/model/user.dart';
 // ignore: unused_import
-import 'package:SoalUjian/helper/paths.dart';
+import 'package:TesUjian/helper/paths.dart';
 // ignore: unused_import
-import 'package:SoalUjian/helper/rijndael.dart';
+import 'package:TesUjian/helper/rijndael.dart';
 // import 'package:skripsi/src/model/warehouse.dart';
-import 'package:SoalUjian/src/response/pembelian.dart';
+import 'package:TesUjian/src/response/pembelian.dart';
 import 'dart:convert';
 
-import 'package:SoalUjian/src/response/penjualan.dart';
-import 'package:SoalUjian/src/response/warehouse.dart';
+import 'package:TesUjian/src/response/penjualan.dart';
+import 'package:TesUjian/src/response/warehouse.dart';
 
 class TransactionApi {
   Client _client = new Client();

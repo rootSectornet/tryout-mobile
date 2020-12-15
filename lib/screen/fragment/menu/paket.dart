@@ -1,7 +1,7 @@
-import 'package:SoalUjian/helper/utils.dart';
-import 'package:SoalUjian/src/model/paket.dart';
-import 'package:SoalUjian/src/presenter/paket.dart';
-import 'package:SoalUjian/src/state/paket.dart';
+import 'package:TesUjian/helper/utils.dart';
+import 'package:TesUjian/src/model/paket.dart';
+import 'package:TesUjian/src/presenter/paket.dart';
+import 'package:TesUjian/src/state/paket.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';

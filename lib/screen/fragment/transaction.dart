@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:select_dialog/select_dialog.dart';
-import 'package:SoalUjian/screen/fragment/pembelian.dart';
-import 'package:SoalUjian/screen/fragment/penjualan.dart';
-import 'package:SoalUjian/src/model/transaction.dart';
-import 'package:SoalUjian/src/model/warehouse.dart';
-import 'package:SoalUjian/src/presenter/transaction.dart';
-import 'package:SoalUjian/src/state/transaction.dart';
+import 'package:TesUjian/screen/fragment/pembelian.dart';
+import 'package:TesUjian/screen/fragment/penjualan.dart';
+import 'package:TesUjian/src/model/transaction.dart';
+import 'package:TesUjian/src/model/warehouse.dart';
+import 'package:TesUjian/src/presenter/transaction.dart';
+import 'package:TesUjian/src/state/transaction.dart';
 import 'package:toast/toast.dart';
 
 class Transaction extends StatefulWidget {

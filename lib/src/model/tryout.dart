@@ -1,5 +1,5 @@
-import 'package:SoalUjian/src/response/tryoutdetail.dart';
-import 'package:SoalUjian/src/response/tryoutinfo.dart';
+import 'package:TesUjian/src/response/tryoutdetail.dart';
+import 'package:TesUjian/src/response/tryoutinfo.dart';
 
 class TryoutModel {
   bool isloading = false;

@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/tryout.dart';
+import 'package:TesUjian/src/model/tryout.dart';
 import 'package:flutter/material.dart';
 
 class TryoutParent extends InheritedWidget {

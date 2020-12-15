@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/detail.dart';
-import 'package:SoalUjian/src/resources/detailApi.dart';
-import 'package:SoalUjian/src/state/detail.dart';
+import 'package:TesUjian/src/model/detail.dart';
+import 'package:TesUjian/src/resources/detailApi.dart';
+import 'package:TesUjian/src/state/detail.dart';
 
 abstract class DetailPresenterAbstract {
   set view(DetailState view) {}

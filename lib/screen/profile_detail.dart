@@ -1,6 +1,6 @@
-import 'package:SoalUjian/helper/getStorage.dart';
-import 'package:SoalUjian/screen/fragment/profil/profile_header.dart';
-import 'package:SoalUjian/screen/fragment/profil/total_nilai.dart';
+import 'package:TesUjian/helper/getStorage.dart';
+import 'package:TesUjian/screen/fragment/profil/profile_header.dart';
+import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/session.dart';
 
 class ProfileDetail extends StatefulWidget {
   @override
@@ -352,6 +352,48 @@ class _ProfileDetailState extends State<ProfileDetail>
                                           width: 5,
                                         ),
                                         Text('Kebijakan Privacy',
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Icon(
+                                      Ionicons.chevron_forward_outline,
+                                      size: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, "/profile_syarat_ketentuan");
+                            },
+                            child: Container(
+                              height: 40,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Ionicons.document_attach,
+                                          color: Colors.black,
+                                          size: 12,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text('Syarat Dan Ketentuan',
                                             style: GoogleFonts.poppins(
                                                 color: Colors.black,
                                                 fontSize: 18)),

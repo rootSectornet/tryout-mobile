@@ -32,7 +32,7 @@ class _LandingScreenState extends State<LandingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset("assets/img/login.jpg", fit: BoxFit.cover),
-            Text("Soal Ujian",
+            Text("Tes Ujian",
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontSize: 34,

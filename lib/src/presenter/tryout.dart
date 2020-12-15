@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/tryout.dart';
-import 'package:SoalUjian/src/resources/TryoutApi.dart';
-import 'package:SoalUjian/src/resources/session.dart';
-import 'package:SoalUjian/src/state/tryout.dart';
+import 'package:TesUjian/src/model/tryout.dart';
+import 'package:TesUjian/src/resources/TryoutApi.dart';
+import 'package:TesUjian/src/resources/session.dart';
+import 'package:TesUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

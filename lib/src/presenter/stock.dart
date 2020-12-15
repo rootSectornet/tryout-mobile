@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/stock.dart';
-import 'package:SoalUjian/src/model/warehouse.dart';
-import 'package:SoalUjian/src/resources/productApi.dart';
-import 'package:SoalUjian/src/resources/warehouseApi.dart';
-import 'package:SoalUjian/src/response/products.dart';
-import 'package:SoalUjian/src/response/warehouse.dart';
-import 'package:SoalUjian/src/state/stock.dart';
+import 'package:TesUjian/src/model/stock.dart';
+import 'package:TesUjian/src/model/warehouse.dart';
+import 'package:TesUjian/src/resources/productApi.dart';
+import 'package:TesUjian/src/resources/warehouseApi.dart';
+import 'package:TesUjian/src/response/products.dart';
+import 'package:TesUjian/src/response/warehouse.dart';
+import 'package:TesUjian/src/state/stock.dart';
 
 abstract class StockPresenterAbstract {
   set view(StockState view) {}

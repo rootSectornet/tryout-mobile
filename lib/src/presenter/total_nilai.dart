@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/src/model/paket.dart';
-import 'package:SoalUjian/src/model/total_nilai.dart';
-import 'package:SoalUjian/src/resources/historyTryoutApi.dart';
-import 'package:SoalUjian/src/state/total_nilai.dart';
+import 'package:TesUjian/src/model/paket.dart';
+import 'package:TesUjian/src/model/total_nilai.dart';
+import 'package:TesUjian/src/resources/historyTryoutApi.dart';
+import 'package:TesUjian/src/state/total_nilai.dart';
 import 'package:intl/intl.dart';
 
 abstract class TotalNilaiPresenterAbstract {

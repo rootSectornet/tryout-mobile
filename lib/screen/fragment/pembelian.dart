@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/src/model/transaction.dart';
+import 'package:TesUjian/src/model/transaction.dart';
 
 class Pembelian extends StatefulWidget {
   final TransactionModel transactionModel;

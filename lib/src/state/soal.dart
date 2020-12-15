@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/soal.dart';
+import 'package:TesUjian/src/model/soal.dart';
 
 abstract class SoalState {
   void refreshData(SoalModel soalModel);

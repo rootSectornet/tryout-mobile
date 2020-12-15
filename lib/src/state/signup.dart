@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/signup.dart';
+import 'package:TesUjian/src/model/signup.dart';
 
 abstract class SignUpState {
   void refreshData(SignUpModel signUpModel);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:SoalUjian/src/model/detail.dart';
-import 'package:SoalUjian/src/presenter/detail.dart';
-import 'package:SoalUjian/src/state/detail.dart';
+import 'package:TesUjian/src/model/detail.dart';
+import 'package:TesUjian/src/presenter/detail.dart';
+import 'package:TesUjian/src/state/detail.dart';
 import 'package:toast/toast.dart';
 
 class DetailPembelian extends StatefulWidget {

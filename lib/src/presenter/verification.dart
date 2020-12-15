@@ -1,7 +1,7 @@
-import 'package:SoalUjian/src/model/verification.dart';
-import 'package:SoalUjian/src/resources/verifiyApi.dart';
-import 'package:SoalUjian/src/state/verification.dart';
-import 'package:SoalUjian/src/resources/session.dart';
+import 'package:TesUjian/src/model/verification.dart';
+import 'package:TesUjian/src/resources/verifiyApi.dart';
+import 'package:TesUjian/src/state/verification.dart';
+import 'package:TesUjian/src/resources/session.dart';
 
 abstract class VerificationPresenterAbstract {
   set view(VerificationState view) {}

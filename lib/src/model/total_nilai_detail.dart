@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/overall_stat.dart';
+import 'package:TesUjian/src/model/overall_stat.dart';
 
 class TotalNilaiDetail {
   int id;

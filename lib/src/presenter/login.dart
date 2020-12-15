@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:SoalUjian/helper/paths.dart';
-import 'package:SoalUjian/helper/rijndael.dart';
-import 'package:SoalUjian/src/model/login.dart';
-import 'package:SoalUjian/src/model/user.dart';
-import 'package:SoalUjian/src/resources/session.dart';
-import 'package:SoalUjian/src/resources/userApi.dart';
-import 'package:SoalUjian/src/state/login.dart';
-import 'package:SoalUjian/helper/getStorage.dart' as constants;
+import 'package:TesUjian/helper/paths.dart';
+import 'package:TesUjian/helper/rijndael.dart';
+import 'package:TesUjian/src/model/login.dart';
+import 'package:TesUjian/src/model/user.dart';
+import 'package:TesUjian/src/resources/session.dart';
+import 'package:TesUjian/src/resources/userApi.dart';
+import 'package:TesUjian/src/state/login.dart';
+import 'package:TesUjian/helper/getStorage.dart' as constants;
 import 'package:get_storage/get_storage.dart';
 
 abstract class LoginPresenterAbstract {

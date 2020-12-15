@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/model/stock.dart';
+import 'package:TesUjian/src/model/stock.dart';
 
 abstract class StockState {
   void refreshData(StockModel stockModel);

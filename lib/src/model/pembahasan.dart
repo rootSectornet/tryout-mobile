@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:SoalUjian/src/response/tryoutsoal.dart';
+import 'package:TesUjian/src/response/tryoutsoal.dart';
 
 class Pembahasan {
   int idTryoutDetail = 0;

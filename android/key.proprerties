@@ -1,4 +1,4 @@
 storePassword=root12345
 keyPassword=root12345
 keyAlias=key
-storeFile=E:\candahar\projeck\try out\apps\keystore.jks
+storeFile=/Users/Administrator/key.jks

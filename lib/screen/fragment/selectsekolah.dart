@@ -1,4 +1,4 @@
-import 'package:SoalUjian/src/response/sekolah.dart';
+import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 

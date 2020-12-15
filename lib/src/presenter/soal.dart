@@ -1,6 +1,6 @@
-import 'package:SoalUjian/src/model/soal.dart';
-import 'package:SoalUjian/src/resources/TryoutApi.dart';
-import 'package:SoalUjian/src/state/soal.dart';
+import 'package:TesUjian/src/model/soal.dart';
+import 'package:TesUjian/src/resources/TryoutApi.dart';
+import 'package:TesUjian/src/state/soal.dart';
 
 abstract class SoalPresenterAbstract {
   set view(SoalState view) {}
