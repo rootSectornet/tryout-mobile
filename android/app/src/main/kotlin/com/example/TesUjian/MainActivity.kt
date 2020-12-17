@@ -1,4 +1,4 @@
-package com.example.TesUjian
+package com.TesUjian
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -57,7 +57,7 @@ class DataMurids {
   String kelamin;
   String alamat;
   int idSekolah;
-  String picture;
+  Picture picture;
   String createdAt;
   String updatedAt;
   Sekolah sekolah;
@@ -87,7 +87,8 @@ class DataMurids {
     kelamin = json['kelamin'];
     alamat = json['alamat'];
     idSekolah = json['id_sekolah'];
-    picture = json['picture'];
+    picture =
+        json['picture'] != null ? new Picture.fromJson(json['picture']) : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     sekolah =
@@ -105,12 +106,33 @@ class DataMurids {
     data['kelamin'] = this.kelamin;
     data['alamat'] = this.alamat;
     data['id_sekolah'] = this.idSekolah;
-    data['picture'] = this.picture;
+    if (this.picture != null) {
+      data['picture'] = this.picture.toJson();
+    }
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     if (this.sekolah != null) {
       data['sekolah'] = this.sekolah.toJson();
     }
+    return data;
+  }
+}
+
+class Picture {
+  String type;
+  List<int> data;
+
+  Picture({this.type, this.data});
+
+  Picture.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    data = json['data'].cast<int>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['data'] = this.data;
     return data;
   }
 }

@@ -358,6 +358,60 @@ class _TryoutScreenState extends State<TryoutScreen>
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(10),
+                              color: Colors.orange,
+                              disabledColor: Colors.red,
+                              onPressed: () async {},
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Text(
+                                'cek Nilai',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            height: 40,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(10),
+                              color: Colors.blue,
+                              disabledColor: Colors.red,
+                              onPressed: () async {
+                                Navigator.pushNamed(
+                                    context, "/pembayaran_info");
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Text(
+                                'Cek Pembahasan',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

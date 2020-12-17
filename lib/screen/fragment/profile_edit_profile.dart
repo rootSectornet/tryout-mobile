@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:TesUjian/helper/getStorage.dart';
 // import 'package:TesUjian/screen/fragment/profile_edit_profile_detail.dart';
@@ -299,6 +301,42 @@ class EditProfileState extends State<EditProfile>
                                                             getImageGalery();
                                                           },
                                                         ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Container(
+                                                          height: 35,
+                                                          width: 50,
+                                                          child: RaisedButton(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10),
+                                                            color: Colors.blue,
+                                                            disabledColor:
+                                                                Colors.red,
+                                                            onPressed:
+                                                                () async {
+                                                              uploadImage();
+                                                            },
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0)),
+                                                            child: Text(
+                                                              'Selesai',
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -539,46 +577,56 @@ class EditProfileState extends State<EditProfile>
                                 ),
                                 Divider(),
                                 Text('Tujuan Sekolah'),
-                                Padding(
-                                  padding: EdgeInsets.all(1),
-                                  child: TextFormField(
-                                    controller: this
-                                        ._profileModel
-                                        .sekolahTujuanController,
-                                    keyboardType: TextInputType.text,
-                                    textInputAction: TextInputAction.next,
-                                    onFieldSubmitted: (_) {
-                                      FocusScope.of(context).requestFocus(
-                                          _inputTujuanSekolahFocusNode);
-                                    },
-                                    onTap: (() => {this.selectSekolahTujuan()}),
-                                    onChanged: (String sekolah) {},
-                                    decoration: InputDecoration(
-                                        hintText: this
-                                                    ._profileModel
-                                                    .daftarResponse
-                                                    .dataDaftar
-                                                    .data[0]
-                                                    .sekolah ==
-                                                null
-                                            ? 'Sekolah Tujuan Belum Dipilih'
-                                            : this
-                                                ._profileModel
-                                                .daftarResponse
-                                                .dataDaftar
-                                                .data[0]
-                                                .sekolah
-                                                .nama,
-                                        hintStyle: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.redAccent),
-                                        border: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none),
-                                  ),
-                                ),
+                                this
+                                            ._profileModel
+                                            .daftarResponse
+                                            .dataDaftar
+                                            .data[0] ==
+                                        null
+                                    ? Container(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Padding(
+                                        padding: EdgeInsets.all(1),
+                                        child: TextFormField(
+                                          controller: this
+                                              ._profileModel
+                                              .sekolahTujuanController,
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          onFieldSubmitted: (_) {
+                                            FocusScope.of(context).requestFocus(
+                                                _inputTujuanSekolahFocusNode);
+                                          },
+                                          onTap: (() =>
+                                              {this.selectSekolahTujuan()}),
+                                          onChanged: (String sekolah) {},
+                                          decoration: InputDecoration(
+                                              hintText: this
+                                                          ._profileModel
+                                                          .daftarResponse
+                                                          .dataDaftar
+                                                          .data[0]
+                                                          .sekolah ==
+                                                      null
+                                                  ? 'Sekolah Tujuan Belum Dipilih'
+                                                  : this
+                                                      ._profileModel
+                                                      .daftarResponse
+                                                      .dataDaftar
+                                                      .data[0]
+                                                      .sekolah
+                                                      .nama,
+                                              hintStyle: TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.redAccent),
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              errorBorder: InputBorder.none,
+                                              disabledBorder: InputBorder.none),
+                                        ),
+                                      ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15.0, vertical: 15.0),
@@ -596,7 +644,7 @@ class EditProfileState extends State<EditProfile>
                                             fontWeight: FontWeight.w600),
                                       ),
                                       onPressed: () {
-                                        print(_image);
+                                        print(GetStorage().read(ID_MURID));
                                         print(_inputNamaController.text);
                                         print(_inputEmailController.text);
                                         print(_inputPasswordController.text);
@@ -612,7 +660,9 @@ class EditProfileState extends State<EditProfile>
                                             .profiles[0]
                                             .idSekolah
                                             .toString());
-                                        print(this._profileModel.sekolahId);
+                                        // print(this._profileModel.sekolahId);
+                                        print(
+                                            this._profileModel.sekolahTujuanId);
                                         // this
                                         //     ._profileHeaderPresenter
                                         //     .updateProfile(
@@ -736,6 +786,7 @@ class EditProfileState extends State<EditProfile>
       if (pickedFile != null) {
         _image = File(pickedFile.path);
         fileName = _image.path.split('/').last;
+
         // print(fileName);
       } else {
         print('No image selected.');
@@ -756,6 +807,51 @@ class EditProfileState extends State<EditProfile>
         print('No image selected.');
       }
     });
+  }
+
+  Future<void> uploadImage() async {
+    //show your own loading or progressing code here
+
+    String uploadurl = "http://103.41.207.247:3000/api/cms/murid/" +
+        GetStorage().read(ID_MURID);
+    //dont use http://localhost , because emulator don't get that address
+    //insted use your local IP address or use live URL
+    //hit "ipconfig" in windows or "ip a" in linux to get you local IP
+
+    try {
+      List<int> imageBytes = _image.readAsBytesSync();
+      String baseimage = base64Encode(imageBytes);
+      //convert file image to Base64 encoding
+      var response = await http.post(uploadurl, body: {
+        'id': GetStorage().read(ID_MURID),
+        'id_sekolah': this._profileModel.profiles[0].idSekolah,
+        'name': this._profileModel.profiles[0].nama,
+        'email': this._profileModel.profiles[0].email,
+        'password': this._profileModel.profiles[0].password,
+        'phone': this._profileModel.profiles[0].phone,
+        'tgl_lahir': this._profileModel.profiles[0].tglLahirAsli,
+        'kelamin': this._profileModel.profiles[0].kelamin,
+        'alamat': this._profileModel.profiles[0].alamat,
+        'picture': baseimage,
+      });
+      if (response.statusCode == 200) {
+        var jsondata = json.decode(response.body); //decode json data
+        if (jsondata["error"]) {
+          //check error sent from server
+          print(jsondata["msg"]);
+          //if error return from server, show message from server
+        } else {
+          print("Upload successful");
+        }
+      } else {
+        print("Error during connection to server");
+        //there is error during connecting to server,
+        //status code might be 404 = url not found
+      }
+    } catch (e) {
+      print("Error during converting to Base64");
+      //there is error during converting file image to base64 encoding.
+    }
   }
 
   @override

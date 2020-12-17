@@ -176,7 +176,7 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                margin: EdgeInsets.symmetric(horizontal: 3.0),
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     color: Colors.white,
