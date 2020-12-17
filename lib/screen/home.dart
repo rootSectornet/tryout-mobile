@@ -191,6 +191,8 @@ class _HomeState extends State<Home> implements HomeState {
 
   @override
   void onError(String error) {
+    print(error);
+    print("error paket");
     Toast.show("$error", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }

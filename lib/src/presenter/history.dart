@@ -47,9 +47,9 @@ class HistoryPresenter implements HistoryPresenterAbstract {
           if (totalPercent < 100.0) {
             this._historyModel.historyActive.add(new HistoryActive(
                 tryout.id,
-                tryout.paket.namaPaket,
+                tryout.paket != null ? tryout.paket.namaPaket : "-",
                 totalPercent,
-                tryout.tingkat.jenjang,
+                tryout.tingkat != null ? tryout.tingkat.jenjang : '-',
                 matpels));
           }
         });

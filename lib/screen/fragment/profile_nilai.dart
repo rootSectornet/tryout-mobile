@@ -295,4 +295,10 @@ class ProfileNilaiState extends State<ProfileNilai>
       this._totalNilaiModel = paketModel;
     });
   }
+
+  @override
+  void onCheck(bool error) {
+    // ignore: todo
+    // TODO: implement onCheck
+  }
 }
