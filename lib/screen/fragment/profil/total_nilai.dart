@@ -289,4 +289,10 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
       this._totalNilaiModel = paketModel;
     });
   }
+
+  @override
+  void onCheck(bool error) {
+    // ignore: todo
+    // TODO: implement onCheck
+  }
 }

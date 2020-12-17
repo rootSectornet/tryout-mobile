@@ -351,6 +351,8 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
 
   @override
   void onError(String error) {
+    print(error);
+    print("error paket");
     Toast.show("$error", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }

@@ -146,6 +146,7 @@ class _PembahasanScreenState extends State<PembahasanScreen>
                                   ? Container()
                                   : Container(
                                       padding: EdgeInsets.only(top: 5),
+                                      margin: EdgeInsets.only(bottom: 5),
                                       child: RaisedButton(
                                         padding: EdgeInsets.all(1),
                                         color: Colors.white,

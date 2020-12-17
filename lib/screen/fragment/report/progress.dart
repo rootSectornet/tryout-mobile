@@ -42,7 +42,7 @@ class _ProgressScreenState extends State<ProgressScreen>
             padding: EdgeInsets.only(bottom: 10),
             child: CarouselSlider.builder(
                 options: CarouselOptions(
-                  height: 200,
+                  height: 190,
                   enableInfiniteScroll: true,
                   autoPlayAnimationDuration: Duration(microseconds: 5000),
                   viewportFraction: 0.9,
@@ -77,88 +77,93 @@ class _ProgressScreenState extends State<ProgressScreen>
                             SizedBox(
                               height: 10,
                             ),
-                            Center(
-                              child: new CircularPercentIndicator(
-                                radius: 71.0,
-                                lineWidth: 6,
-                                animation: true,
-                                percent: this
-                                        ._historyModel
-                                        .historyActive[itemIndex]
-                                        .totalPercent /
-                                    100,
-                                center: new Text(
-                                  "${this._historyModel.historyActive[itemIndex].totalPercent} %",
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                new CircularPercentIndicator(
+                                  radius: 71.0,
+                                  lineWidth: 6,
+                                  animation: true,
+                                  percent: this
+                                          ._historyModel
+                                          .historyActive[itemIndex]
+                                          .totalPercent /
+                                      100,
+                                  center: new Text(
+                                    "${this._historyModel.historyActive[itemIndex].totalPercent} %",
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0),
+                                  ),
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  progressColor: colorList[
+                                          Random().nextInt(colorList.length)]
+                                      .colors[0],
                                 ),
-                                circularStrokeCap: CircularStrokeCap.round,
-                                progressColor: colorList[
-                                        Random().nextInt(colorList.length)]
-                                    .colors[0],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: InkWell(
-                                splashColor: Color(0xff7474BF),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => TryoutScreen(
-                                          key: Key("1"),
-                                          idPaket: 0,
-                                          idJenjang: 0,
-                                          idTryout: this
-                                              ._historyModel
-                                              .historyActive[itemIndex]
-                                              .idTryout,
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                InkWell(
+                                  splashColor: Color(0xff7474BF),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TryoutScreen(
+                                            key: Key("1"),
+                                            idPaket: 0,
+                                            idJenjang: 0,
+                                            idTryout: this
+                                                ._historyModel
+                                                .historyActive[itemIndex]
+                                                .idTryout,
+                                          ),
+                                        ));
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 10.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black26,
+                                              offset: Offset(0, 28),
+                                              blurRadius: 40,
+                                              spreadRadius: -12)
+                                        ],
+                                        gradient: colorList[
+                                            Random().nextInt(colorList.length)],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Yuk, Di lanjut",
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ));
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 5),
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0, 28),
-                                            blurRadius: 40,
-                                            spreadRadius: -12)
-                                      ],
-                                      gradient: colorList[
-                                          Random().nextInt(colorList.length)],
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Yuk, Di lanjut",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Icon(
+                                          LineIcons.arrow_circle_o_right,
+                                          size: 18,
                                           color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Icon(
-                                        LineIcons.arrow_circle_o_right,
-                                        size: 18,
-                                        color: Colors.white,
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             )
                           ],
                         ),
@@ -170,6 +175,7 @@ class _ProgressScreenState extends State<ProgressScreen>
   @override
   void onError(String error) {
     print(error);
+    print("error proigress");
     Toast.show("$error", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }

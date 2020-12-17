@@ -1,4 +1,5 @@
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
+// ignore: unused_import
 import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
 import 'package:TesUjian/screen/fragment/profile_edit_profile.dart';
 import 'package:TesUjian/screen/fragment/profile_history.dart';
@@ -14,6 +15,7 @@ import 'package:TesUjian/screen/onboarding_page.dart';
 import 'package:TesUjian/screen/pembayaran_info.dart';
 import 'package:TesUjian/screen/profile_detail.dart';
 import 'package:TesUjian/screen/signup.dart';
+// ignore: unused_import
 import 'package:TesUjian/screen/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:TesUjian/screen/home.dart';

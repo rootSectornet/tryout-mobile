@@ -77,11 +77,11 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
                                 .jenjangResponse
                                 .data[index]
                                 .jenjang,
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   fontSize: 10,
                                   color: Color(0xff485460),
-                                  wordSpacing: 4,
                                   fontWeight: FontWeight.w600),
                             )),
                       ],
@@ -115,6 +115,8 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
 
   @override
   void onError(String error) {
+    print(error);
+    print("error");
     Toast.show("$error", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }
