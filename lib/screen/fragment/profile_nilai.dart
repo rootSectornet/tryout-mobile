@@ -418,6 +418,121 @@ class ProfileNilaiState extends State<ProfileNilai>
                     )));
 
         break;
+      case 'expire':
+        showCupertinoModalBottomSheet(
+          expand: false,
+          context: context,
+          backgroundColor: Colors.transparent,
+          enableDrag: true,
+          builder: (context) {
+            return Material(
+              child: SafeArea(
+                top: false,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Image.asset(
+                          'assets/img/lock-bayar.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Pembelian sebelumnya sudah expired, kamu harus melakukan proses ulang",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontSize: 14, color: Color(0xff2c2c2c))),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            padding: EdgeInsets.all(1),
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.red, width: 2)),
+                            child: Text(
+                              'Batal',
+                              style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          RaisedButton(
+                            padding: EdgeInsets.all(10),
+                            color: Color(0xff030779),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CheckoutScreen(
+                                            key: Key(
+                                                "${this._totalNilaiModel.pakets[selected].id}checkout"),
+                                            idTryout: this
+                                                ._totalNilaiModel
+                                                .pakets[selected]
+                                                .id,
+                                            namaPaket: this
+                                                ._totalNilaiModel
+                                                .pakets[selected]
+                                                .title,
+                                            jenjang: this
+                                                ._totalNilaiModel
+                                                .pakets[selected]
+                                                .namaJenjang,
+                                          )));
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(
+                                    color: Color(0xff030779), width: 0)),
+                            child: Text(
+                              'oke, Lanjut Bayar',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => CheckoutScreen(
+        //               key: Key(
+        //                   "${this._totalNilaiModel.pakets[selected].id}checkout"),
+        //               idTryout: this._totalNilaiModel.pakets[selected].id,
+        //               namaPaket: this._totalNilaiModel.pakets[selected].title,
+        //               jenjang:
+        //                   this._totalNilaiModel.pakets[selected].namaJenjang,
+        //             )));
+
+        break;
       default:
         this._totalNilaiModel.pakets[selected].belumDikerjakan == 0
             ? Toast.show("soal ini belum dikerjakan", context,

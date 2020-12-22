@@ -21,9 +21,19 @@ class TotalNilaiDetail {
   });
 }
 
+class StatDetail {
+  String namaMatpel;
+  double nilai;
+  StatDetail(
+    this.namaMatpel,
+    this.nilai,
+  );
+}
+
 class TotalNilaiDetailModel {
   bool isloading = false;
   bool isSuccess = false;
   List<TotalNilaiDetail> paketDetails = new List<TotalNilaiDetail>();
   List<OverallStatModel> overallStat = new List<OverallStatModel>();
+  List<StatDetail> statDetail = new List<StatDetail>();
 }

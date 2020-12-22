@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/tryout.dart';
 import 'package:TesUjian/src/resources/TryoutApi.dart';
+import 'package:TesUjian/src/resources/bayarApi.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:TesUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +14,16 @@ abstract class TryoutPresenterAbstract {
   void save(int idPaket, int idJenjang) {}
   void getMatpels(int idTryout) {}
   void getInfo(int idTryout) {}
+  void check(int idMurid, int idTryout) {}
+  void checkPembayaranStatus(String idBayar) {}
 }
 
 class TryoutPresenter implements TryoutPresenterAbstract {
+  BayarModel _bayarModel = new BayarModel();
   TryoutModel _tryoutModel = new TryoutModel();
   TryoutState _tryoutState;
   TryoutApi _tryoutApi = new TryoutApi();
+  BayarApi _bayarApi = new BayarApi();
 
   @override
   // ignore: avoid_return_types_on_setters
@@ -96,6 +102,37 @@ class TryoutPresenter implements TryoutPresenterAbstract {
       print("matpels");
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
+    });
+  }
+
+  @override
+  void check(int idMurid, int idTryout) {
+    this._bayarApi.checkPembayaran(idMurid, idTryout).then((value) {
+      this._tryoutState.onCheck(value);
+    }).catchError((err) {
+      this._tryoutState.onError(err.toString());
+    });
+  }
+
+  @override
+  void checkPembayaranStatus(String idBayar) {
+    this._tryoutModel.isloading = true;
+    print('+++++++pembayaranStatus');
+    this._bayarModel.bayars.clear();
+    this._bayarApi.checkPembayaranStatuss(idBayar).then((value) {
+      this._bayarModel.bayars.add(new Bayar(
+          amount: value.dataBayar.data.amount,
+          bank: value.dataBayar.data.vaNumber[0].bank,
+          batasWaktu: value.dataBayar.data.batasWaktu,
+          idTryout: value.dataBayar.data.id,
+          transactionStatus: value.dataBayar.data.transactionStatus,
+          transactionTime: value.dataBayar.data.tanggal,
+          vaNumber: value.dataBayar.data.vaNumber[0].vaNumber));
+      this._tryoutModel.isloading = false;
+      this._tryoutState.onCheckBayar(this._bayarModel);
+    }).catchError((err) {
+      this._tryoutModel.isloading = false;
+      this._tryoutState.onError(err.toString());
     });
   }
 
