@@ -63,15 +63,15 @@ class ReportAppState extends State<ReportApp>
     _controller.dispose();
   }
 
-  List<String> kategori = [
-    "Semua",
-    "Matematika",
-    "PPKN",
-    "B.Indonesia",
-    "B.Inggris",
-    "IPA",
-    "IPS"
-  ];
+  // List<String> kategori = [
+  //   "Semua",
+  //   "Matematika",
+  //   "PPKN",
+  //   "B.Indonesia",
+  //   "B.Inggris",
+  //   "IPA",
+  //   "IPS"
+  // ];
   AnimationController _controller;
 
   static List<charts.Series<OverallStatModel, String>> _overallStat = [];

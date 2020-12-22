@@ -1,5 +1,6 @@
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/fragment/profile_nilai.dart';
+import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/total_nilai.dart';
 import 'package:TesUjian/src/presenter/paket.dart';
 import 'package:TesUjian/src/presenter/total_nilai.dart';
@@ -25,6 +26,7 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
   // ignore: unused_field
   int idMurid;
   TotalNilaiModel _totalNilaiModel;
+  BayarModel _bayarModel;
   TotalNilaiPresenter _totalNilaiPresenter;
 
   _TotalNilaiScreenState() {
@@ -291,8 +293,30 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
   }
 
   @override
-  void onCheck(bool error) {
+  void onCheck(String error) {
     // ignore: todo
     // TODO: implement onCheck
+  }
+
+  @override
+  void onCheckStatus(String error) {
+    // TODO: implement onCheckStatus
+  }
+
+  @override
+  void onCheckBayar(BayarModel bayarModel) {
+    // TODO: implement onCheckBayar
+  }
+
+  @override
+  void refreshDataBayar(BayarModel bayarModel) {
+    setState(() {
+      this._bayarModel = bayarModel;
+    });
+  }
+
+  @override
+  void removeDataBayar(String error) {
+    this._bayarModel.bayars.clear();
   }
 }

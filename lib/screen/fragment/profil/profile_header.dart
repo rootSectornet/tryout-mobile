@@ -68,17 +68,19 @@ class _ProfileHeaderState extends State<ProfileHeader>
                                 color: Color(0xff2D8EFF),
                                 image: new DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: ExactAssetImage(this
-                                                ._profileModel
-                                                .profiles[0]
-                                                .picture ==
-                                            null
-                                        ? "assets/img/user.png"
-                                        : "http://103.41.207.247:3000/" +
-                                            this
-                                                ._profileModel
-                                                .profiles[0]
-                                                .picture)))),
+                                    image: ExactAssetImage("assets/img/user.png"
+                                        // this
+                                        //           ._profileModel
+                                        //           .profiles[0]
+                                        //           .picture ==
+                                        //       null
+                                        //   ? "assets/img/user.png"
+                                        //   : "http://103.41.207.247:3000/" +
+                                        //       this
+                                        //           ._profileModel
+                                        //           .profiles[0]
+                                        //           .picture
+                                        )))),
                       )
                     ],
                   ),
@@ -88,13 +90,17 @@ class _ProfileHeaderState extends State<ProfileHeader>
                   child: Column(
                     children: [
                       Text(
-                        this._profileModel.profiles[0].nama,
+                        this._profileModel.profiles == null
+                            ? ''
+                            : this._profileModel.profiles[0].nama,
                         style: GoogleFonts.poppins(
                           fontSize: 24,
                         ),
                       ),
                       Text(
-                        this._profileModel.profiles[0].email,
+                        this._profileModel.profiles == null
+                            ? ''
+                            : this._profileModel.profiles[0].email,
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Color(0xffaaaaaa),

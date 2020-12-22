@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/checkout.dart';
+import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
 import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
 import 'package:TesUjian/screen/fragment/report.dart';
+import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/total_nilai.dart';
 import 'package:TesUjian/src/presenter/total_nilai.dart';
 import 'package:TesUjian/src/state/total_nilai.dart';
@@ -29,6 +31,7 @@ class HistoryWidgetState extends State<HistoryWidget>
     implements TotalNilaiState {
   AnimationController _controller;
   int idMurid;
+  BayarModel _bayarModel;
   TotalNilaiModel _totalNilaiModel;
   TotalNilaiPresenter _totalNilaiPresenter;
 
@@ -56,9 +59,8 @@ class HistoryWidgetState extends State<HistoryWidget>
         ? SizedBox(height: 1)
         : InkWell(
             onTap: () {
-              this
-                  ._totalNilaiPresenter
-                  .check(this.idMurid, this._totalNilaiModel.pakets[0].id);
+              this._totalNilaiPresenter.check(GetStorage().read(ID_MURID),
+                  this._totalNilaiModel.pakets[0].id);
             },
             child: Container(
               padding: EdgeInsets.all(10),
@@ -196,22 +198,8 @@ class HistoryWidgetState extends State<HistoryWidget>
   }
 
   @override
-  void onCheck(bool error) {
-    if (error) {
-      this._totalNilaiModel.pakets[0].belumDikerjakan == 0
-          ? Toast.show("soal ini belum dikerjakan", context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM)
-          : Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ReportApp(
-                        idTryout: this._totalNilaiModel.pakets[0].id,
-                        namaPaket: this._totalNilaiModel.pakets[0].title,
-                        jenjang: this._totalNilaiModel.pakets[0].namaJenjang,
-                        tanggalPengerjaan:
-                            this._totalNilaiModel.pakets[0].tanggal,
-                      )));
-    } else {
+  void onCheck(String idPembayaran) {
+    if (idPembayaran == 'false') {
       showCupertinoModalBottomSheet(
         expand: false,
         context: context,
@@ -289,6 +277,14 @@ class HistoryWidgetState extends State<HistoryWidget>
                                               ._totalNilaiModel
                                               .pakets[0]
                                               .id,
+                                          namaPaket: this
+                                              ._totalNilaiModel
+                                              .pakets[0]
+                                              .title,
+                                          jenjang: this
+                                              ._totalNilaiModel
+                                              .pakets[0]
+                                              .namaJenjang,
                                         )));
                           },
                           shape: RoundedRectangleBorder(
@@ -312,6 +308,59 @@ class HistoryWidgetState extends State<HistoryWidget>
           );
         },
       );
+    } else {
+      print(idPembayaran);
+      this._totalNilaiPresenter.checkPembayaranStatus(idPembayaran);
     }
+  }
+
+  @override
+  void onCheckStatus(String error) {
+    // TODO: implement onCheckStatus
+  }
+
+  @override
+  void onCheckBayar(BayarModel bayarModel) {
+    switch (this._bayarModel.bayars[0].transactionStatus) {
+      case 'pending':
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PembayaranDetail(
+                      metode: bayarModel.bayars[0].bank,
+                      jumlah: bayarModel.bayars[0].amount,
+                      va: bayarModel.bayars[0].vaNumber,
+                      batasWaktu: bayarModel.bayars[0].batasWaktu,
+                      status: bayarModel.bayars[0].transactionStatus,
+                    )));
+        break;
+
+      default:
+        this._totalNilaiModel.pakets[0].belumDikerjakan == 0
+            ? Toast.show("soal ini belum dikerjakan", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM)
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ReportApp(
+                          idTryout: this._totalNilaiModel.pakets[0].id,
+                          namaPaket: this._totalNilaiModel.pakets[0].title,
+                          jenjang: this._totalNilaiModel.pakets[0].namaJenjang,
+                          tanggalPengerjaan:
+                              this._totalNilaiModel.pakets[0].tanggal,
+                        )));
+    }
+  }
+
+  @override
+  void refreshDataBayar(BayarModel bayarModel) {
+    setState(() {
+      this._bayarModel = bayarModel;
+    });
+  }
+
+  @override
+  void removeDataBayar(String error) {
+    this._bayarModel.bayars.clear();
   }
 }

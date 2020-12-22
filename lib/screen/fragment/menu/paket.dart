@@ -291,7 +291,12 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                             child: Column(
                               children: <Widget>[
                                 AutoSizeText(
-                                  this._paketModel.pakets[itemIndex].title,
+                                  this._paketModel.pakets == null
+                                      ? ''
+                                      : this
+                                          ._paketModel
+                                          .pakets[itemIndex]
+                                          .title,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         fontSize: 14, color: Color(0xffffffff)),

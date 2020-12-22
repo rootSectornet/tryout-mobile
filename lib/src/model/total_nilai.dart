@@ -1,3 +1,5 @@
+import 'package:TesUjian/src/response/cekPembayaran.dart';
+
 class TotalNilai {
   int id;
   String title;
@@ -16,6 +18,9 @@ class TotalNilai {
   int totalSalah;
   int belumDikerjakan;
   int sudahSelesai;
+  String metodePembayaran;
+  String jumlahBayar;
+  String batasWaktu;
   TotalNilai(
       {this.id,
       this.title,
@@ -33,7 +38,10 @@ class TotalNilai {
       this.totalBenar,
       this.totalSalah,
       this.belumDikerjakan,
-      this.sudahSelesai});
+      this.sudahSelesai,
+      this.metodePembayaran,
+      this.jumlahBayar,
+      this.batasWaktu});
 }
 
 class TotalNilaiModel {

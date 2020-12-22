@@ -51,6 +51,7 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
                   onTap: () {
                     this.onTryoutgo(
                         this._jenjangModel.jenjangResponse.data[index].id);
+                    print(this._jenjangModel.jenjangResponse.data[index].id);
                   },
                   child: Container(
                     padding: EdgeInsets.all(3),

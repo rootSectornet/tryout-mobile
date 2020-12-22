@@ -1,7 +1,10 @@
 import 'package:TesUjian/helper/getStorage.dart';
+import 'package:TesUjian/screen/checkout.dart';
+import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
 import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
 import 'package:TesUjian/screen/fragment/report.dart';
+import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/total_nilai.dart';
 import 'package:TesUjian/src/presenter/total_nilai.dart';
 import 'package:TesUjian/src/state/total_nilai.dart';
@@ -11,6 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
@@ -25,6 +29,8 @@ class ProfileNilaiState extends State<ProfileNilai>
     implements TotalNilaiState {
   AnimationController _controller;
   int idMurid;
+  int selected;
+  BayarModel _bayarModel;
   TotalNilaiModel _totalNilaiModel;
   TotalNilaiPresenter _totalNilaiPresenter;
 
@@ -103,36 +109,13 @@ class ProfileNilaiState extends State<ProfileNilai>
                                   (BuildContext context, int itemIndex) =>
                                       InkWell(
                                 onTap: () {
-                                  this
-                                              ._totalNilaiModel
-                                              .pakets[itemIndex]
-                                              .belumDikerjakan ==
-                                          0
-                                      ? Toast.show(
-                                          "soal ini belum dikerjakan", context,
-                                          duration: Toast.LENGTH_SHORT,
-                                          gravity: Toast.BOTTOM)
-                                      : Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ReportApp(
-                                                    idTryout: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .id,
-                                                    namaPaket: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .title,
-                                                    jenjang: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .namaJenjang,
-                                                    tanggalPengerjaan: this
-                                                        ._totalNilaiModel
-                                                        .pakets[itemIndex]
-                                                        .tanggal,
-                                                  )));
+                                  this._totalNilaiPresenter.check(
+                                      GetStorage().read(ID_MURID),
+                                      this
+                                          ._totalNilaiModel
+                                          .pakets[itemIndex]
+                                          .id);
+                                  this.selected = itemIndex;
                                 },
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -141,8 +124,8 @@ class ProfileNilaiState extends State<ProfileNilai>
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(15)),
                                   child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Image.asset("assets/img/history.png",
                                           fit: BoxFit.fill),
@@ -158,7 +141,7 @@ class ProfileNilaiState extends State<ProfileNilai>
                                                     ._totalNilaiModel
                                                     .pakets[itemIndex]
                                                     .title +
-                                                ' ' +
+                                                '\n' +
                                                 this
                                                     ._totalNilaiModel
                                                     .pakets[itemIndex]
@@ -297,8 +280,176 @@ class ProfileNilaiState extends State<ProfileNilai>
   }
 
   @override
-  void onCheck(bool error) {
-    // ignore: todo
-    // TODO: implement onCheck
+  void onCheck(String error) {
+    if (error == 'false') {
+      showCupertinoModalBottomSheet(
+        expand: false,
+        context: context,
+        backgroundColor: Colors.transparent,
+        enableDrag: true,
+        builder: (context) {
+          return Material(
+            child: SafeArea(
+              top: false,
+              child: Container(
+                padding: EdgeInsets.all(15),
+                height: MediaQuery.of(context).size.height / 2.5,
+                child: Column(
+                  children: [
+                    Container(
+                      child: Image.asset(
+                        'assets/img/lock-bayar.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Nilai kamu pasti bagus",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 16, color: Color(0xff3b3b3b))),
+                    ),
+                    Text(
+                      "Tapi ada proses yang harus kamu lewati dulu untuk lihat hasil ujianmu",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 14, color: Color(0xff2c2c2c))),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RaisedButton(
+                          padding: EdgeInsets.all(1),
+                          color: Colors.white,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.red, width: 2)),
+                          child: Text(
+                            'Batal',
+                            style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 25,
+                        ),
+                        RaisedButton(
+                          padding: EdgeInsets.all(10),
+                          color: Color(0xff030779),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CheckoutScreen(
+                                          key: Key(
+                                              "${this._totalNilaiModel.pakets[selected].id}checkout"),
+                                          idTryout: this
+                                              ._totalNilaiModel
+                                              .pakets[selected]
+                                              .id,
+                                          namaPaket: this
+                                              ._totalNilaiModel
+                                              .pakets[selected]
+                                              .title,
+                                          jenjang: this
+                                              ._totalNilaiModel
+                                              .pakets[selected]
+                                              .namaJenjang,
+                                        )));
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                  color: Color(0xff030779), width: 0)),
+                          child: Text(
+                            'oke, Lanjut Bayar',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      print(error);
+      this._totalNilaiPresenter.checkPembayaranStatus(error);
+    }
+  }
+
+  @override
+  void onCheckStatus(String orderId) {
+    print(orderId);
+    this._totalNilaiPresenter.checkPembayaranStatus(orderId);
+  }
+
+  @override
+  void onCheckBayar(BayarModel bayarModel) {
+    switch (this._bayarModel.bayars[0].transactionStatus) {
+      case 'pending':
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PembayaranDetail(
+                      metode: this._bayarModel.bayars[0].bank,
+                      jumlah: this._bayarModel.bayars[0].amount,
+                      va: this._bayarModel.bayars[0].vaNumber,
+                      batasWaktu: this._bayarModel.bayars[0].batasWaktu,
+                      status: this._bayarModel.bayars[0].transactionStatus,
+                    )));
+
+        break;
+      default:
+        this._totalNilaiModel.pakets[selected].belumDikerjakan == 0
+            ? Toast.show("soal ini belum dikerjakan", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM)
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ReportApp(
+                          idTryout: this._totalNilaiModel.pakets[selected].id,
+                          namaPaket:
+                              this._totalNilaiModel.pakets[selected].title,
+                          jenjang: this
+                              ._totalNilaiModel
+                              .pakets[selected]
+                              .namaJenjang,
+                          tanggalPengerjaan:
+                              this._totalNilaiModel.pakets[selected].tanggal,
+                        )));
+    }
+  }
+
+  @override
+  void removeDataBayar(String error) {
+    setState(() {
+      this._bayarModel.bayars.clear();
+    });
+  }
+
+  @override
+  void refreshDataBayar(BayarModel bayarModel) {
+    setState(() {
+      this._bayarModel = bayarModel;
+    });
   }
 }

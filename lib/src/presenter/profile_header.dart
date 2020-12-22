@@ -71,7 +71,7 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
             alamat: element.alamat,
             namaSekolah: element.sekolah.nama,
             idSekolah: element.idSekolah,
-            picture: element.picture.type));
+            picture: element.picture));
       });
       this._profileModel.isloading = false;
       this._profileHeaderState.refreshData(this._profileModel);

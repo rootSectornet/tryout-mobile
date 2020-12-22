@@ -44,6 +44,6 @@ class HomePresenter implements HomePresenterAbstract {
     this._homeModel.jenjang = 0;
     this._homeModel.idPaket = 0;
     this._homeState.refreshData(this._homeModel);
-    this._homeState.toTryout(paket, jenjang);
+    this._homeState.toTryout(jenjang, paket);
   }
 }
