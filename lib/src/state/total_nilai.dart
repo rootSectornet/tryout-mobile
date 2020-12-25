@@ -6,7 +6,7 @@ abstract class TotalNilaiState {
   void onSuccess(String success);
   void onError(String error);
   void onCheck(String error);
-  void onCheckStatus(String orderId);
+  void onCheckStatus(int idMurid, int idTryout);
   void removeDataBayar(String error);
   void refreshDataBayar(BayarModel bayarModel);
   void onCheckBayar(BayarModel bayarModel);

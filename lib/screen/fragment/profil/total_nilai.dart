@@ -299,7 +299,7 @@ class _TotalNilaiScreenState extends State<TotalNilaiScreen>
   }
 
   @override
-  void onCheckStatus(String error) {
+  void onCheckStatus(int idMurid, int idTryout) {
     // TODO: implement onCheckStatus
   }
 

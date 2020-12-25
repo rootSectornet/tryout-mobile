@@ -66,21 +66,50 @@ class _ProfileHeaderState extends State<ProfileHeader>
                             decoration: new BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Color(0xff2D8EFF),
-                                image: new DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: ExactAssetImage("assets/img/user.png"
-                                        // this
-                                        //           ._profileModel
-                                        //           .profiles[0]
-                                        //           .picture ==
-                                        //       null
-                                        //   ? "assets/img/user.png"
-                                        //   : "http://103.41.207.247:3000/" +
-                                        //       this
-                                        //           ._profileModel
-                                        //           .profiles[0]
-                                        //           .picture
-                                        )))),
+                                image: this._profileModel.isloading
+                                    ? new DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: ExactAssetImage(
+                                            "assets/img/user.png"
+                                            // this
+                                            //           ._profileModel
+                                            //           .profiles[0]
+                                            //           .picture ==
+                                            //       null
+                                            //   ? "assets/img/user.png"
+                                            //   : "http://103.41.207.247:3000/public/" +
+                                            //       this
+                                            //           ._profileModel
+                                            //           .profiles[0]
+                                            //           .picture
+                                            ))
+                                    : new DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: this._profileModel.isloading
+                                            ? ExactAssetImage(
+                                                "assets/img/user.png"
+                                                // this
+                                                //           ._profileModel
+                                                //           .profiles[0]
+                                                //           .picture ==
+                                                //       null
+                                                //   ? "assets/img/user.png"
+                                                //   : "http://103.41.207.247:3000/public/" +
+                                                //       this
+                                                //           ._profileModel
+                                                //           .profiles[0]
+                                                //           .picture
+                                                )
+                                            : NetworkImage(
+                                                // "assets/img/user.png"
+                                                this._profileModel.profiles ==
+                                                        null
+                                                    ? "assets/img/user.png"
+                                                    : "http://103.41.207.247:3000/" +
+                                                        this
+                                                            ._profileModel
+                                                            .profiles[0]
+                                                            .picture)))),
                       )
                     ],
                   ),

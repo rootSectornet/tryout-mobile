@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:TesUjian/src/resources/session.dart';
+import 'package:TesUjian/src/response/RasioGrades.dart';
 import 'package:TesUjian/src/response/historytryout.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
@@ -20,6 +21,25 @@ class HistoryTryoutApi {
         HistoryTryoutResponse paketResponse =
             HistoryTryoutResponse.fromJson(json.decode(response.body));
         return paketResponse;
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<RasioGradeResponse> getRasioGrades(int idMurid, int idTryout) async {
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_RASIO_GRADES}?id_murid=$idMurid&id=$idTryout");
+    if (response.statusCode == 200) {
+      print(response.body);
+      Map<String, dynamic> res = jsonDecode(response.body);
+      if (res['success']) {
+        RasioGradeResponse rasioGradesResponse =
+            RasioGradeResponse.fromJson(json.decode(response.body));
+        return rasioGradesResponse;
       } else {
         Future.error("${res['data']}");
       }

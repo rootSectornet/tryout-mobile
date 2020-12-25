@@ -137,7 +137,7 @@ class _PembahasanScreenState extends State<PembahasanScreen>
                                   textStyle: TextStyle(
                                       fontSize: 12, color: Colors.white60))),
                           SizedBox(
-                            height: 15,
+                            height: 8,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -516,33 +516,73 @@ class _PembahasanScreenState extends State<PembahasanScreen>
                                           .tryoutSoalResponse
                                           .dataTryout[
                                               this._soalModel.currentIndex]
-                                          .pembahasan ==
-                                      null
-                                  ? Container()
-                                  : CachedNetworkImage(
-                                      imageUrl: "http://103.41.207.247:3000/" +
-                                          this
+                                          .imgPembahasan ==
+                                      true
+                                  ? Html(
+                                      data: this
+                                          ._soalModel
+                                          .tryoutSoalResponse
+                                          .dataTryout[
+                                              this._soalModel.currentIndex]
+                                          .pembahasan,
+                                      style: {
+                                        "table": Style(
+                                          backgroundColor: Color.fromARGB(
+                                              0x50, 0xee, 0xee, 0xee),
+                                        ),
+                                        "tr": Style(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.grey)),
+                                        ),
+                                        "th": Style(
+                                          padding: EdgeInsets.all(6),
+                                          backgroundColor: Colors.grey,
+                                        ),
+                                        "td": Style(
+                                          padding: EdgeInsets.all(6),
+                                        ),
+                                        "p": Style(
+                                            fontFamily: 'serif',
+                                            textAlign: TextAlign.justify),
+                                      },
+                                    )
+                                  : this
                                               ._soalModel
                                               .tryoutSoalResponse
                                               .dataTryout[
                                                   this._soalModel.currentIndex]
-                                              .pembahasan,
-                                      height: 85,
-                                      width: MediaQuery.of(context).size.width,
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.fill,
+                                              .pembahasan ==
+                                          null
+                                      ? Container()
+                                      : CachedNetworkImage(
+                                          imageUrl:
+                                              "http://103.41.207.247:3000/" +
+                                                  this
+                                                      ._soalModel
+                                                      .tryoutSoalResponse
+                                                      .dataTryout[this
+                                                          ._soalModel
+                                                          .currentIndex]
+                                                      .pembahasan,
+                                          height: 85,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
+                                          placeholder: (context, url) =>
+                                              new CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              new Icon(Icons.error),
                                         ),
-                                      ),
-                                      placeholder: (context, url) =>
-                                          new CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          new Icon(Icons.error),
-                                    ),
                             ],
                           ),
                         ),

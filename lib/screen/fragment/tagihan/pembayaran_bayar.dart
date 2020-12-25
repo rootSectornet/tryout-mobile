@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
 
-class PembayaranDetail extends StatefulWidget {
+class PembayaranBayar extends StatefulWidget {
   final String metode;
   final String jumlah;
   final String va;
   final String batasWaktu;
   final String batasTanggal;
   final String status;
-  const PembayaranDetail(
+  const PembayaranBayar(
       {Key key,
       this.metode,
       this.jumlah,
@@ -25,10 +25,10 @@ class PembayaranDetail extends StatefulWidget {
       this.status})
       : super(key: key);
   @override
-  PembayaranDetailState createState() => PembayaranDetailState();
+  PembayaranBayarState createState() => PembayaranBayarState();
 }
 
-class PembayaranDetailState extends State<PembayaranDetail>
+class PembayaranBayarState extends State<PembayaranBayar>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -89,8 +89,6 @@ class PembayaranDetailState extends State<PembayaranDetail>
                     Container(
                       child: Text(
                         'Segera lakukan pembayaran sebelum ' +
-                            widget.batasTanggal +
-                            ' - ' +
                             widget.batasWaktu +
                             ' WIB dengan rincian sebagai berikut.',
                         style: GoogleFonts.poppins(

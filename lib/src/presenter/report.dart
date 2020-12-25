@@ -41,7 +41,7 @@ class ReportPresenter implements ReportPresenterAbstract {
 
   @override
   void check(int idMurid, int idTryout) {
-    this._bayarApi.checkPembayaran(idMurid, idTryout).then((value) {
+    this._bayarApi.checkStatus(idMurid, idTryout).then((value) {
       this._totalNilaiState.onCheck(value);
     }).catchError((err) {
       this._totalNilaiState.onError(err.toString());
@@ -58,7 +58,7 @@ class ReportPresenter implements ReportPresenterAbstract {
           amount: value.dataBayar.data.amount,
           bank: value.dataBayar.data.vaNumber[0].bank,
           batasWaktu: value.dataBayar.data.batasWaktu,
-          idTryout: value.dataBayar.data.id,
+          idTryout: value.dataBayar.data.idTryout,
           transactionStatus: value.dataBayar.data.transactionStatus,
           transactionTime: value.dataBayar.data.tanggal,
           vaNumber: value.dataBayar.data.vaNumber[0].vaNumber));

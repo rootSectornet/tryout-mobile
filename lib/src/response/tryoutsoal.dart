@@ -33,6 +33,7 @@ class DataTryout {
   bool status;
   bool isEssay;
   String pembahasan;
+  bool imgPembahasan;
 
   DataTryout(
       {this.id,
@@ -42,7 +43,8 @@ class DataTryout {
       this.choice,
       this.status,
       this.isEssay,
-      this.pembahasan});
+      this.pembahasan,
+      this.imgPembahasan});
 
   DataTryout.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -58,6 +60,7 @@ class DataTryout {
     status = json['status'];
     isEssay = json['isEssay'];
     pembahasan = json['pembahasan'];
+    imgPembahasan = json['imgPembahasan'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +75,7 @@ class DataTryout {
     data['status'] = this.status;
     data['isEssay'] = this.isEssay;
     data['pembahasan'] = this.pembahasan;
+    data['imgPembahasan'] = this.imgPembahasan;
     return data;
   }
 }

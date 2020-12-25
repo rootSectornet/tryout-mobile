@@ -34,6 +34,7 @@ class LoginPresenter implements LoginPresenterAbstract {
     _userApi.login(json.encode(param)).then((res) async {
       Session.setId(res.dataLogin.dataMurid.id);
       Session.setName(res.dataLogin.dataMurid.name);
+      Session.setPicture(res.dataLogin.dataMurid.picture);
       await GetStorage().write(constants.ID_MURID, res.dataLogin.dataMurid.id);
       await GetStorage()
           .write(constants.NAMA_USER, res.dataLogin.dataMurid.name);

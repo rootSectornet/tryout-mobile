@@ -1,6 +1,7 @@
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/parent/tryout.dart';
 import 'package:TesUjian/screen/checkout.dart';
+import 'package:TesUjian/screen/fragment/average_nilai.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/tryout/info.dart';
@@ -47,6 +48,7 @@ class _TryoutScreenState extends State<TryoutScreen>
   int selected;
   // ignore: unused_field
   TryoutModel _tryoutModel;
+  BayarModel _bayarModel;
   // ignore: unused_field
   TryoutPresenter _tryoutPresenter;
   TabController tabController;
@@ -337,12 +339,50 @@ class _TryoutScreenState extends State<TryoutScreen>
                         child: InkWell(
                           splashColor: Color(0xff7474BF),
                           onTap: () {
-                            this
-                                ._tryoutPresenter
-                                .getMatpels(this._tryoutModel.idTryout);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AverageNilai(
+                                          title:
+                                              "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
+                                          idMurid: GetStorage().read(ID_MURID),
+                                          idTryout: this._tryoutModel.idTryout,
+                                        )));
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 50.0),
+                            height: 43,
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 28),
+                                      blurRadius: 40,
+                                      spreadRadius: -12)
+                                ],
+                                color: Color(0xff1fc8db),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Center(
+                              child: Text(
+                                "Cek nilai rata-rata",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: InkWell(
+                          splashColor: Color(0xff7474BF),
+                          onTap: () {
+                            showMatpel(context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10.0),
                             height: 43,
                             width: MediaQuery.of(context).size.width / 1.2,
                             decoration: BoxDecoration(
@@ -358,7 +398,7 @@ class _TryoutScreenState extends State<TryoutScreen>
                                     BorderRadius.all(Radius.circular(10))),
                             child: Center(
                               child: Text(
-                                "Refresh",
+                                "Cek Pembahasan",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -370,56 +410,56 @@ class _TryoutScreenState extends State<TryoutScreen>
                       SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width / 2.5,
-                            child: RaisedButton(
-                              padding: EdgeInsets.all(10),
-                              color: Colors.orange,
-                              disabledColor: Colors.red,
-                              onPressed: () async {},
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Text(
-                                'cek Nilai rata-rata',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width / 2.5,
-                            child: RaisedButton(
-                              padding: EdgeInsets.all(10),
-                              color: Colors.blue,
-                              disabledColor: Colors.red,
-                              onPressed: () async {
-                                showMatpel(context);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Text(
-                                'Cek Pembahasan',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Container(
+                      //       height: 40,
+                      //       width: MediaQuery.of(context).size.width / 2.5,
+                      //       child: RaisedButton(
+                      //         padding: EdgeInsets.all(10),
+                      //         color: Colors.orange,
+                      //         disabledColor: Colors.red,
+                      //         onPressed: () async {},
+                      //         shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(10.0)),
+                      //         child: Text(
+                      //           'cek Nilai rata-rata',
+                      //           style: GoogleFonts.poppins(
+                      //             color: Colors.white,
+                      //             fontSize: 14,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Container(
+                      //       height: 40,
+                      //       width: MediaQuery.of(context).size.width / 2.5,
+                      //       child: RaisedButton(
+                      //         padding: EdgeInsets.all(10),
+                      //         color: Colors.blue,
+                      //         disabledColor: Colors.red,
+                      //         onPressed: () async {
+                      //           showMatpel(context);
+                      //         },
+                      //         shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(10.0)),
+                      //         child: Text(
+                      //           'Cek Pembahasan',
+                      //           style: GoogleFonts.poppins(
+                      //             color: Colors.white,
+                      //             fontSize: 14,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
@@ -461,6 +501,7 @@ class _TryoutScreenState extends State<TryoutScreen>
           child: SafeArea(
             top: false,
             child: Container(
+                padding: EdgeInsets.only(top: 10),
                 width: MediaQuery.of(context).size.width,
                 child: this._tryoutModel.isloading
                     ? GridView.builder(
@@ -485,168 +526,146 @@ class _TryoutScreenState extends State<TryoutScreen>
                             ),
                           ));
                         })
-                    : GridView.builder(
-                        padding: EdgeInsets.all(10),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 2.5,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        itemCount:
-                            this._tryoutModel.tryoutDetailResponse.data.length,
-                        itemBuilder: (ctx, index) {
-                          var total = this
-                                  ._tryoutModel
-                                  .tryoutDetailResponse
-                                  .data[index]
-                                  .totalBenar +
-                              this
-                                  ._tryoutModel
-                                  .tryoutDetailResponse
-                                  .data[index]
-                                  .totalSalah;
-                          return InkWell(
-                            onTap: () {
-                              print(this._tryoutModel.idTryout);
-                              this._tryoutPresenter.check(
-                                  GetStorage().read(ID_MURID),
-                                  this._tryoutModel.idTryout);
-                              this.selected = index;
-                              // if (total ==
-                              //     this
-                              //         ._tryoutModel
-                              //         .tryoutDetailResponse
-                              //         .data[index]
-                              //         .jumlahSoal) {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => PembahasanScreen(
-                              //                 idMatpel: this
-                              //                     ._tryoutModel
-                              //                     .tryoutDetailResponse
-                              //                     .data[index]
-                              //                     .idmatpel,
-                              //                 idtryoutdetail: this
-                              //                     ._tryoutModel
-                              //                     .tryoutDetailResponse
-                              //                     .data[index]
-                              //                     .id,
-                              //                 matpel: this
-                              //                     ._tryoutModel
-                              //                     .tryoutDetailResponse
-                              //                     .data[index]
-                              //                     .nama,
-                              //               )));
-                              //   // Navigator.push(
-                              //   //     context,
-                              //   //     MaterialPageRoute(
-                              //   //         builder: (context) => MatpelDoneScreen(
-                              //   //               idMatpel: this
-                              //   //                   ._tryoutModel
-                              //   //                   .tryoutDetailResponse
-                              //   //                   .data[index]
-                              //   //                   .idmatpel,
-                              //   //               idtryoutdetail: this
-                              //   //                   ._tryoutModel
-                              //   //                   .tryoutDetailResponse
-                              //   //                   .data[index]
-                              //   //                   .id,
-                              //   //               matpel: this
-                              //   //                   ._tryoutModel
-                              //   //                   .tryoutDetailResponse
-                              //   //                   .data[index]
-                              //   //                   .nama,
-                              //   //             )));
-                              // } else {
-                              //   print(this
-                              //       ._tryoutModel
-                              //       .tryoutDetailResponse
-                              //       .data[index]
-                              //       .nama);
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context) => SoalScreen(
-                              //           key: Key("Soal$index"),
-                              //           idMatpel: this
-                              //               ._tryoutModel
-                              //               .tryoutDetailResponse
-                              //               .data[index]
-                              //               .idmatpel,
-                              //           idtryoutdetail: this
-                              //               ._tryoutModel
-                              //               .tryoutDetailResponse
-                              //               .data[index]
-                              //               .id,
-                              //           matpel: this
-                              //               ._tryoutModel
-                              //               .tryoutDetailResponse
-                              //               .data[index]
-                              //               .nama,
-                              //         ),
-                              //       )).then((value) {
-                              //     this
-                              //         ._tryoutPresenter
-                              //         .getMatpels(this._tryoutModel.idTryout);
-                              //     this
-                              //         ._tryoutPresenter
-                              //         .getInfo(this._tryoutModel.idTryout);
-                              //   });
-                              // }
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    LineIcons.book,
-                                    size: 24,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          this
-                                              ._tryoutModel
-                                              .tryoutDetailResponse
-                                              .data[index]
-                                              .nama,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff485460),
-                                            ),
-                                          )),
-                                      Text(
-                                          " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xff7a7a7a),
-                                            ),
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ),
+                    : Column(
+                        children: [
+                          Container(
+                            child: Text(
+                              "Hi, Pilih Mata Pelajarannya Disini",
+                              style: GoogleFonts.poppins(
+                                  color: Color(0xff1f1f1f), fontSize: 16),
                             ),
-                          );
-                        })),
+                          ),
+                          GridView.builder(
+                              padding: EdgeInsets.all(10),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 2.5,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10),
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: this
+                                  ._tryoutModel
+                                  .tryoutDetailResponse
+                                  .data
+                                  .length,
+                              itemBuilder: (ctx, index) {
+                                var total = this
+                                        ._tryoutModel
+                                        .tryoutDetailResponse
+                                        .data[index]
+                                        .totalBenar +
+                                    this
+                                        ._tryoutModel
+                                        .tryoutDetailResponse
+                                        .data[index]
+                                        .totalSalah;
+                                return InkWell(
+                                  onTap: () {
+                                    // print(this._tryoutModel.idTryout);
+                                    // this._tryoutPresenter.check(
+                                    //     GetStorage().read(ID_MURID),
+                                    //     this._tryoutModel.idTryout);
+                                    // this.selected = index;
+                                    if (total ==
+                                        this
+                                            ._tryoutModel
+                                            .tryoutDetailResponse
+                                            .data[index]
+                                            .jumlahSoal) {
+                                      this._tryoutPresenter.check(
+                                          GetStorage().read(ID_MURID),
+                                          this._tryoutModel.idTryout);
+                                      this.selected = index;
+                                    } else {
+                                      Toast.show(
+                                          "SELESAIKAN DULU SOAL INI", context,
+                                          duration: Toast.LENGTH_LONG,
+                                          gravity: Toast.BOTTOM);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => SoalScreen(
+                                              key: Key("Soal$index"),
+                                              idMatpel: this
+                                                  ._tryoutModel
+                                                  .tryoutDetailResponse
+                                                  .data[index]
+                                                  .idmatpel,
+                                              idtryoutdetail: this
+                                                  ._tryoutModel
+                                                  .tryoutDetailResponse
+                                                  .data[index]
+                                                  .id,
+                                              matpel: this
+                                                  ._tryoutModel
+                                                  .tryoutDetailResponse
+                                                  .data[index]
+                                                  .nama,
+                                            ),
+                                          )).then((value) {
+                                        this._tryoutPresenter.getMatpels(
+                                            this._tryoutModel.idTryout);
+                                        this._tryoutPresenter.getInfo(
+                                            this._tryoutModel.idTryout);
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          LineIcons.book,
+                                          size: 24,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                                this
+                                                    ._tryoutModel
+                                                    .tryoutDetailResponse
+                                                    .data[index]
+                                                    .nama,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Color(0xff485460),
+                                                  ),
+                                                )),
+                                            Text(
+                                                " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Color(0xff7a7a7a),
+                                                  ),
+                                                )),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ],
+                      )),
           ),
         );
       },
@@ -768,131 +787,28 @@ class _TryoutScreenState extends State<TryoutScreen>
       );
     } else {
       print(error);
-      this._tryoutPresenter.checkPembayaranStatus(error);
+      // this._tryoutPresenter.checkPembayaranStatus(error);
     }
   }
 
   @override
   void onCheckBayar(BayarModel bayarModel) {
-    switch (bayarModel.bayars[0].transactionStatus) {
-      case 'pending':
+    switch (this._bayarModel.bayars[0].status) {
+      case false:
+        // print('false');
+        Toast.show("Selesaikan dulu pembayaran :)", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => PembayaranDetail(
-                      metode: bayarModel.bayars[0].bank,
-                      jumlah: bayarModel.bayars[0].amount,
-                      va: bayarModel.bayars[0].vaNumber,
-                      batasWaktu: bayarModel.bayars[0].batasWaktu,
-                      status: bayarModel.bayars[0].transactionStatus,
+                      metode: this._bayarModel.bayars[0].bank,
+                      jumlah: this._bayarModel.bayars[0].amount,
+                      va: this._bayarModel.bayars[0].vaNumber,
+                      batasTanggal: this._bayarModel.bayars[0].batasTanggal,
+                      batasWaktu: this._bayarModel.bayars[0].batasWaktu,
+                      status: this._bayarModel.bayars[0].transactionStatus,
                     )));
-
-        break;
-      case 'expire':
-        showCupertinoModalBottomSheet(
-          expand: false,
-          context: context,
-          backgroundColor: Colors.transparent,
-          enableDrag: true,
-          builder: (context) {
-            return Material(
-              child: SafeArea(
-                top: false,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  height: MediaQuery.of(context).size.height / 2.5,
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          'assets/img/lock-bayar.png',
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Pembelian sebelumnya sudah expired, kamu harus melakukan proses ulang",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontSize: 14, color: Color(0xff2c2c2c))),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RaisedButton(
-                            padding: EdgeInsets.all(1),
-                            color: Colors.white,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.red, width: 2)),
-                            child: Text(
-                              'Batal',
-                              style: GoogleFonts.poppins(
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          RaisedButton(
-                            padding: EdgeInsets.all(10),
-                            color: Color(0xff030779),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CheckoutScreen(
-                                            key: Key(
-                                                "${this._tryoutModel.idTryout}checkout"),
-                                            idTryout:
-                                                this._tryoutModel.idTryout,
-                                            namaPaket: this
-                                                ._tryoutModel
-                                                .tryoutInfoResponse
-                                                .dataTryout
-                                                .paket
-                                                .namaPaket,
-                                            jenjang: this
-                                                ._tryoutModel
-                                                .tryoutInfoResponse
-                                                .dataTryout
-                                                .tingkat
-                                                .jenjang,
-                                          )));
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: Color(0xff030779), width: 0)),
-                            child: Text(
-                              'oke, Lanjut Bayar',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-
         break;
       default:
         var total = this
@@ -969,5 +885,322 @@ class _TryoutScreenState extends State<TryoutScreen>
           });
         }
     }
+  }
+
+  // @override
+  // void onCheckBayar(BayarModel bayarModel) {
+  //   switch (bayarModel.bayars[0].transactionStatus) {
+  //     case 'pending':
+  //       Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => PembayaranDetail(
+  //                     metode: bayarModel.bayars[0].bank,
+  //                     jumlah: bayarModel.bayars[0].amount,
+  //                     va: bayarModel.bayars[0].vaNumber,
+  //                     batasWaktu: bayarModel.bayars[0].batasWaktu,
+  //                     status: bayarModel.bayars[0].transactionStatus,
+  //                   )));
+
+  //       break;
+  //     case 'expire':
+  //       showCupertinoModalBottomSheet(
+  //         expand: false,
+  //         context: context,
+  //         backgroundColor: Colors.transparent,
+  //         enableDrag: true,
+  //         builder: (context) {
+  //           return Material(
+  //             child: SafeArea(
+  //               top: false,
+  //               child: Container(
+  //                 padding: EdgeInsets.all(15),
+  //                 height: MediaQuery.of(context).size.height / 2.5,
+  //                 child: Column(
+  //                   children: [
+  //                     Container(
+  //                       child: Image.asset(
+  //                         'assets/img/lock-bayar.png',
+  //                         fit: BoxFit.fill,
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 15,
+  //                     ),
+  //                     Text(
+  //                       "Pembelian sebelumnya sudah expired, kamu harus melakukan proses ulang",
+  //                       textAlign: TextAlign.center,
+  //                       style: GoogleFonts.poppins(
+  //                           textStyle: TextStyle(
+  //                               fontSize: 14, color: Color(0xff2c2c2c))),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 25,
+  //                     ),
+  //                     Row(
+  //                       mainAxisAlignment: MainAxisAlignment.center,
+  //                       children: [
+  //                         RaisedButton(
+  //                           padding: EdgeInsets.all(1),
+  //                           color: Colors.white,
+  //                           onPressed: () {
+  //                             Navigator.of(context).pop();
+  //                           },
+  //                           shape: RoundedRectangleBorder(
+  //                               borderRadius: BorderRadius.circular(18.0),
+  //                               side: BorderSide(color: Colors.red, width: 2)),
+  //                           child: Text(
+  //                             'Batal',
+  //                             style: GoogleFonts.poppins(
+  //                               color: Colors.black,
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           width: 25,
+  //                         ),
+  //                         RaisedButton(
+  //                           padding: EdgeInsets.all(10),
+  //                           color: Color(0xff030779),
+  //                           onPressed: () {
+  //                             Navigator.push(
+  //                                 context,
+  //                                 MaterialPageRoute(
+  //                                     builder: (context) => CheckoutScreen(
+  //                                           key: Key(
+  //                                               "${this._tryoutModel.idTryout}checkout"),
+  //                                           idTryout:
+  //                                               this._tryoutModel.idTryout,
+  //                                           namaPaket: this
+  //                                               ._tryoutModel
+  //                                               .tryoutInfoResponse
+  //                                               .dataTryout
+  //                                               .paket
+  //                                               .namaPaket,
+  //                                           jenjang: this
+  //                                               ._tryoutModel
+  //                                               .tryoutInfoResponse
+  //                                               .dataTryout
+  //                                               .tingkat
+  //                                               .jenjang,
+  //                                         )));
+  //                           },
+  //                           shape: RoundedRectangleBorder(
+  //                               borderRadius: BorderRadius.circular(18.0),
+  //                               side: BorderSide(
+  //                                   color: Color(0xff030779), width: 0)),
+  //                           child: Text(
+  //                             'oke, Lanjut Bayar',
+  //                             style: GoogleFonts.poppins(
+  //                               color: Colors.white,
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+
+  //       break;
+  //     case 'cancel':
+  //       showCupertinoModalBottomSheet(
+  //         expand: false,
+  //         context: context,
+  //         backgroundColor: Colors.transparent,
+  //         enableDrag: true,
+  //         builder: (context) {
+  //           return Material(
+  //             child: SafeArea(
+  //               top: false,
+  //               child: Container(
+  //                 padding: EdgeInsets.all(15),
+  //                 height: MediaQuery.of(context).size.height / 2.5,
+  //                 child: Column(
+  //                   children: [
+  //                     Container(
+  //                       child: Image.asset(
+  //                         'assets/img/lock-bayar.png',
+  //                         fit: BoxFit.fill,
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 15,
+  //                     ),
+  //                     Text(
+  //                       "Pembelian sebelumnya sudah dicancel, kamu harus melakukan proses ulang",
+  //                       textAlign: TextAlign.center,
+  //                       style: GoogleFonts.poppins(
+  //                           textStyle: TextStyle(
+  //                               fontSize: 14, color: Color(0xff2c2c2c))),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 25,
+  //                     ),
+  //                     Row(
+  //                       mainAxisAlignment: MainAxisAlignment.center,
+  //                       children: [
+  //                         RaisedButton(
+  //                           padding: EdgeInsets.all(1),
+  //                           color: Colors.white,
+  //                           onPressed: () {
+  //                             Navigator.of(context).pop();
+  //                           },
+  //                           shape: RoundedRectangleBorder(
+  //                               borderRadius: BorderRadius.circular(18.0),
+  //                               side: BorderSide(color: Colors.red, width: 2)),
+  //                           child: Text(
+  //                             'Batal',
+  //                             style: GoogleFonts.poppins(
+  //                               color: Colors.black,
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           width: 25,
+  //                         ),
+  //                         RaisedButton(
+  //                           padding: EdgeInsets.all(10),
+  //                           color: Color(0xff030779),
+  //                           onPressed: () {
+  //                             Navigator.push(
+  //                                 context,
+  //                                 MaterialPageRoute(
+  //                                     builder: (context) => CheckoutScreen(
+  //                                           key: Key(
+  //                                               "${this._tryoutModel.idTryout}checkout"),
+  //                                           idTryout:
+  //                                               this._tryoutModel.idTryout,
+  //                                           namaPaket: this
+  //                                               ._tryoutModel
+  //                                               .tryoutInfoResponse
+  //                                               .dataTryout
+  //                                               .paket
+  //                                               .namaPaket,
+  //                                           jenjang: this
+  //                                               ._tryoutModel
+  //                                               .tryoutInfoResponse
+  //                                               .dataTryout
+  //                                               .tingkat
+  //                                               .jenjang,
+  //                                         )));
+  //                           },
+  //                           shape: RoundedRectangleBorder(
+  //                               borderRadius: BorderRadius.circular(18.0),
+  //                               side: BorderSide(
+  //                                   color: Color(0xff030779), width: 0)),
+  //                           child: Text(
+  //                             'oke, Lanjut Bayar',
+  //                             style: GoogleFonts.poppins(
+  //                               color: Colors.white,
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+
+  //       break;
+  //     default:
+  //       var total = this
+  //               ._tryoutModel
+  //               .tryoutDetailResponse
+  //               .data[selected]
+  //               .totalBenar +
+  //           this._tryoutModel.tryoutDetailResponse.data[selected].totalSalah;
+  //       if (total ==
+  //           this._tryoutModel.tryoutDetailResponse.data[selected].jumlahSoal) {
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (context) => PembahasanScreen(
+  //                       idMatpel: this
+  //                           ._tryoutModel
+  //                           .tryoutDetailResponse
+  //                           .data[selected]
+  //                           .idmatpel,
+  //                       idtryoutdetail: this
+  //                           ._tryoutModel
+  //                           .tryoutDetailResponse
+  //                           .data[selected]
+  //                           .id,
+  //                       matpel: this
+  //                           ._tryoutModel
+  //                           .tryoutDetailResponse
+  //                           .data[selected]
+  //                           .nama,
+  //                     )));
+  //         // Navigator.push(
+  //         //     context,
+  //         //     MaterialPageRoute(
+  //         //         builder: (context) => MatpelDoneScreen(
+  //         //               idMatpel: this
+  //         //                   ._tryoutModel
+  //         //                   .tryoutDetailResponse
+  //         //                   .data[index]
+  //         //                   .idmatpel,
+  //         //               idtryoutdetail: this
+  //         //                   ._tryoutModel
+  //         //                   .tryoutDetailResponse
+  //         //                   .data[index]
+  //         //                   .id,
+  //         //               matpel: this
+  //         //                   ._tryoutModel
+  //         //                   .tryoutDetailResponse
+  //         //                   .data[index]
+  //         //                   .nama,
+  //         //             )));
+  //       } else {
+  //         print(this._tryoutModel.tryoutDetailResponse.data[selected].nama);
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //               builder: (context) => SoalScreen(
+  //                 key: Key("Soal$selected"),
+  //                 idMatpel: this
+  //                     ._tryoutModel
+  //                     .tryoutDetailResponse
+  //                     .data[selected]
+  //                     .idmatpel,
+  //                 idtryoutdetail:
+  //                     this._tryoutModel.tryoutDetailResponse.data[selected].id,
+  //                 matpel: this
+  //                     ._tryoutModel
+  //                     .tryoutDetailResponse
+  //                     .data[selected]
+  //                     .nama,
+  //               ),
+  //             )).then((value) {
+  //           this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+  //           this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+  //         });
+  //       }
+  //   }
+  // }
+
+  @override
+  void onCheckStatus(int idMurid, int idTryout) {
+    this._tryoutPresenter.checkStatus(idMurid, idTryout);
+  }
+
+  @override
+  void refreshDataBayar(BayarModel bayarModel) {
+    setState(() {
+      this._bayarModel = bayarModel;
+    });
   }
 }

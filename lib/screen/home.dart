@@ -38,6 +38,11 @@ class _HomeState extends State<Home> implements HomeState {
         this._homeModel.nama = value;
       });
     });
+    Session.getPicture().then((value) {
+      setState(() {
+        this._homeModel.picture = value;
+      });
+    });
     Session.getId().then((value) {
       setState(() {
         this.idMurid = value;
@@ -77,10 +82,19 @@ class _HomeState extends State<Home> implements HomeState {
                         decoration: new BoxDecoration(
                             shape: BoxShape.circle,
                             color: Color(0xff2D8EFF),
-                            image: new DecorationImage(
-                                fit: BoxFit.fill,
-                                image: ExactAssetImage(
-                                    "assets/img/download.png")))),
+                            image: this._homeModel.picture == ""
+                                ? new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image:
+                                        ExactAssetImage("assets/img/user.png"))
+                                : new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                        // "assets/img/user.png"
+                                        this._homeModel.picture == ""
+                                            ? "assets/img/user.png"
+                                            : "http://103.41.207.247:3000/" +
+                                                this._homeModel.picture)))),
                   )
                 ],
               ),

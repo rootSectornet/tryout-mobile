@@ -2,7 +2,7 @@ import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/pembayaran.dart';
 
 abstract class PembayaranState {
-  void refreshData(PembayaranModel pembayaranModel);
+  void refreshData(BayarModel bayarModel);
   void onSuccess(String success);
   void onError(String error);
   void onCheck(String orderId);

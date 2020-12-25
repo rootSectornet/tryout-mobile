@@ -106,45 +106,45 @@ class _MatpelDoneScreenState extends State<MatpelDoneScreen> {
               SizedBox(
                 height: 15,
               ),
-              Center(
-                child: Text("Atau",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: Color(0xff303030),
-                    )),
-              ),
+              // Center(
+              //   child: Text("Atau",
+              //       textAlign: TextAlign.center,
+              //       style: GoogleFonts.poppins(
+              //         fontSize: 14,
+              //         color: Color(0xff303030),
+              //       )),
+              // ),
               SizedBox(
                 height: 15,
               ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PembahasanScreen(
-                                idMatpel: widget.idMatpel,
-                                idtryoutdetail: widget.idtryoutdetail,
-                                matpel: widget.matpel,
-                              )));
-                },
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Color(0xff25509e))),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                  child: Center(
-                    child: Text(
-                      'Lihat Pembahasannya',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: Color(0xff2b2b2b),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // RaisedButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => PembahasanScreen(
+              //                   idMatpel: widget.idMatpel,
+              //                   idtryoutdetail: widget.idtryoutdetail,
+              //                   matpel: widget.matpel,
+              //                 )));
+              //   },
+              //   color: Colors.white,
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(18.0),
+              //       side: BorderSide(color: Color(0xff25509e))),
+              //   child: Padding(
+              //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              //     child: Center(
+              //       child: Text(
+              //         'Lihat Pembahasannya',
+              //         style: GoogleFonts.poppins(
+              //           fontSize: 14,
+              //           color: Color(0xff2b2b2b),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

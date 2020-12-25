@@ -15,6 +15,7 @@ abstract class TryoutPresenterAbstract {
   void getMatpels(int idTryout) {}
   void getInfo(int idTryout) {}
   void check(int idMurid, int idTryout) {}
+  void checkStatus(int idMurid, int idTryout) {}
   void checkPembayaranStatus(String idBayar) {}
 }
 
@@ -107,9 +108,52 @@ class TryoutPresenter implements TryoutPresenterAbstract {
 
   @override
   void check(int idMurid, int idTryout) {
-    this._bayarApi.checkPembayaran(idMurid, idTryout).then((value) {
-      this._tryoutState.onCheck(value);
+    this._tryoutModel.isloading = true;
+    this._bayarApi.checkStatus(idMurid, idTryout).then((value) {
+      this._tryoutModel.isloading = false;
+      if (value == 'false') {
+        this._tryoutState.onCheck(value);
+      } else {
+        this._tryoutState.onCheckStatus(idMurid, idTryout);
+      }
     }).catchError((err) {
+      this._tryoutState.onError(err.toString());
+    });
+  }
+
+  @override
+  void checkStatus(int idMurid, int idTryout) {
+    this._tryoutModel.isloading = true;
+    this._bayarModel.bayars.clear();
+    // this._totalNilaiState.removeDataBayar('test');
+
+    this._bayarApi.checkPembayaran(idMurid, idTryout).then((value) {
+      this._tryoutModel.isloading = false;
+      String tanggal = DateFormat("d, MMMM - y")
+          .format(DateTime.parse(value.dataBayar.tgl))
+          .toString();
+      List<String> time = value.dataBayar.batasWaktu.split("T");
+      List<String> times = time[1].split(".");
+      String batasTanggal = DateFormat("d, MMMM - y")
+          .format(DateTime.parse(value.dataBayar.batasWaktu))
+          .toString();
+      this._bayarModel.bayars.add(new Bayar(
+          amount: value.dataBayar.jumlah,
+          bank: value.dataBayar.metodePembayaran,
+          batasTanggal: batasTanggal,
+          batasWaktu: times[0].substring(1, 5),
+          idTryout: value.dataBayar.idTryout,
+          orderId: value.dataBayar.id,
+          status: value.dataBayar.status,
+          transactionStatus: 'Pending',
+          transactionTime: tanggal,
+          vaNumber: value.dataBayar.vaNumber));
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshDataBayar(this._bayarModel);
+      this._tryoutState.onCheckBayar(this._bayarModel);
+    }).catchError((err) {
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
       this._tryoutState.onError(err.toString());
     });
   }
@@ -124,7 +168,7 @@ class TryoutPresenter implements TryoutPresenterAbstract {
           amount: value.dataBayar.data.amount,
           bank: value.dataBayar.data.vaNumber[0].bank,
           batasWaktu: value.dataBayar.data.batasWaktu,
-          idTryout: value.dataBayar.data.id,
+          idTryout: value.dataBayar.data.idTryout,
           transactionStatus: value.dataBayar.data.transactionStatus,
           transactionTime: value.dataBayar.data.tanggal,
           vaNumber: value.dataBayar.data.vaNumber[0].vaNumber));

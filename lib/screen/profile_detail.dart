@@ -86,7 +86,7 @@ class _ProfileDetailState extends State<ProfileDetail>
                     SizedBox(
                       height: 20,
                     ),
-                    TotalNilaiScreen(),
+                    // TotalNilaiScreen(),
                     // InkWell(
                     //   splashColor: Colors.blue,
                     //   onTap: () {

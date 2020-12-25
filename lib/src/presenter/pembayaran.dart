@@ -19,7 +19,6 @@ abstract class PembayaranPresenterAbstract {
 
 class PembayaranPresenter implements PembayaranPresenterAbstract {
   BayarModel _bayarModel = new BayarModel();
-  PembayaranModel _pembayaranModel = new PembayaranModel();
   PembayaranState _pembayaranState;
   BayarApi _bayarApi = new BayarApi();
 
@@ -29,18 +28,20 @@ class PembayaranPresenter implements PembayaranPresenterAbstract {
     // ignore: todo
     // TODO: implement view
     this._pembayaranState = view;
-    this._pembayaranState.refreshData(this._pembayaranModel);
+    this._pembayaranState.refreshData(this._bayarModel);
   }
 
   @override
   void checkPembayaranStatus(String idBayar) {
+    // this._bayarModel.bayars.clear();
+    this._bayarModel.isloading = false;
+    this._pembayaranState.refreshData(this._bayarModel);
     this._bayarApi.checkPembayaranStatuss(idBayar).then((value) {
-      this._bayarModel.bayars.clear();
       this._bayarModel.bayars.add(new Bayar(
           amount: value.dataBayar.data.amount,
           bank: value.dataBayar.data.vaNumber[0].bank,
           batasWaktu: value.dataBayar.data.batasWaktu,
-          idTryout: value.dataBayar.data.id,
+          idTryout: value.dataBayar.data.idTryout,
           transactionStatus: value.dataBayar.data.transactionStatus,
           transactionTime: value.dataBayar.data.tanggal,
           vaNumber: value.dataBayar.data.vaNumber[0].vaNumber));
@@ -51,10 +52,12 @@ class PembayaranPresenter implements PembayaranPresenterAbstract {
       //         .format(DateTime.parse(value.dataBayar.batasWaktu))
       //         .toString()));
       // this._totalNilaiState.refreshData(this._totalNilaiModel);
-      this._pembayaranState.refreshDataBayar(this._bayarModel);
+      this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
       this._pembayaranState.onCheckBayar(this._bayarModel);
     }).catchError((err) {
-      this._pembayaranState.refreshData(this._pembayaranModel);
+      this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
       this._pembayaranState.onError(err.toString());
     });
   }
@@ -62,6 +65,8 @@ class PembayaranPresenter implements PembayaranPresenterAbstract {
   @override
   void checkout(int idMurid, int idTryout, String metode, String jumlah) {
     print('2');
+    this._bayarModel.isloading = true;
+    this._pembayaranState.refreshData(this._bayarModel);
     // this._pembayaranModel.isloading = true;
     Map param = {
       'id_murid': idMurid,
@@ -72,7 +77,11 @@ class PembayaranPresenter implements PembayaranPresenterAbstract {
     // print(param);
     this._bayarApi.bayarPost(json.encode(param)).then((value) {
       this._pembayaranState.onCheck(value);
+      this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
     }).catchError((err) {
+      this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
       this._pembayaranState.onError(err.toString());
     });
   }

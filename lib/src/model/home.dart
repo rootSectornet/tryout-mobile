@@ -4,4 +4,5 @@ class HomeModel {
   int idPaket = 0;
   int jenjang = 0;
   String nama = "";
+  String picture = "";
 }

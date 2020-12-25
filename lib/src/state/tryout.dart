@@ -4,9 +4,11 @@ import 'package:flutter/widgets.dart';
 
 abstract class TryoutState {
   void refreshData(TryoutModel tryoutModel);
+  void refreshDataBayar(BayarModel bayarModel);
   void onSuccess(String success);
   void onError(String error);
   void onCheck(String error);
+  void onCheckStatus(int idMurid, int idTryout);
   void showMatpel(BuildContext context);
   void onCheckBayar(BayarModel bayarModel);
 }
