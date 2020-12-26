@@ -56,7 +56,14 @@ class HistoryWidgetState extends State<HistoryWidget>
   @override
   Widget build(BuildContext context) {
     return this._totalNilaiModel.pakets.length == 0
-        ? SizedBox(height: 1)
+        ? Container(
+            child: Center(
+            child: Text('Belum Ada Paket Yang Dikerjakan',
+                style: GoogleFonts.poppins(
+                  fontStyle: FontStyle.italic,
+                  textStyle: TextStyle(fontSize: 14, color: Color(0xff1f1f1f)),
+                )),
+          ))
         : InkWell(
             onTap: () {
               this._totalNilaiPresenter.check(GetStorage().read(ID_MURID),

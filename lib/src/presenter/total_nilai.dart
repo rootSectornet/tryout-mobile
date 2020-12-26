@@ -80,8 +80,8 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
 
   @override
   void check(int idMurid, int idTryout) {
-    this._totalNilaiModel.isloading = true;
-    this._totalNilaiState.refreshData(this._totalNilaiModel);
+    // this._totalNilaiModel.isloading = true;
+    // this._totalNilaiState.refreshData(this._totalNilaiModel);
     // this._totalNilaiState.removeDataBayar('test');
     this._bayarApi.checkStatus(idMurid, idTryout).then((value) {
       this._totalNilaiModel.isloading = false;

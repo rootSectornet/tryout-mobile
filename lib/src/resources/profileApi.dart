@@ -13,6 +13,7 @@ class ProfileApi {
     final response = await _client.get(
         "${Paths.BASEURL}${Paths.ENDPOINT_MURID}?id=$idMurid&offset=0&limit=10");
     if (response.statusCode == 200) {
+      print(response.body);
       ProfileResponse profileResponse =
           ProfileResponse.fromJson(json.decode(response.body));
       return profileResponse;

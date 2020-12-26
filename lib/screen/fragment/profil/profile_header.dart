@@ -85,7 +85,11 @@ class _ProfileHeaderState extends State<ProfileHeader>
                                             ))
                                     : new DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: this._profileModel.isloading
+                                        image: this
+                                                    ._profileModel
+                                                    .profiles[0]
+                                                    .picture ==
+                                                null
                                             ? ExactAssetImage(
                                                 "assets/img/user.png"
                                                 // this
@@ -102,7 +106,10 @@ class _ProfileHeaderState extends State<ProfileHeader>
                                                 )
                                             : NetworkImage(
                                                 // "assets/img/user.png"
-                                                this._profileModel.profiles ==
+                                                this
+                                                            ._profileModel
+                                                            .profiles[0]
+                                                            .picture ==
                                                         null
                                                     ? "assets/img/user.png"
                                                     : "http://103.41.207.247:3000/" +
