@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:TesUjian/helper/paths.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:TesUjian/helper/getStorage.dart';
-// import 'package:TesUjian/screen/fragment/profile_edit_profile_detail.dart';
 import 'package:TesUjian/screen/fragment/selectsekolah.dart';
 import 'package:TesUjian/src/model/profile.dart';
 import 'package:TesUjian/src/presenter/profile_header.dart';
@@ -11,13 +12,70 @@ import 'package:TesUjian/src/state/profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
+
+class Service {
+  Future<int> submitSubscription(
+      {File file,
+      String filename,
+      int idMurid,
+      String idSekolah,
+      String name,
+      String email,
+      String password,
+      String phone,
+      String tglLahir,
+      String kelamin,
+      String alamat}) async {
+    ///MultiPart request
+    var request = http.MultipartRequest(
+      'PUT',
+      Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_MURID}/$idMurid"),
+    );
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'picture',
+        file.readAsBytes().asStream(),
+        file.lengthSync(),
+        filename: filename,
+        contentType: MediaType('image', 'jpeg'),
+      ),
+    );
+    request.headers.addAll(headers);
+    request.fields.addAll({
+      "id": "$idMurid",
+      "id_sekolah": idSekolah,
+      "name": name,
+      "email": email,
+      "password": password,
+      "phone": phone,
+      "tgl_lahir": tglLahir,
+      "kelamin": kelamin,
+      "alamat": alamat
+    });
+    print("request: " + request.toString());
+    final res = await request.send();
+    final respStr = await res.stream.bytesToString();
+    print("This is response:" + respStr.toString());
+    if (res.statusCode == 200) {
+      Session.removeName();
+      Session.removePicture();
+      if (filename == null) {
+        Session.setPicture("");
+      } else {
+        Session.setPicture(filename);
+      }
+      Session.setName(name);
+    }
+    return res.statusCode;
+  }
+}
 
 class EditProfile extends StatefulWidget {
   @override
@@ -27,6 +85,8 @@ class EditProfile extends StatefulWidget {
 class EditProfileState extends State<EditProfile>
     with SingleTickerProviderStateMixin
     implements ProfileHeaderState {
+  ProgressDialog pr;
+
   bool _isPasswordVisible = true;
   AnimationController _controller;
   File _image;
@@ -46,7 +106,6 @@ class EditProfileState extends State<EditProfile>
   FocusNode _inputPhoneFocusNode;
   TextEditingController _inputAlamatController;
   FocusNode _inputAlamatFocusNode;
-  TextEditingController _inputAsalSekolahController;
   FocusNode _inputAsalSekolahFocusNode;
   FocusNode _inputTujuanSekolahFocusNode;
   TextEditingController _inputTanggalLahirController;
@@ -72,7 +131,6 @@ class EditProfileState extends State<EditProfile>
     _inputPhoneFocusNode = FocusNode();
     _inputAlamatController = TextEditingController();
     _inputAlamatFocusNode = FocusNode();
-    _inputAsalSekolahController = TextEditingController();
     _inputAsalSekolahFocusNode = FocusNode();
     _inputTujuanSekolahFocusNode = FocusNode();
     _inputTanggalLahirController = TextEditingController();
@@ -96,7 +154,7 @@ class EditProfileState extends State<EditProfile>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: this._profileModel.isloading
+      body: this._profileModel.profiles.isEmpty
           ? Container(
               width: MediaQuery.of(context).size.width,
               height: double.infinity,
@@ -255,9 +313,23 @@ class EditProfileState extends State<EditProfile>
                                                     image: DecorationImage(
                                                         fit: BoxFit.fill,
                                                         image: _image == null
-                                                            ? ExactAssetImage(
-                                                                "assets/img/user.png",
-                                                              )
+                                                            ? this
+                                                                        ._profileModel
+                                                                        .profiles[
+                                                                            0]
+                                                                        .picture ==
+                                                                    null
+                                                                ? ExactAssetImage(
+                                                                    "assets/img/user.png",
+                                                                  )
+                                                                : NetworkImage(
+                                                                    // "assets/img/user.png"
+                                                                    "http://103.41.207.247:3000/" +
+                                                                        this
+                                                                            ._profileModel
+                                                                            .profiles[
+                                                                                0]
+                                                                            .picture)
                                                             : Image.file(
                                                                 _image)))),
                                       ),
@@ -315,9 +387,7 @@ class EditProfileState extends State<EditProfile>
                                                             disabledColor:
                                                                 Colors.red,
                                                             onPressed:
-                                                                () async {
-                                                              uploadImage();
-                                                            },
+                                                                () async {},
                                                             shape: RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
@@ -355,6 +425,7 @@ class EditProfileState extends State<EditProfile>
                                   padding: EdgeInsets.all(1),
                                   child: TextFormField(
                                     controller: _inputNamaController,
+                                    validator: _userPasswordValidation,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.next,
                                     onFieldSubmitted: (_) {
@@ -381,6 +452,7 @@ class EditProfileState extends State<EditProfile>
                                   padding: EdgeInsets.all(1),
                                   child: TextFormField(
                                     controller: _inputEmailController,
+                                    validator: _userPasswordValidation,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.next,
                                     onFieldSubmitted: (_) {
@@ -409,10 +481,7 @@ class EditProfileState extends State<EditProfile>
                                     validator: _userPasswordValidation,
                                     obscureText: _isPasswordVisible,
                                     decoration: InputDecoration(
-                                      hintText: this
-                                          ._profileModel
-                                          .profiles[0]
-                                          .password,
+                                      hintText: 'password',
                                       suffixIcon: IconButton(
                                           icon: Icon(
                                             _isPasswordVisible
@@ -435,6 +504,7 @@ class EditProfileState extends State<EditProfile>
                                   padding: EdgeInsets.all(1),
                                   child: TextFormField(
                                     controller: _inputPhoneController,
+                                    validator: _userPasswordValidation,
                                     keyboardType: TextInputType.number,
                                     textInputAction: TextInputAction.next,
                                     onFieldSubmitted: (_) {
@@ -522,6 +592,7 @@ class EditProfileState extends State<EditProfile>
                                     controller: _inputAlamatController
                                       ..text =
                                           this._profileModel.profiles[0].alamat,
+                                    validator: _userPasswordValidation,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.next,
                                     onFieldSubmitted: (_) {
@@ -556,6 +627,7 @@ class EditProfileState extends State<EditProfile>
                                         ._profileModel
                                         .sekolahAsalController,
                                     keyboardType: TextInputType.text,
+                                    validator: _userPasswordValidation,
                                     textInputAction: TextInputAction.next,
                                     onFieldSubmitted: (_) {
                                       FocusScope.of(context).requestFocus(
@@ -592,6 +664,7 @@ class EditProfileState extends State<EditProfile>
                                           controller: this
                                               ._profileModel
                                               .sekolahTujuanController,
+                                          validator: _userPasswordValidation,
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
                                           onFieldSubmitted: (_) {
@@ -644,50 +717,41 @@ class EditProfileState extends State<EditProfile>
                                             fontWeight: FontWeight.w600),
                                       ),
                                       onPressed: () {
-                                        print(GetStorage().read(ID_MURID));
-                                        print(_inputNamaController.text);
-                                        print(_inputEmailController.text);
-                                        print(_inputPasswordController.text);
-                                        print(_inputPhoneController.text);
-                                        print(_inputKelaminController.text);
-                                        print(this
-                                            ._profileModel
-                                            .profiles[0]
-                                            .tglLahirAsli);
-                                        print(_inputAlamatController.text);
-                                        print(this
-                                            ._profileModel
-                                            .profiles[0]
-                                            .idSekolah
-                                            .toString());
-                                        // print(this._profileModel.sekolahId);
-                                        print(
-                                            this._profileModel.sekolahTujuanId);
-                                        // this
-                                        //     ._profileHeaderPresenter
-                                        //     .updateProfile(
-                                        //       GetStorage().read(ID_MURID),
-                                        //       _image,
-                                        //       _inputNamaController.text,
-                                        //       _inputEmailController.text,
-                                        //       _inputPasswordController.text,
-                                        //       _inputPhoneController.text,
-                                        //       _inputKelaminController.text,
-                                        //       this
-                                        //           ._profileModel
-                                        //           .profiles[0]
-                                        //           .tglLahirAsli,
-                                        //       _inputAlamatController.text,
-                                        //       this
-                                        //           ._profileModel
-                                        //           .profiles[0]
-                                        //           .idSekolah
-                                        //           .toString(),
-                                        //       this
-                                        //           ._profileModel
-                                        //           .sekolahTujuanController
-                                        //           .text,
-                                        //     );
+                                        if (_image != null ||
+                                            _inputNamaController.text != '' ||
+                                            _inputEmailController.text != '' ||
+                                            _inputPasswordController.text !=
+                                                '' ||
+                                            _inputPhoneController.text != '') {
+                                          Service service = Service();
+                                          service.submitSubscription(
+                                              file: _image,
+                                              filename: fileName,
+                                              idMurid:
+                                                  GetStorage().read(ID_MURID),
+                                              idSekolah: this
+                                                  ._profileModel
+                                                  .sekolahId
+                                                  .toString(),
+                                              name: _inputNamaController.text,
+                                              email: _inputEmailController.text,
+                                              password:
+                                                  _inputPasswordController.text,
+                                              phone: _inputPhoneController.text,
+                                              tglLahir: this
+                                                  ._profileModel
+                                                  .profiles[0]
+                                                  .tglLahirAsli,
+                                              kelamin:
+                                                  _inputKelaminController.text,
+                                              alamat:
+                                                  _inputAlamatController.text);
+                                        } else {
+                                          Toast.show(
+                                              "Harus terisi semua! :)", context,
+                                              duration: Toast.LENGTH_LONG,
+                                              gravity: Toast.BOTTOM);
+                                        }
                                       },
                                     ),
                                   ),
@@ -705,33 +769,33 @@ class EditProfileState extends State<EditProfile>
     );
   }
 
-  DateTime pilihTanggal, labelText;
-  @override
-  void showCalender() {
-    // ignore: todo
-    // TODO: implement showCalender.
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(1969, 1, 1, 11, 33),
-            lastDate: DateTime.now())
-        .then((value) {
-      if (value == null) {
-        return;
-      }
-      setState(() {
-        this.pilihTanggal = value;
-        _inputTanggalLahirController.text = DateFormat("d, MMMM - y")
-            .format(this.pilihTanggal.toLocal())
-            .toString();
-        // this.refreshData(this._profileModel);
-      });
-    });
-  }
+  // DateTime pilihTanggal, labelText;
+  // @override
+  // void showCalender() {
+  //   // ignore: todo
+  //   // TODO: implement showCalender.
+  //   showDatePicker(
+  //           context: context,
+  //           initialDate: DateTime.now(),
+  //           firstDate: DateTime(1969, 1, 1, 11, 33),
+  //           lastDate: DateTime.now())
+  //       .then((value) {
+  //     if (value == null) {
+  //       return;
+  //     }
+  //     setState(() {
+  //       this.pilihTanggal = value;
+  //       _inputTanggalLahirController.text = DateFormat("d, MMMM - y")
+  //           .format(this.pilihTanggal.toLocal())
+  //           .toString();
+  //       // this.refreshData(this._profileModel);
+  //     });
+  //   });
+  // }
 
   String _userPasswordValidation(String value) {
     if (value.isEmpty) {
-      return "Password tidak boleh kosong";
+      return "field tidak boleh kosong";
     } else {
       return null;
     }
@@ -757,9 +821,8 @@ class EditProfileState extends State<EditProfile>
   }
 
   @override
+  // ignore: override_on_non_overriding_member
   void selectSekolah() async {
-    // ignore: todo
-    // TODO: implement selectSekolah
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -778,86 +841,9 @@ class EditProfileState extends State<EditProfile>
     });
   }
 
-  Future getImage() async {
-    final pickedFile =
-        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        fileName = _image.path.split('/').last;
-
-        // print(fileName);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  Future getImageGalery() async {
-    final pickedFile =
-        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        fileName = _image.path.split('/').last;
-        // print(fileName);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  Future<void> uploadImage() async {
-    //show your own loading or progressing code here
-
-    String uploadurl = "http://103.41.207.247:3000/api/cms/murid/" +
-        GetStorage().read(ID_MURID);
-    //dont use http://localhost , because emulator don't get that address
-    //insted use your local IP address or use live URL
-    //hit "ipconfig" in windows or "ip a" in linux to get you local IP
-
-    try {
-      List<int> imageBytes = _image.readAsBytesSync();
-      String baseimage = base64Encode(imageBytes);
-      //convert file image to Base64 encoding
-      var response = await http.post(uploadurl, body: {
-        'id': GetStorage().read(ID_MURID),
-        'id_sekolah': this._profileModel.profiles[0].idSekolah,
-        'name': this._profileModel.profiles[0].nama,
-        'email': this._profileModel.profiles[0].email,
-        'password': this._profileModel.profiles[0].password,
-        'phone': this._profileModel.profiles[0].phone,
-        'tgl_lahir': this._profileModel.profiles[0].tglLahirAsli,
-        'kelamin': this._profileModel.profiles[0].kelamin,
-        'alamat': this._profileModel.profiles[0].alamat,
-        'picture': baseimage,
-      });
-      if (response.statusCode == 200) {
-        var jsondata = json.decode(response.body); //decode json data
-        if (jsondata["error"]) {
-          //check error sent from server
-          print(jsondata["msg"]);
-          //if error return from server, show message from server
-        } else {
-          print("Upload successful");
-        }
-      } else {
-        print("Error during connection to server");
-        //there is error during connecting to server,
-        //status code might be 404 = url not found
-      }
-    } catch (e) {
-      print("Error during converting to Base64");
-      //there is error during converting file image to base64 encoding.
-    }
-  }
-
   @override
+  // ignore: override_on_non_overriding_member
   void selectSekolahTujuan() async {
-    // ignore: todo
-    // TODO: implement selectSekolah
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -873,6 +859,34 @@ class EditProfileState extends State<EditProfile>
       this._profileModel.sekolahTujuanController.text =
           this._profileModel.sekolah.dataSekolah.data[value].nama;
       this.refreshData(this._profileModel);
+    });
+  }
+
+  Future getImage() async {
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        fileName = _image.path.split('/').last;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getImageGalery() async {
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        fileName = _image.path.split('/').last;
+      } else {
+        print('No image selected.');
+      }
     });
   }
 }

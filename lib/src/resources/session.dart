@@ -36,6 +36,17 @@ class Session {
     return prefs.getString(_picture);
   }
 
+  // remove
+  static Future<bool> removeName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(_name);
+  }
+
+  static Future<bool> removePicture() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(_picture);
+  }
+
   //cek
   static Future<bool> checkUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

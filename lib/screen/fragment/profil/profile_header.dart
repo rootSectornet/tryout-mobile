@@ -44,7 +44,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
 
   @override
   Widget build(BuildContext context) {
-    return this._profileModel.isloading
+    return this._profileModel.profiles.isEmpty
         ? Container(
             child: CircularProgressIndicator(),
           )
@@ -106,17 +106,11 @@ class _ProfileHeaderState extends State<ProfileHeader>
                                                 )
                                             : NetworkImage(
                                                 // "assets/img/user.png"
-                                                this
-                                                            ._profileModel
-                                                            .profiles[0]
-                                                            .picture ==
-                                                        null
-                                                    ? "assets/img/user.png"
-                                                    : "http://103.41.207.247:3000/" +
-                                                        this
-                                                            ._profileModel
-                                                            .profiles[0]
-                                                            .picture)))),
+                                                "http://103.41.207.247:3000/" +
+                                                    this
+                                                        ._profileModel
+                                                        .profiles[0]
+                                                        .picture)))),
                       )
                     ],
                   ),

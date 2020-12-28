@@ -22,6 +22,7 @@ class ProfileApi {
     }
   }
 
+  // ignore: missing_return
   Future<ProfileResponse> updateProfile(String data) async {
     final response =
         await _client.post("${Paths.BASEURL}${Paths.ENDPOINT_MURID}");

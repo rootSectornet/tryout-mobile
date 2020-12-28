@@ -15,8 +15,7 @@ abstract class ProfileHeaderPresenterAbstract {
   void getDaftar(int idMurid) {}
   void getSekolah() {}
   void updateProfile(
-      String id,
-      File _image,
+      int id,
       String nama,
       String email,
       String password,
@@ -111,8 +110,8 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
   }
 
   @override
-  void updateProfile(id, _image, nama, email, password, phone, jenisKelamin,
-      tglLahir, alamat, asalSekolah, tujuanSekolah) {
+  void updateProfile(id, nama, email, password, phone, jenisKelamin, tglLahir,
+      alamat, asalSekolah, tujuanSekolah) {
     // ignore: todo
     // TODO: implement getSekolah
     Map param = {
@@ -125,7 +124,6 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
       'tgl_lahir': tglLahir,
       'kelamin': jenisKelamin,
       'alamat': alamat,
-      'picture': _image
     };
     this._profileApi.updateProfile(json.encode(param)).then((res) {
       this._profileHeaderState.onSuccess(res.success.toString());

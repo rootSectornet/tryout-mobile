@@ -38,12 +38,11 @@ class HistoryPresenter implements HistoryPresenterAbstract {
           tryout.matpels.forEach((element) {
             var percent = ((element.totalSalah + element.totalBenar) * 100) /
                 element.jumlahSoal;
-            totalPercent += percent;
+            totalPercent = totalPercent + percent;
             matpels.add(new HistoryMatpel(element.id, element.idmatpel,
                 element.nama, element.jumlahSoal, percent));
           });
-          totalPercent =
-              (totalPercent / tryout.matpels.length).round().toDouble();
+          totalPercent = (totalPercent / tryout.matpels.length).toDouble();
           if (totalPercent < 100.0) {
             this._historyModel.historyActive.add(new HistoryActive(
                 tryout.id,
