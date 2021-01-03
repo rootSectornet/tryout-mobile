@@ -18,6 +18,7 @@ class _LoginUI extends State<Login> implements LoginState {
   LoginPresenter _loginPresenter;
   // ignore: unused_field
   LoginModel _loginModel;
+  bool _isPasswordVisible = true;
   final _formkey = GlobalKey<FormState>();
   _LoginUI() {
     this._loginPresenter = new LoginPresenter();
@@ -33,6 +34,7 @@ class _LoginUI extends State<Login> implements LoginState {
   void initState() {
     super.initState();
     this._loginPresenter.view = this;
+    _isPasswordVisible = true;
   }
 
   @override
@@ -171,7 +173,7 @@ class _LoginUI extends State<Login> implements LoginState {
                                   });
                                 },
                                 controller: this._loginModel.password,
-                                obscureText: true,
+                                obscureText: _isPasswordVisible,
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 14),
                                 decoration: InputDecoration(
@@ -182,6 +184,19 @@ class _LoginUI extends State<Login> implements LoginState {
                                           : Color(0xff2D8EFF),
                                       size: 18,
                                     ),
+                                    suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _isPasswordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isPasswordVisible =
+                                                !_isPasswordVisible;
+                                          });
+                                        }),
                                     hintText: "Password",
                                     border: InputBorder.none,
                                     errorText: this._loginModel.passwordError,

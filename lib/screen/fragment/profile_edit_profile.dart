@@ -722,7 +722,8 @@ class EditProfileState extends State<EditProfile>
                                             _inputEmailController.text != '' ||
                                             _inputPasswordController.text !=
                                                 '' ||
-                                            _inputPhoneController.text != '') {
+                                            _inputPhoneController.text != '' ||
+                                            _inputAlamatController.text != '') {
                                           Service service = Service();
                                           service.submitSubscription(
                                               file: _image,
