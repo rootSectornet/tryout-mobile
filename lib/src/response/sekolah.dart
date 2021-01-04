@@ -51,7 +51,9 @@ class Data {
   int id;
   String nama;
   int idArea;
-  Null active;
+  bool active;
+  double kkm;
+  int idJenjang;
   String createdAt;
   String updatedAt;
   Area area;
@@ -61,6 +63,8 @@ class Data {
       this.nama,
       this.idArea,
       this.active,
+      this.kkm,
+      this.idJenjang,
       this.createdAt,
       this.updatedAt,
       this.area});
@@ -70,6 +74,8 @@ class Data {
     nama = json['nama'];
     idArea = json['id_area'];
     active = json['active'];
+    kkm = json['kkm'].toDouble();
+    idJenjang = json['id_jenjang'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     area = json['area'] != null ? new Area.fromJson(json['area']) : null;
@@ -81,6 +87,8 @@ class Data {
     data['nama'] = this.nama;
     data['id_area'] = this.idArea;
     data['active'] = this.active;
+    data['kkm'] = this.kkm;
+    data['id_jenjang'] = this.idJenjang;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     if (this.area != null) {

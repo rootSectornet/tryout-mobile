@@ -116,7 +116,9 @@ class Sekolah {
   int id;
   String nama;
   int idArea;
-  Null active;
+  bool active;
+  double kkm;
+  int idJenjang;
   String createdAt;
   String updatedAt;
 
@@ -125,6 +127,8 @@ class Sekolah {
       this.nama,
       this.idArea,
       this.active,
+      this.kkm,
+      this.idJenjang,
       this.createdAt,
       this.updatedAt});
 
@@ -133,6 +137,8 @@ class Sekolah {
     nama = json['nama'];
     idArea = json['id_area'];
     active = json['active'];
+    kkm = json['kkm'].toDouble();
+    idJenjang = json['id_jenjang'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -143,6 +149,8 @@ class Sekolah {
     data['nama'] = this.nama;
     data['id_area'] = this.idArea;
     data['active'] = this.active;
+    data['kkm'] = this.kkm;
+    data['id_jenjang'] = this.idJenjang;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
