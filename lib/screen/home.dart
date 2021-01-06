@@ -166,7 +166,7 @@ class _HomeState extends State<Home> implements HomeState {
                         PaketScreen(
                           key: Key("1"),
                           isList: false,
-                          onTryoutgo: (int paket) {
+                          onTryoutgo: (int paket, bool isParent) {
                             this._homePresenter.setPaket(paket, context);
                           },
                         ),
@@ -180,10 +180,17 @@ class _HomeState extends State<Home> implements HomeState {
                               ),
                             )),
                         JenjangScreen(
-                            key: Key("2"),
-                            onTryoutgo: (int jenjang) {
-                              this._homePresenter.setJenjang(jenjang, context);
-                            }),
+                          key: Key("2"),
+                          onTryoutgo: (int jenjang, bool isParent) {
+                            setState(() {
+                              this._homeModel.idPaket = 0;
+                            });
+                            this
+                                ._homePresenter
+                                .setJenjang(jenjang, isParent, context);
+                          },
+                          idparent: 0,
+                        ),
                         SizedBox(
                           height: 15,
                         ),
@@ -251,7 +258,7 @@ class _HomeState extends State<Home> implements HomeState {
   }
 
   @override
-  void showJenjang(BuildContext context) {
+  void showJenjang(BuildContext context, int idParent) {
     showCupertinoModalBottomSheet(
       expand: false,
       context: context,
@@ -286,13 +293,17 @@ class _HomeState extends State<Home> implements HomeState {
                       )
                     ],
                   ),
-                  JenjangScreen(
+                  Expanded(
+                    child: JenjangScreen(
                       key: Key("3"),
-                      onTryoutgo: (int jenjang) {
+                      onTryoutgo: (int jenjang, bool isParent) {
                         this
                             ._homePresenter
-                            .save(this._homeModel.idPaket, jenjang);
-                      }),
+                            .setJenjang(jenjang, isParent, context);
+                      },
+                      idparent: idParent,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -345,7 +356,7 @@ class _HomeState extends State<Home> implements HomeState {
                     child: PaketScreen(
                         key: Key("4"),
                         isList: true,
-                        onTryoutgo: (int paket) {
+                        onTryoutgo: (int paket, bool isParent) {
                           this
                               ._homePresenter
                               .save(this._homeModel.jenjang, paket);

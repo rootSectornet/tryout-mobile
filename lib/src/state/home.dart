@@ -5,7 +5,7 @@ abstract class HomeState {
   void refreshData(HomeModel homeModel);
   void onSuccess(String success);
   void onError(String error);
-  void showJenjang(BuildContext context);
+  void showJenjang(BuildContext context, int idParent);
   void showPaket(BuildContext context);
   void toTryout(int idPaket, int idJenjang);
 }

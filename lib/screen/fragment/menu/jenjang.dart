@@ -12,17 +12,21 @@ import 'package:toast/toast.dart';
 
 class JenjangScreen extends StatefulWidget {
   final TryoutCallback onTryoutgo;
+  final int idparent;
 
-  const JenjangScreen({Key key, this.onTryoutgo}) : super(key: key);
+  const JenjangScreen({Key key, this.onTryoutgo, this.idparent})
+      : super(key: key);
   @override
-  _JenjangScreenState createState() => _JenjangScreenState(onTryoutgo);
+  _JenjangScreenState createState() =>
+      _JenjangScreenState(onTryoutgo, idparent);
 }
 
 class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
   JenjangModel _jenjangModel;
   JenjangPresenter _jenjangPresenter;
   final TryoutCallback onTryoutgo;
-  _JenjangScreenState(this.onTryoutgo) {
+  final int idparent;
+  _JenjangScreenState(this.onTryoutgo, this.idparent) {
     this._jenjangPresenter = new JenjangPresenter();
   }
 
@@ -35,23 +39,28 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
 
   @override
   Widget build(BuildContext context) {
+    List<MenuJenjang> jenjangs = this
+        ._jenjangModel
+        .menuJenjang
+        .where((x) => x.parentID == this.idparent)
+        .toList();
     return Container(
       width: MediaQuery.of(context).size.width,
       child: !this._jenjangModel.isloading
           ? GridView.builder(
               padding: EdgeInsets.all(10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                  crossAxisCount: 4, crossAxisSpacing: 7, mainAxisSpacing: 10),
               shrinkWrap: true,
               primary: true,
               physics: ClampingScrollPhysics(),
-              itemCount: this._jenjangModel.jenjangResponse.data.length,
+              itemCount: jenjangs.length,
               itemBuilder: (ctx, index) {
                 return InkWell(
                   onTap: () {
                     this.onTryoutgo(
-                        this._jenjangModel.jenjangResponse.data[index].id);
-                    print(this._jenjangModel.jenjangResponse.data[index].id);
+                        jenjangs[index].id, jenjangs[index].isParent);
+                    print(jenjangs[index].id);
                   },
                   child: Container(
                     padding: EdgeInsets.all(3),
@@ -65,26 +74,23 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          child: Icon(
-                            Ionicons.school,
-                            color: Color((math.Random().nextDouble() * 0xFFFFFF)
-                                    .toInt())
-                                .withOpacity(1.0),
+                          height: 40,
+                          width: 40,
+                          child: Image.asset(
+                            jenjangs[index].icon,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        Text(
-                            this
-                                ._jenjangModel
-                                .jenjangResponse
-                                .data[index]
-                                .jenjang,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 10,
-                                  color: Color(0xff485460),
-                                  fontWeight: FontWeight.w600),
-                            )),
+                        Expanded(
+                          child: Text(jenjangs[index].name,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 10,
+                                    color: Color(0xff485460),
+                                    fontWeight: FontWeight.w600),
+                              )),
+                        ),
                       ],
                     ),
                   ),

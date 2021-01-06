@@ -283,7 +283,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                           InkWell(
                         onTap: () {
                           this.onTryoutgo(
-                              this._paketModel.pakets[itemIndex].id);
+                              this._paketModel.pakets[itemIndex].id, false);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -384,7 +384,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                           InkWell(
                         onTap: () {
                           this.onTryoutgo(
-                              this._paketModel.pakets[itemIndex].id);
+                              this._paketModel.pakets[itemIndex].id, false);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,

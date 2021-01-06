@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 abstract class HomePresenterAbstract {
   set view(HomeState view) {}
   void setPaket(id, BuildContext context) {}
-  void setJenjang(id, BuildContext context) {}
+  void setJenjang(id, isParent, BuildContext context) {}
   void save(int paket, int jenjang) {}
 }
 
@@ -23,17 +23,25 @@ class HomePresenter implements HomePresenterAbstract {
   }
 
   @override
-  void setJenjang(id, context) {
-    this._homeModel.jenjang = id;
-    this._homeState.refreshData(this._homeModel);
-    this._homeState.showPaket(context);
+  void setJenjang(id, isParent, context) {
+    if (isParent) {
+      this._homeState.showJenjang(context, id);
+    } else {
+      this._homeModel.jenjang = id;
+      this._homeState.refreshData(this._homeModel);
+      if (this._homeModel.idPaket == 0) {
+        this._homeState.showPaket(context);
+      } else {
+        this.save(this._homeModel.idPaket, id);
+      }
+    }
   }
 
   @override
   void setPaket(id, context) {
     this._homeModel.idPaket = id;
     this._homeState.refreshData(this._homeModel);
-    this._homeState.showJenjang(context);
+    this._homeState.showJenjang(context, 0);
   }
 
   @override

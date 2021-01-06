@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-typedef TryoutCallback = void Function(int id);
+typedef TryoutCallback = void Function(int id, bool isParent);
 
 List<LinearGradient> colorList = [
   new LinearGradient(colors: [Color(0xffFF5F6C), Color(0xffFF8B46)]),
