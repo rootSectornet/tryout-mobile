@@ -42,7 +42,8 @@ class HistoryPresenter implements HistoryPresenterAbstract {
             matpels.add(new HistoryMatpel(element.id, element.idmatpel,
                 element.nama, element.jumlahSoal, percent));
           });
-          totalPercent = (totalPercent / tryout.matpels.length).toDouble();
+          totalPercent =
+              (totalPercent / tryout.matpels.length).toDouble().roundToDouble();
           if (totalPercent < 100.0) {
             this._historyModel.historyActive.add(new HistoryActive(
                 tryout.id,

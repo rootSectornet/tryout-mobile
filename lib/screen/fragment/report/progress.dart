@@ -176,8 +176,6 @@ class _ProgressScreenState extends State<ProgressScreen>
   void onError(String error) {
     print(error);
     print("error proigress");
-    Toast.show("$error", context,
-        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }
 
   @override
