@@ -33,6 +33,13 @@ class _HomeState extends State<Home> implements HomeState {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   _HomeState() {
     this._homePresenter = new HomePresenter();
+
+    Session.checkUser().then((check) {
+      if (check) {
+      } else {
+        Navigator.pushReplacementNamed(context, "/landing");
+      }
+    });
   }
 
   @override

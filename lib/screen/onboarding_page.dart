@@ -1,3 +1,4 @@
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:flutter/material.dart';
 
 import 'fragment/onboarding/onboarding_widget.dart';
@@ -10,6 +11,14 @@ class OnBoarding extends StatefulWidget {
 class _OnBoardingState extends State<OnBoarding> {
   int _currentPage = 0;
   PageController _controller = PageController();
+
+  _OnBoardingState() {
+    Session.checkUser().then((check) {
+      if (check) {
+        Navigator.pushReplacementNamed(context, "/home");
+      }
+    });
+  }
 
   List<Widget> _pages = [
     SliderPage(

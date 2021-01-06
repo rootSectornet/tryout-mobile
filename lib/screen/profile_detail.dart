@@ -457,7 +457,7 @@ class _ProfileDetailState extends State<ProfileDetail>
                                   await SharedPreferences.getInstance();
                               preferences.clear();
                               GetStorage().erase();
-                              Navigator.pushNamed(context, "/");
+                              Navigator.pushNamed(context, "/landing");
                             },
                             child: Container(
                               height: 40,

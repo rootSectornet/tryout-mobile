@@ -31,7 +31,9 @@ class Service {
       String phone,
       String tglLahir,
       String kelamin,
-      String alamat}) async {
+      String alamat,
+      String idSekolahTujuan,
+      BuildContext context}) async {
     ///MultiPart request
     var request = http.MultipartRequest(
       'PUT',
@@ -57,7 +59,8 @@ class Service {
       "phone": phone,
       "tgl_lahir": tglLahir,
       "kelamin": kelamin,
-      "alamat": alamat
+      "alamat": alamat,
+      "id_sekolah_tujuan": idSekolahTujuan
     });
     print("request: " + request.toString());
     final res = await request.send();
@@ -72,6 +75,9 @@ class Service {
         Session.setPicture(filename);
       }
       Session.setName(name);
+      Toast.show("profil berhasil di update :)", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      Navigator.popAndPushNamed(context, '/home');
     }
     return res.statusCode;
   }
@@ -386,8 +392,12 @@ class EditProfileState extends State<EditProfile>
                                                             color: Colors.blue,
                                                             disabledColor:
                                                                 Colors.red,
-                                                            onPressed:
-                                                                () async {},
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(
+                                                                      'Success');
+                                                            },
                                                             shape: RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
@@ -434,8 +444,11 @@ class EditProfileState extends State<EditProfile>
                                     },
                                     onChanged: (String nama) {},
                                     decoration: InputDecoration(
-                                        hintText:
-                                            this._profileModel.profiles[0].nama,
+                                        hintText: this
+                                                ._profileModel
+                                                .profiles[0]
+                                                .nama +
+                                            ' (nama saat ini)',
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -462,9 +475,10 @@ class EditProfileState extends State<EditProfile>
                                     onChanged: (String email) {},
                                     decoration: InputDecoration(
                                         hintText: this
-                                            ._profileModel
-                                            .profiles[0]
-                                            .email,
+                                                ._profileModel
+                                                .profiles[0]
+                                                .email +
+                                            ' (email saat ini)',
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -514,9 +528,10 @@ class EditProfileState extends State<EditProfile>
                                     onChanged: (String phone) {},
                                     decoration: InputDecoration(
                                         hintText: this
-                                            ._profileModel
-                                            .profiles[0]
-                                            .phone,
+                                                ._profileModel
+                                                .profiles[0]
+                                                .phone +
+                                            ' (nomer saat ini)',
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -589,9 +604,7 @@ class EditProfileState extends State<EditProfile>
                                 Padding(
                                   padding: EdgeInsets.all(1),
                                   child: TextFormField(
-                                    controller: _inputAlamatController
-                                      ..text =
-                                          this._profileModel.profiles[0].alamat,
+                                    controller: _inputAlamatController,
                                     validator: _userPasswordValidation,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.next,
@@ -722,8 +735,16 @@ class EditProfileState extends State<EditProfile>
                                             _inputEmailController.text != '' ||
                                             _inputPasswordController.text !=
                                                 '' ||
-                                            _inputPhoneController.text != '') {
+                                            _inputPhoneController.text != '' ||
+                                            _inputAlamatController.text != '') {
                                           Service service = Service();
+                                          // print(_inputNamaController.text);
+                                          // print(_inputPhoneController.text);
+                                          // print(_inputAlamatController.text);
+                                          // print(this
+                                          //     ._profileModel
+                                          //     .sekolahTujuanId);
+
                                           service.submitSubscription(
                                               file: _image,
                                               filename: fileName,
@@ -745,7 +766,12 @@ class EditProfileState extends State<EditProfile>
                                               kelamin:
                                                   _inputKelaminController.text,
                                               alamat:
-                                                  _inputAlamatController.text);
+                                                  _inputAlamatController.text,
+                                              idSekolahTujuan: this
+                                                  ._profileModel
+                                                  .sekolahTujuanId
+                                                  .toString(),
+                                              context: context);
                                         } else {
                                           Toast.show(
                                               "Harus terisi semua! :)", context,
