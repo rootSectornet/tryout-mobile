@@ -203,6 +203,11 @@ class _TryoutScreenState extends State<TryoutScreen>
                                       .data
                                       .length,
                                   itemBuilder: (ctx, index) {
+                                    var nilai = this
+                                        ._tryoutModel
+                                        .tryoutDetailResponse
+                                        .data[index]
+                                        .nilai;
                                     var total = this
                                             ._tryoutModel
                                             .tryoutDetailResponse
@@ -215,33 +220,69 @@ class _TryoutScreenState extends State<TryoutScreen>
                                             .totalSalah;
                                     return InkWell(
                                       onTap: () {
-                                        if (total ==
-                                            this
+                                        if (nilai != 0) {
+                                          if (total ==
+                                              this
+                                                  ._tryoutModel
+                                                  .tryoutDetailResponse
+                                                  .data[index]
+                                                  .jumlahSoal) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MatpelDoneScreen(
+                                                          idMatpel: this
+                                                              ._tryoutModel
+                                                              .tryoutDetailResponse
+                                                              .data[index]
+                                                              .idmatpel,
+                                                          idtryoutdetail: this
+                                                              ._tryoutModel
+                                                              .tryoutDetailResponse
+                                                              .data[index]
+                                                              .id,
+                                                          matpel: this
+                                                              ._tryoutModel
+                                                              .tryoutDetailResponse
+                                                              .data[index]
+                                                              .nama,
+                                                        )));
+                                          } else {
+                                            print(this
                                                 ._tryoutModel
                                                 .tryoutDetailResponse
                                                 .data[index]
-                                                .jumlahSoal) {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
+                                                .nama);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
                                                   builder: (context) =>
-                                                      MatpelDoneScreen(
-                                                        idMatpel: this
-                                                            ._tryoutModel
-                                                            .tryoutDetailResponse
-                                                            .data[index]
-                                                            .idmatpel,
-                                                        idtryoutdetail: this
-                                                            ._tryoutModel
-                                                            .tryoutDetailResponse
-                                                            .data[index]
-                                                            .id,
-                                                        matpel: this
-                                                            ._tryoutModel
-                                                            .tryoutDetailResponse
-                                                            .data[index]
-                                                            .nama,
-                                                      )));
+                                                      SoalScreen(
+                                                    key: Key("Soal$index"),
+                                                    idMatpel: this
+                                                        ._tryoutModel
+                                                        .tryoutDetailResponse
+                                                        .data[index]
+                                                        .idmatpel,
+                                                    idtryoutdetail: this
+                                                        ._tryoutModel
+                                                        .tryoutDetailResponse
+                                                        .data[index]
+                                                        .id,
+                                                    matpel: this
+                                                        ._tryoutModel
+                                                        .tryoutDetailResponse
+                                                        .data[index]
+                                                        .nama,
+                                                  ),
+                                                )).then((value) {
+                                              this._tryoutPresenter.getMatpels(
+                                                  this._tryoutModel.idTryout);
+                                              this._tryoutPresenter.getInfo(
+                                                  this._tryoutModel.idTryout);
+                                            });
+                                          }
                                         } else {
                                           print(this
                                               ._tryoutModel
@@ -318,7 +359,8 @@ class _TryoutScreenState extends State<TryoutScreen>
                                                       ),
                                                     )),
                                                 Text(
-                                                    " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
+                                                    // " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
+                                                    "${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
                                                     style: GoogleFonts.poppins(
                                                       textStyle: TextStyle(
                                                         fontSize: 10,
