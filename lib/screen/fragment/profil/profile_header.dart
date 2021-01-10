@@ -211,4 +211,34 @@ class _ProfileHeaderState extends State<ProfileHeader>
       this._profileModel = profileModel;
     });
   }
+
+  @override
+  void showJenjang(BuildContext context, int idParent) {
+    // TODO: implement showJenjang
+  }
+
+  @override
+  void saveAreaJenjang(int jenjang) {
+    // TODO: implement saveAreaJenjang
+  }
+
+  @override
+  void selectSekolah() {
+    // TODO: implement selectSekolah
+  }
+
+  @override
+  void saveAreaJenjangTujuan(int jenjang) {
+    // TODO: implement saveAreaJenjangTujuan
+  }
+
+  @override
+  void selectSekolahTujuan() {
+    // TODO: implement selectSekolahTujuan
+  }
+
+  @override
+  void showJenjangTujuan(BuildContext context, int idParent) {
+    // TODO: implement showJenjangTujuan
+  }
 }

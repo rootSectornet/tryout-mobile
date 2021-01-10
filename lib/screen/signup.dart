@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
+import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/screen/fragment/selectsekolah.dart';
 import 'package:TesUjian/src/model/signup.dart';
 import 'package:TesUjian/src/presenter/signup.dart';
@@ -12,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:toast/toast.dart';
 
 class SignUp extends StatefulWidget {
@@ -37,7 +40,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   void initState() {
     super.initState();
     this._signUpPresenter.view = this;
-    this._signUpPresenter.getSekolah();
+    this._signUpPresenter.getArea();
   }
 
   @override
@@ -365,7 +368,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                                     hintStyle: TextStyle(
                                         color: Color(0xff2D8EFF),
                                         fontSize: 12)),
-                                onTap: (() => {this.selectSekolah()}),
+                                onTap: (() => {this.areaJenjang()}),
                                 readOnly: true,
                                 controller: this._signUpModel.sekolahController,
                               ),
@@ -553,8 +556,8 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
 
   @override
   void selectSekolah() async {
-    // ignore: todo
-    // TODO: implement selectSekolah
+    Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -569,7 +572,240 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
           this._signUpModel.sekolah.dataSekolah.data[value].nama;
       this._signUpModel.sekolahController.text =
           this._signUpModel.sekolah.dataSekolah.data[value].nama;
+      this._signUpModel.areaId = 0;
+      this._signUpModel.jenjangId = 0;
+      this._signUpModel.namaArea = "";
+      this._signUpModel.namaJenjang = "";
+      this._signUpModel.sekolah.dataSekolah.data.clear();
       this.refreshData(this._signUpModel);
     });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void areaJenjang() {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text('Pilih Area & jenjang'),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextFormField(
+                      controller: this._signUpModel.areaController,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      onTap: (() => {this.selectArea()}),
+                      onChanged: (String area) {},
+                      decoration: InputDecoration(
+                          hintText: 'pilih area',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none),
+                    ),
+                  ),
+                  // Text("Jenjang soal",
+                  //     style: GoogleFonts.poppins(
+                  //       textStyle: TextStyle(
+                  //         fontSize: 12,
+                  //         color: Color(0xff485460),
+                  //         wordSpacing: 4,
+                  //         letterSpacing: 1.5,
+                  //       ),
+                  //     )),
+                  // JenjangScreen(
+                  //   key: Key("2"),
+                  //   onTryoutgo: (int jenjang, bool isParent, String name) {
+                  //     this
+                  //         ._profileHeaderPresenter
+                  //         .setJenjang(jenjang, isParent, name, context);
+                  //   },
+                  //   idparent: 0,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectArea() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectArea(
+            key: Key("1"),
+            areaResponse: this._signUpModel.area,
+          ),
+        )).then((value) {
+      print(this._signUpModel.area.data[value].id);
+      this._signUpModel.areaId = this._signUpModel.area.data[value].id;
+      this._signUpModel.namaArea = this._signUpModel.area.data[value].area;
+      this._signUpModel.areaController.text =
+          this._signUpModel.area.data[value].area;
+      this.refreshData(this._signUpModel);
+      this.selectJenjangnya();
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectJenjangnya() async {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text("Jenjang soal",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff485460),
+                          wordSpacing: 4,
+                          letterSpacing: 1.5,
+                        ),
+                      )),
+                  JenjangScreen(
+                    key: Key("2"),
+                    onTryoutgo: (int jenjang, bool isParent, String name) {
+                      this
+                          ._signUpPresenter
+                          .setJenjang(jenjang, isParent, name, context);
+                    },
+                    idparent: 0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void saveAreaJenjang(int jenjang) {
+    this._signUpPresenter.save(this._signUpModel.areaId, jenjang);
+  }
+
+  @override
+  void showJenjang(BuildContext context, int idParent) {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Pilih Jenjangnya",
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xff485460),
+                            ),
+                          )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: JenjangScreen(
+                      key: Key("3"),
+                      onTryoutgo: (int jenjang, bool isParent, String name) {
+                        this
+                            ._signUpPresenter
+                            .setJenjang(jenjang, isParent, name, context);
+                      },
+                      idparent: idParent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

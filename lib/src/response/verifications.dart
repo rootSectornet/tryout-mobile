@@ -87,7 +87,7 @@ class Murid {
   String kelamin;
   String alamat;
   int idSekolah;
-  Null picture;
+  String picture;
   String createdAt;
   String updatedAt;
 

@@ -105,8 +105,8 @@ class TryoutApi {
   // ignore: missing_return
   Future<bool> kumpulkan(Map<String, String> data) async {
     print('test');
-    var uri = Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_KUMPULKAN}");
-    var request = MultipartRequest('POST', uri)..fields.addAll(data);
+    var uri = Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_KUMPULKAN_V2}");
+    var request = MultipartRequest('PUT', uri)..fields.addAll(data);
     var response = await request.send();
     if (response.statusCode == 200) {
       return true;

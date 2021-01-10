@@ -1,4 +1,5 @@
 // ignore: unused_import
+import 'package:TesUjian/src/response/area.dart';
 import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:http/http.dart' show Client, MultipartRequest;
 // ignore: unused_import
@@ -27,11 +28,27 @@ class SuccessResponse {
 
 class SekolahApi {
   Client _client = new Client();
+
   // ignore: missing_return
-  Future<SekolahResponse> getSekolah() async {
-    final response = await _client
-        .get("${Paths.BASEURL}${Paths.ENDPOINT_SEKOLAH}?offset=0&limit=100");
+  Future<AreaResponse> getArea() async {
+    final response =
+        await _client.get("${Paths.BASEURL}${Paths.ENDPOINT_AREA}");
     if (response.statusCode == 200) {
+      print(response.body);
+      AreaResponse sekolahResponse =
+          AreaResponse.fromJson(json.decode(response.body));
+      return sekolahResponse;
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<SekolahResponse> getSekolah(int areaId, int areaJenjang) async {
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_SEKOLAH}?id_area=$areaId&id_jenjang=$areaJenjang&offset=0&limit=100");
+    if (response.statusCode == 200) {
+      print(response.body);
       SekolahResponse sekolahResponse =
           SekolahResponse.fromJson(json.decode(response.body));
       return sekolahResponse;

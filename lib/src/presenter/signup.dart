@@ -1,12 +1,16 @@
 import 'package:TesUjian/src/model/signup.dart';
 import 'package:TesUjian/src/resources/sekolahApi.dart';
 import 'package:TesUjian/src/state/signup.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 abstract class SignUpPresenterAbstract {
   set view(SignUpState view) {}
   void register() {}
   void getSekolah() {}
+  void getArea() {}
+  void setJenjang(int id, bool isParent, String name, BuildContext context) {}
+  void save(int area, int jenjang) {}
 }
 
 class SignUpPresenter implements SignUpPresenterAbstract {
@@ -64,9 +68,47 @@ class SignUpPresenter implements SignUpPresenterAbstract {
   void getSekolah() {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getSekolah().then((value) {
+    this._sekolahApi.getSekolah(1, 2).then((value) {
       this._signUpModel.sekolah = value;
       this._signUpState.refreshData(this._signUpModel);
+    }).catchError((err) {
+      this._signUpState.onError(err.toString());
+    });
+  }
+
+  @override
+  void getArea() {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getArea().then((value) {
+      this._signUpModel.area = value;
+      this._signUpState.refreshData(this._signUpModel);
+    }).catchError((err) {
+      this._signUpState.onError(err.toString());
+    });
+  }
+
+  @override
+  void setJenjang(id, isParent, name, context) {
+    if (isParent) {
+      this._signUpState.showJenjang(context, id);
+    } else {
+      this._signUpModel.jenjangId = id;
+      this._signUpModel.namaJenjang = name;
+      this._signUpState.refreshData(this._signUpModel);
+      this._signUpState.saveAreaJenjang(id);
+    }
+  }
+
+  @override
+  void save(int area, int jenjang) {
+    print(jenjang);
+    print("+++++++++++");
+    print(area);
+    this._sekolahApi.getSekolah(area, jenjang).then((value) {
+      this._signUpModel.sekolah = value;
+      this._signUpState.refreshData(this._signUpModel);
+      this._signUpState.selectSekolah();
     }).catchError((err) {
       this._signUpState.onError(err.toString());
     });

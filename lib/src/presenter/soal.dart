@@ -81,7 +81,6 @@ class SoalPresenter implements SoalPresenterAbstract {
         print(element.jawabanUser);
         Map<String, String> body = <String, String>{
           "id_tryoutDetail": this._soalModel.idTryoutDetail.toString(),
-          "id_soal": element.id.toString(),
           "jawaban_user": element.jawabanUser,
         };
         var a = await this._tryoutApi.kumpulkan(body);

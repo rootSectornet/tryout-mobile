@@ -7,13 +7,20 @@ import 'package:TesUjian/src/resources/profileApi.dart';
 import 'package:TesUjian/src/resources/sekolahApi.dart';
 import 'package:TesUjian/src/state/profile_header.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 abstract class ProfileHeaderPresenterAbstract {
   set view(ProfileHeaderState view) {}
   void getData(int idMurid) {}
   void getDaftar(int idMurid) {}
+  void getArea() {}
   void getSekolah() {}
+  void setJenjang(int id, bool isParent, String name, BuildContext context) {}
+  void setJenjangTujuan(
+      int id, bool isParent, String name, BuildContext context) {}
+  void save(int area, int jenjang) {}
+  void saveTujuan(int area, int jenjang) {}
   void updateProfile(
       int id,
       String nama,
@@ -98,10 +105,74 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
   }
 
   @override
+  void getArea() {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getArea().then((value) {
+      this._profileModel.area = value;
+      this._profileHeaderState.refreshData(this._profileModel);
+    }).catchError((err) {
+      this._profileHeaderState.onError(err.toString());
+    });
+  }
+
+  @override
+  void setJenjang(id, isParent, name, context) {
+    if (isParent) {
+      this._profileHeaderState.showJenjang(context, id);
+    } else {
+      this._profileModel.jenjangId = id;
+      this._profileModel.namaJenjang = name;
+      this._profileHeaderState.refreshData(this._profileModel);
+      this._profileHeaderState.saveAreaJenjang(id);
+    }
+  }
+
+  @override
+  void setJenjangTujuan(id, isParent, name, context) {
+    if (isParent) {
+      this._profileHeaderState.showJenjangTujuan(context, id);
+    } else {
+      this._profileModel.jenjangIdTujuan = id;
+      this._profileModel.namaJenjangTujuan = name;
+      this._profileHeaderState.refreshData(this._profileModel);
+      this._profileHeaderState.saveAreaJenjangTujuan(id);
+    }
+  }
+
+  @override
+  void save(area, jenjang) {
+    print(jenjang);
+    print("+++++++++++");
+    print(area);
+    this._sekolahApi.getSekolah(area, jenjang).then((value) {
+      this._profileModel.sekolah = value;
+      this._profileHeaderState.refreshData(this._profileModel);
+      this._profileHeaderState.selectSekolah();
+    }).catchError((err) {
+      this._profileHeaderState.onError(err.toString());
+    });
+  }
+
+  @override
+  void saveTujuan(area, jenjang) {
+    print(jenjang);
+    print("+++++++++++");
+    print(area);
+    this._sekolahApi.getSekolah(area, jenjang).then((value) {
+      this._profileModel.sekolah = value;
+      this._profileHeaderState.refreshData(this._profileModel);
+      this._profileHeaderState.selectSekolahTujuan();
+    }).catchError((err) {
+      this._profileHeaderState.onError(err.toString());
+    });
+  }
+
+  @override
   void getSekolah() {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getSekolah().then((value) {
+    this._sekolahApi.getSekolah(1, 2).then((value) {
       this._profileModel.sekolah = value;
       this._profileHeaderState.refreshData(this._profileModel);
     }).catchError((err) {

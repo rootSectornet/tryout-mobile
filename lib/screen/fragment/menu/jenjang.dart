@@ -58,8 +58,8 @@ class _JenjangScreenState extends State<JenjangScreen> implements JenjangState {
               itemBuilder: (ctx, index) {
                 return InkWell(
                   onTap: () {
-                    this.onTryoutgo(
-                        jenjangs[index].id, jenjangs[index].isParent);
+                    this.onTryoutgo(jenjangs[index].id,
+                        jenjangs[index].isParent, jenjangs[index].name);
                     print(jenjangs[index].id);
                   },
                   child: Container(

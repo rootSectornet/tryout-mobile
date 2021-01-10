@@ -63,6 +63,7 @@ class _TryoutScreenState extends State<TryoutScreen>
     if (this.idTryout == 0) {
       this._tryoutPresenter.save(this.idPaket, this.idJenjang);
     } else {
+      print('idtryoyut' + this.idTryout.toString());
       this._tryoutPresenter.getMatpels(this.idTryout);
       // this._tryoutPresenter.getInfo(this.idTryout);
     }
@@ -399,6 +400,38 @@ class _TryoutScreenState extends State<TryoutScreen>
                             child: Center(
                               child: Text(
                                 "Cek Pembahasan",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: InkWell(
+                          splashColor: Color(0xff7474BF),
+                          onTap: () {
+                            // showMatpel(context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            height: 43,
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 28),
+                                      blurRadius: 40,
+                                      spreadRadius: -12)
+                                ],
+                                color: Color(0xff1d63dc),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Center(
+                              child: Text(
+                                "Selesai",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),

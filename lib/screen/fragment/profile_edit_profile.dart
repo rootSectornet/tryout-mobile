@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:TesUjian/helper/paths.dart';
+import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
+import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +16,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -98,6 +102,8 @@ class EditProfileState extends State<EditProfile>
   File _image;
   String fileName;
   final picker = ImagePicker();
+  List statesList;
+  int _areanyaTujuan;
   bool kosong;
   ProfileModel _profileModel;
   ProfileHeaderPresenter _profileHeaderPresenter;
@@ -113,6 +119,7 @@ class EditProfileState extends State<EditProfile>
   TextEditingController _inputAlamatController;
   FocusNode _inputAlamatFocusNode;
   FocusNode _inputAsalSekolahFocusNode;
+  FocusNode _inputAreaFocusNode;
   FocusNode _inputTujuanSekolahFocusNode;
   TextEditingController _inputTanggalLahirController;
 
@@ -138,13 +145,14 @@ class EditProfileState extends State<EditProfile>
     _inputAlamatController = TextEditingController();
     _inputAlamatFocusNode = FocusNode();
     _inputAsalSekolahFocusNode = FocusNode();
+    _inputAreaFocusNode = FocusNode();
     _inputTujuanSekolahFocusNode = FocusNode();
     _inputTanggalLahirController = TextEditingController();
     this._profileHeaderPresenter.view = this;
     print(GetStorage().read(ID_MURID));
     this._profileHeaderPresenter.getData(GetStorage().read(ID_MURID));
     this._profileHeaderPresenter.getDaftar(GetStorage().read(ID_MURID));
-    this._profileHeaderPresenter.getSekolah();
+    this._profileHeaderPresenter.getArea();
     if (Profile().checkIfAnyIsNull()) {
       kosong = true;
     }
@@ -277,7 +285,7 @@ class EditProfileState extends State<EditProfile>
                       child: Column(
                         children: [
                           Container(
-                            height: 950,
+                            height: 1000,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -618,12 +626,13 @@ class EditProfileState extends State<EditProfile>
                                                     ._profileModel
                                                     .profiles[0]
                                                     .alamat ==
-                                                null
+                                                ''
                                             ? 'alamat belum diisi'
-                                            : '',
-                                        hintStyle: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.redAccent),
+                                            : this
+                                                ._profileModel
+                                                .profiles[0]
+                                                .alamat,
+                                        hintStyle: TextStyle(fontSize: 12.0),
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -632,6 +641,9 @@ class EditProfileState extends State<EditProfile>
                                   ),
                                 ),
                                 Divider(),
+                                SizedBox(
+                                  height: 30,
+                                ),
                                 Text('Asal Sekolah'),
                                 Padding(
                                   padding: EdgeInsets.all(1),
@@ -646,7 +658,7 @@ class EditProfileState extends State<EditProfile>
                                       FocusScope.of(context).requestFocus(
                                           _inputAsalSekolahFocusNode);
                                     },
-                                    onTap: (() => {this.selectSekolah()}),
+                                    onTap: (() => {this.areaJenjang()}),
                                     onChanged: (String sekolah) {},
                                     decoration: InputDecoration(
                                         hintText: this
@@ -662,11 +674,7 @@ class EditProfileState extends State<EditProfile>
                                 ),
                                 Divider(),
                                 Text('Tujuan Sekolah'),
-                                this
-                                            ._profileModel
-                                            .daftarResponse
-                                            .dataDaftar
-                                            .data[0] ==
+                                this._profileModel.daftarResponse.dataDaftar ==
                                         null
                                     ? Container(
                                         child: CircularProgressIndicator(),
@@ -685,7 +693,7 @@ class EditProfileState extends State<EditProfile>
                                                 _inputTujuanSekolahFocusNode);
                                           },
                                           onTap: (() =>
-                                              {this.selectSekolahTujuan()}),
+                                              {this.areaJenjangTujuan()}),
                                           onChanged: (String sekolah) {},
                                           decoration: InputDecoration(
                                               hintText: this
@@ -848,7 +856,351 @@ class EditProfileState extends State<EditProfile>
 
   @override
   // ignore: override_on_non_overriding_member
+  void areaJenjang() {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text('Pilih Area & jenjang'),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextFormField(
+                      controller: this._profileModel.areaController,
+                      keyboardType: TextInputType.text,
+                      validator: _userPasswordValidation,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context)
+                            .requestFocus(_inputAreaFocusNode);
+                      },
+                      onTap: (() => {this.selectArea()}),
+                      onChanged: (String area) {},
+                      decoration: InputDecoration(
+                          hintText: 'pilih area',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none),
+                    ),
+                  ),
+                  // Text("Jenjang soal",
+                  //     style: GoogleFonts.poppins(
+                  //       textStyle: TextStyle(
+                  //         fontSize: 12,
+                  //         color: Color(0xff485460),
+                  //         wordSpacing: 4,
+                  //         letterSpacing: 1.5,
+                  //       ),
+                  //     )),
+                  // JenjangScreen(
+                  //   key: Key("2"),
+                  //   onTryoutgo: (int jenjang, bool isParent, String name) {
+                  //     this
+                  //         ._profileHeaderPresenter
+                  //         .setJenjang(jenjang, isParent, name, context);
+                  //   },
+                  //   idparent: 0,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void areaJenjangTujuan() {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text('Pilih Area & jenjang'),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextFormField(
+                      controller: this._profileModel.areaTujuanController,
+                      keyboardType: TextInputType.text,
+                      validator: _userPasswordValidation,
+                      textInputAction: TextInputAction.next,
+                      onTap: (() => {this.selectAreaTujuan()}),
+                      onChanged: (String area) {},
+                      decoration: InputDecoration(
+                          hintText: 'pilih area',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none),
+                    ),
+                  ),
+                  // Text("Jenjang soal",
+                  //     style: GoogleFonts.poppins(
+                  //       textStyle: TextStyle(
+                  //         fontSize: 12,
+                  //         color: Color(0xff485460),
+                  //         wordSpacing: 4,
+                  //         letterSpacing: 1.5,
+                  //       ),
+                  //     )),
+                  // JenjangScreen(
+                  //   key: Key("2"),
+                  //   onTryoutgo: (int jenjang, bool isParent, String name) {
+                  //     this
+                  //         ._profileHeaderPresenter
+                  //         .setJenjang(jenjang, isParent, name, context);
+                  //   },
+                  //   idparent: 0,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectJenjangnya() async {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text("Jenjang soal",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff485460),
+                          wordSpacing: 4,
+                          letterSpacing: 1.5,
+                        ),
+                      )),
+                  JenjangScreen(
+                    key: Key("2"),
+                    onTryoutgo: (int jenjang, bool isParent, String name) {
+                      this
+                          ._profileHeaderPresenter
+                          .setJenjang(jenjang, isParent, name, context);
+                    },
+                    idparent: 0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectJenjangnyaTujuan() async {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text("Pilih Jenjangnya",
+                      //     style: GoogleFonts.poppins(
+                      //       textStyle: TextStyle(
+                      //         fontSize: 16,
+                      //         color: Color(0xff485460),
+                      //       ),
+                      //     )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text("Jenjang soal",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff485460),
+                          wordSpacing: 4,
+                          letterSpacing: 1.5,
+                        ),
+                      )),
+                  JenjangScreen(
+                    key: Key("2"),
+                    onTryoutgo: (int jenjang, bool isParent, String name) {
+                      this
+                          ._profileHeaderPresenter
+                          .setJenjangTujuan(jenjang, isParent, name, context);
+                    },
+                    idparent: 0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectArea() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectArea(
+            key: Key("1"),
+            areaResponse: this._profileModel.area,
+          ),
+        )).then((value) {
+      print(this._profileModel.area.data[value].id);
+      this._profileModel.areaId = this._profileModel.area.data[value].id;
+      this._profileModel.namaArea = this._profileModel.area.data[value].area;
+      this._profileModel.areaController.text =
+          this._profileModel.area.data[value].area;
+      this.refreshData(this._profileModel);
+      this.selectJenjangnya();
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectAreaTujuan() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectArea(
+            key: Key("1"),
+            areaResponse: this._profileModel.area,
+          ),
+        )).then((value) {
+      // print(this._profileModel.area.data[value].id);
+      this._profileModel.areaIdTujuan = this._profileModel.area.data[value].id;
+      this._areanyaTujuan = this._profileModel.area.data[value].id;
+      this._profileModel.namaAreaTujuan =
+          this._profileModel.area.data[value].area;
+      this._profileModel.areaTujuanController.text =
+          this._profileModel.area.data[value].area;
+      this.refreshData(this._profileModel);
+      this.selectJenjangnyaTujuan();
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
   void selectSekolah() async {
+    Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -863,6 +1215,11 @@ class EditProfileState extends State<EditProfile>
           this._profileModel.sekolah.dataSekolah.data[value].nama;
       this._profileModel.sekolahAsalController.text =
           this._profileModel.sekolah.dataSekolah.data[value].nama;
+      this._profileModel.areaId = 0;
+      this._profileModel.jenjangId = 0;
+      this._profileModel.namaArea = "";
+      this._profileModel.namaJenjang = "";
+      this._profileModel.sekolah.dataSekolah.data.clear();
       this.refreshData(this._profileModel);
     });
   }
@@ -870,6 +1227,8 @@ class EditProfileState extends State<EditProfile>
   @override
   // ignore: override_on_non_overriding_member
   void selectSekolahTujuan() async {
+    Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -884,6 +1243,11 @@ class EditProfileState extends State<EditProfile>
           this._profileModel.sekolah.dataSekolah.data[value].nama;
       this._profileModel.sekolahTujuanController.text =
           this._profileModel.sekolah.dataSekolah.data[value].nama;
+      this._profileModel.areaIdTujuan = 0;
+      this._profileModel.jenjangIdTujuan = 0;
+      this._profileModel.namaAreaTujuan = "";
+      this._profileModel.namaJenjangTujuan = "";
+      this._profileModel.sekolah.dataSekolah.data.clear();
       this.refreshData(this._profileModel);
     });
   }
@@ -914,5 +1278,129 @@ class EditProfileState extends State<EditProfile>
         print('No image selected.');
       }
     });
+  }
+
+  @override
+  void saveAreaJenjang(int jenjang) {
+    this._profileHeaderPresenter.save(this._profileModel.areaId, jenjang);
+  }
+
+  @override
+  void saveAreaJenjangTujuan(int jenjang) {
+    this
+        ._profileHeaderPresenter
+        .saveTujuan(this._profileModel.areaIdTujuan, jenjang);
+  }
+
+  @override
+  void showJenjang(BuildContext context, int idParent) {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Pilih Jenjangnya",
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xff485460),
+                            ),
+                          )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: JenjangScreen(
+                      key: Key("3"),
+                      onTryoutgo: (int jenjang, bool isParent, String name) {
+                        this
+                            ._profileHeaderPresenter
+                            .setJenjang(jenjang, isParent, name, context);
+                      },
+                      idparent: idParent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void showJenjangTujuan(BuildContext context, int idParent) {
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) {
+        return Material(
+          child: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Pilih Jenjangnya",
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xff485460),
+                            ),
+                          )),
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 34,
+                          color: Color(0xff485460),
+                        ),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: JenjangScreen(
+                      key: Key("3"),
+                      onTryoutgo: (int jenjang, bool isParent, String name) {
+                        this
+                            ._profileHeaderPresenter
+                            .setJenjangTujuan(jenjang, isParent, name, context);
+                      },
+                      idparent: idParent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
