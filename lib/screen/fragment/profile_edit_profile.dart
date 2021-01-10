@@ -654,11 +654,11 @@ class EditProfileState extends State<EditProfile>
                                     keyboardType: TextInputType.text,
                                     validator: _userPasswordValidation,
                                     textInputAction: TextInputAction.next,
-                                    onFieldSubmitted: (_) {
-                                      FocusScope.of(context).requestFocus(
-                                          _inputAsalSekolahFocusNode);
-                                    },
-                                    onTap: (() => {this.areaJenjang()}),
+                                    onTap: (() => {
+                                          FocusScope.of(context)
+                                              .requestFocus(new FocusNode()),
+                                          this.areaJenjang()
+                                        }),
                                     onChanged: (String sekolah) {},
                                     decoration: InputDecoration(
                                         hintText: this
@@ -688,12 +688,12 @@ class EditProfileState extends State<EditProfile>
                                           validator: _userPasswordValidation,
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
-                                          onFieldSubmitted: (_) {
-                                            FocusScope.of(context).requestFocus(
-                                                _inputTujuanSekolahFocusNode);
-                                          },
-                                          onTap: (() =>
-                                              {this.areaJenjangTujuan()}),
+                                          onTap: (() => {
+                                                FocusScope.of(context)
+                                                    .requestFocus(
+                                                        new FocusNode()),
+                                                this.areaJenjangTujuan()
+                                              }),
                                           onChanged: (String sekolah) {},
                                           decoration: InputDecoration(
                                               hintText: this
@@ -899,11 +899,11 @@ class EditProfileState extends State<EditProfile>
                       keyboardType: TextInputType.text,
                       validator: _userPasswordValidation,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_inputAreaFocusNode);
-                      },
-                      onTap: (() => {this.selectArea()}),
+                      onTap: (() => {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode()),
+                            this.selectArea()
+                          }),
                       onChanged: (String area) {},
                       decoration: InputDecoration(
                           hintText: 'pilih area',
@@ -986,7 +986,11 @@ class EditProfileState extends State<EditProfile>
                       keyboardType: TextInputType.text,
                       validator: _userPasswordValidation,
                       textInputAction: TextInputAction.next,
-                      onTap: (() => {this.selectAreaTujuan()}),
+                      onTap: (() => {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode()),
+                            this.selectAreaTujuan()
+                          }),
                       onChanged: (String area) {},
                       decoration: InputDecoration(
                           hintText: 'pilih area',
