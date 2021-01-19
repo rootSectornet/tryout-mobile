@@ -74,14 +74,14 @@ class DataTryout {
 
 class DataSekolah {
   String namaSekolah;
-  int kkm;
+  String kkm;
   String grades;
 
   DataSekolah({this.namaSekolah, this.kkm, this.grades});
 
   DataSekolah.fromJson(Map<String, dynamic> json) {
     namaSekolah = json['namaSekolah'];
-    kkm = json['kkm'];
+    kkm = json['kkm'].toString();
     grades = json['grades'];
   }
 

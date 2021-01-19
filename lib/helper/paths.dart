@@ -20,6 +20,9 @@ class Paths {
   static const String ENDPOINT_RASIO_GRADES = "RasioGrades";
   static const String ENDPOINT_TRYOUT = "tryout";
   static const String ENDPOINT_TRYOUT_MATPELS = "tryoutdetails";
+  static const String ENDPOINT_CHECK_MATPELS_STATUS = "finishTryoutDetail";
+  static const String ENDPOINT_FINISH_MATPELS_STATUS = "finishTryoutDetail";
+  static const String ENDPOINT_FINISH_TRYOUT_STATUS = "finishTryout";
   static const String ENDPOINT_TRYOUT_INFO = "tryout/info";
   static const String ENDPOINT_TRYOUT_SOAL = "tryout/soals";
   static const String ENDPOINT_MURID = "murid";

@@ -337,7 +337,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                                           width: 5,
                                         ),
                                         Text(
-                                            "${this._paketModel.pakets[itemIndex].durasi} Jam",
+                                            "${this._paketModel.pakets[itemIndex].durasi}",
                                             style: GoogleFonts.poppins(
                                                 color: Colors.white54,
                                                 fontSize: 12)),
@@ -443,7 +443,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
                                           width: 5,
                                         ),
                                         Text(
-                                            "${this._paketModel.pakets[itemIndex].durasi} Jam",
+                                            "${this._paketModel.pakets[itemIndex].durasi}",
                                             style: GoogleFonts.poppins(
                                                 color: Colors.white54,
                                                 fontSize: 12)),

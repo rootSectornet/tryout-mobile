@@ -35,10 +35,7 @@ class PaketPresenter implements PaketPresenterAbstract {
     this._paketState.refreshData(this._paketModel);
     this._paketApi.getPakets().then((value) {
       value.dataPaket.data.forEach((element) {
-        List<String> time = element.waktuPengerjaan.split(" - ");
-        DateTime akhir = DateTime.parse("2020-11-20 " + time[1]);
-        DateTime awal = DateTime.parse("2020-11-20 " + time[0]);
-        var durasi = akhir.hour - awal.hour;
+        var durasi = element.waktuPengerjaan;
         String tanggal = DateFormat("d, MMMM - y")
             .format(DateTime.parse(element.tanggalSelesai))
             .toString();

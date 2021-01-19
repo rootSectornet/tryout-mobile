@@ -141,15 +141,15 @@ class PembayaranBayarState extends State<PembayaranBayar>
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      child: Text(
-                        'Atas Nama: CV Candahar Technologi',
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   child: Text(
+                    //     'Atas Nama: CV Candahar Technologi',
+                    //     style: GoogleFonts.poppins(
+                    //       color: Colors.black,
+                    //       fontSize: 12,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 20,
                     ),

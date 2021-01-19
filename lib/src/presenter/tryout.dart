@@ -4,6 +4,7 @@ import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/tryout.dart';
 import 'package:TesUjian/src/resources/TryoutApi.dart';
 import 'package:TesUjian/src/resources/bayarApi.dart';
+import 'package:TesUjian/src/resources/sekolahApi.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:TesUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,13 @@ abstract class TryoutPresenterAbstract {
   set view(TryoutState view) {}
   void save(int idPaket, int idJenjang) {}
   void getMatpels(int idTryout) {}
+  void getArea() {}
   void getInfo(int idTryout) {}
   void check(int idMurid, int idTryout) {}
+  void checkMatpelStatus(int idTryout, int idTryoutDetail, int index) {}
   void checkStatus(int idMurid, int idTryout) {}
   void checkPembayaranStatus(String idBayar) {}
+  void finishTryout(int idTryout) {}
 }
 
 class TryoutPresenter implements TryoutPresenterAbstract {
@@ -25,6 +29,7 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   TryoutState _tryoutState;
   TryoutApi _tryoutApi = new TryoutApi();
   BayarApi _bayarApi = new BayarApi();
+  SekolahApi _sekolahApi = new SekolahApi();
 
   @override
   // ignore: avoid_return_types_on_setters
@@ -81,6 +86,18 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   }
 
   @override
+  void getArea() {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getArea().then((value) {
+      this._tryoutModel.area = value;
+      this._tryoutState.refreshData(this._tryoutModel);
+    }).catchError((err) {
+      this._tryoutState.onError(err.toString());
+    });
+  }
+
+  @override
   void getMatpels(int idTryout) {
     this._tryoutModel.isloading = true;
     this._tryoutModel.idTryout = idTryout;
@@ -125,6 +142,7 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   void checkStatus(int idMurid, int idTryout) {
     this._tryoutModel.isloading = true;
     this._bayarModel.bayars.clear();
+    this._tryoutState.refreshDataBayar(this._bayarModel);
     // this._totalNilaiState.removeDataBayar('test');
 
     this._bayarApi.checkPembayaran(idMurid, idTryout).then((value) {
@@ -196,6 +214,44 @@ class TryoutPresenter implements TryoutPresenterAbstract {
     }).catchError((onError) {
       print(onError.toString());
       print("info");
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
+    });
+  }
+
+  @override
+  void checkMatpelStatus(int idTryout, int idTryoutDetail, int index) {
+    this._tryoutModel.isloading = true;
+    // this._tryoutModel.statusMatpel = false;
+    this._tryoutState.refreshData(this._tryoutModel);
+    this._tryoutApi.checkmatpel(idTryout, idTryoutDetail).then((value) {
+      print("++++++++++cek+++++++++++++++");
+      print(jsonEncode(value));
+      print("++++++++++cek+++++++++++++++");
+      // this._tryoutModel.statusMatpel = value.dataTryout.data[0].status;
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
+      this
+          ._tryoutState
+          .onCheckMatpelStatus(value.dataTryout.data[0].status, index);
+    }).catchError((onError) {
+      print(onError.toString());
+      print("info");
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
+    });
+  }
+
+  @override
+  void finishTryout(int idTryout) {
+    this._tryoutModel.isloading = true;
+    this._tryoutState.refreshData(this._tryoutModel);
+    this._tryoutApi.finishTryout(idTryout).then((value) {
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
+      this._tryoutState.refreshTampilan();
+    }).catchError((onError) {
+      print(onError.toString());
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
     });

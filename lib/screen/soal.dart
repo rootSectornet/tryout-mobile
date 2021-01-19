@@ -229,97 +229,186 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                       textAlign: TextAlign.justify),
                                 },
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView.builder(
-                                  itemCount: this
+                              this
                                       ._soalModel
                                       .tryoutSoalResponse
                                       .dataTryout[this._soalModel.currentIndex]
-                                      .choice
-                                      .length,
-                                  scrollDirection: Axis.vertical,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder:
-                                      (BuildContext context, int choiceIndex) {
-                                    return InkWell(
-                                      onTap: () {
-                                        this._soalPresenter.jawab(choiceIndex);
-                                      },
-                                      hoverColor: Colors.red,
-                                      highlightColor: Colors.red,
-                                      splashColor: Colors.red,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.all(8),
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        decoration: BoxDecoration(
-                                            color: this
-                                                        ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
-                                                        .jawabanUser ==
+                                      .isEssay
+                                  ? Container(
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            controller:
+                                                this._soalModel.jawabanEssay,
+                                            minLines:
+                                                5, // any number you need (It works as the rows for the textarea)
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            maxLines: null,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder()),
+                                          ),
+                                          Center(
+                                            child: InkWell(
+                                              splashColor: Color(0xff7474BF),
+                                              onTap: () {
+                                                this._soalPresenter.jawabEssay(
                                                     this
                                                         ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
-                                                        .choice[choiceIndex]
-                                                        .choice
-                                                ? Color(0xff25509e)
-                                                : Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black26,
-                                                  offset: Offset(0, 2),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 0)
-                                            ],
-                                            border: this
-                                                        ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
-                                                        .jawabanUser ==
-                                                    this
-                                                        ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
-                                                        .choice[choiceIndex]
-                                                        .choice
-                                                ? Border.all(
-                                                    color: Colors.blue,
-                                                    width: 1)
-                                                : Border.all(
-                                                    color: Colors.transparent,
-                                                    width: 0)),
-                                        child: Row(
-                                          children: [
-                                            AutoSizeText(
+                                                        .jawabanEssay
+                                                        .text);
+                                              },
+                                              child: Container(
+                                                margin:
+                                                    EdgeInsets.only(top: 10.0),
+                                                height: 35,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    1.4,
+                                                decoration: BoxDecoration(
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: Colors.black26,
+                                                          offset: Offset(0, 28),
+                                                          blurRadius: 40,
+                                                          spreadRadius: -12)
+                                                    ],
+                                                    color: Color(0xff1d63dc),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Submit",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: ListView.builder(
+                                        itemCount: this
+                                            ._soalModel
+                                            .tryoutSoalResponse
+                                            .dataTryout[
+                                                this._soalModel.currentIndex]
+                                            .choice
+                                            .length,
+                                        scrollDirection: Axis.vertical,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (BuildContext context,
+                                            int choiceIndex) {
+                                          return InkWell(
+                                            onTap: () {
                                               this
-                                                  ._soalModel
-                                                  .choiceNumber[choiceIndex],
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: this
+                                                  ._soalPresenter
+                                                  .jawab(choiceIndex);
+                                            },
+                                            hoverColor: Colors.red,
+                                            highlightColor: Colors.red,
+                                            splashColor: Colors.red,
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              padding: EdgeInsets.all(8),
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10),
+                                              decoration: BoxDecoration(
+                                                  color: this
+                                                              ._soalModel
+                                                              .tryoutSoalResponse
+                                                              .dataTryout[this
+                                                                  ._soalModel
+                                                                  .currentIndex]
+                                                              .jawabanUser ==
+                                                          this
+                                                              ._soalModel
+                                                              .tryoutSoalResponse
+                                                              .dataTryout[this
+                                                                  ._soalModel
+                                                                  .currentIndex]
+                                                              .choice[
+                                                                  choiceIndex]
+                                                              .choice
+                                                      ? Color(0xff25509e)
+                                                      : Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black26,
+                                                        offset: Offset(0, 2),
+                                                        blurRadius: 1,
+                                                        spreadRadius: 0)
+                                                  ],
+                                                  border: this
+                                                              ._soalModel
+                                                              .tryoutSoalResponse
+                                                              .dataTryout[this
+                                                                  ._soalModel
+                                                                  .currentIndex]
+                                                              .jawabanUser ==
+                                                          this
+                                                              ._soalModel
+                                                              .tryoutSoalResponse
+                                                              .dataTryout[this
+                                                                  ._soalModel
+                                                                  .currentIndex]
+                                                              .choice[
+                                                                  choiceIndex]
+                                                              .choice
+                                                      ? Border.all(color: Colors.blue, width: 1)
+                                                      : Border.all(color: Colors.transparent, width: 0)),
+                                              child: Row(
+                                                children: [
+                                                  AutoSizeText(
+                                                    this
                                                             ._soalModel
-                                                            .tryoutSoalResponse
-                                                            .dataTryout[this
-                                                                ._soalModel
-                                                                .currentIndex]
-                                                            .jawabanUser ==
+                                                            .choiceNumber[
+                                                        choiceIndex],
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: this
+                                                                  ._soalModel
+                                                                  .tryoutSoalResponse
+                                                                  .dataTryout[this
+                                                                      ._soalModel
+                                                                      .currentIndex]
+                                                                  .jawabanUser ==
+                                                              this
+                                                                  ._soalModel
+                                                                  .tryoutSoalResponse
+                                                                  .dataTryout[this
+                                                                      ._soalModel
+                                                                      .currentIndex]
+                                                                  .choice[
+                                                                      choiceIndex]
+                                                                  .choice
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
+                                                    maxFontSize: 14,
+                                                    maxLines: 10,
+                                                    softWrap: true,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 6,
+                                                  ),
+                                                  Expanded(
+                                                    child: AutoSizeText(
                                                         this
                                                             ._soalModel
                                                             .tryoutSoalResponse
@@ -327,59 +416,39 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                                 ._soalModel
                                                                 .currentIndex]
                                                             .choice[choiceIndex]
-                                                            .choice
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                                            .choice,
+                                                        maxFontSize: 14,
+                                                        maxLines: 10,
+                                                        softWrap: true,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: this
+                                                                      ._soalModel
+                                                                      .tryoutSoalResponse
+                                                                      .dataTryout[this
+                                                                          ._soalModel
+                                                                          .currentIndex]
+                                                                      .jawabanUser ==
+                                                                  this
+                                                                      ._soalModel
+                                                                      .tryoutSoalResponse
+                                                                      .dataTryout[this
+                                                                          ._soalModel
+                                                                          .currentIndex]
+                                                                      .choice[
+                                                                          choiceIndex]
+                                                                      .choice
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                        )),
+                                                  ),
+                                                ],
                                               ),
-                                              maxFontSize: 14,
-                                              maxLines: 10,
-                                              softWrap: true,
                                             ),
-                                            SizedBox(
-                                              width: 6,
-                                            ),
-                                            Expanded(
-                                              child: AutoSizeText(
-                                                  this
-                                                      ._soalModel
-                                                      .tryoutSoalResponse
-                                                      .dataTryout[this
-                                                          ._soalModel
-                                                          .currentIndex]
-                                                      .choice[choiceIndex]
-                                                      .choice,
-                                                  maxFontSize: 14,
-                                                  maxLines: 10,
-                                                  softWrap: true,
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: this
-                                                                ._soalModel
-                                                                .tryoutSoalResponse
-                                                                .dataTryout[this
-                                                                    ._soalModel
-                                                                    .currentIndex]
-                                                                .jawabanUser ==
-                                                            this
-                                                                ._soalModel
-                                                                .tryoutSoalResponse
-                                                                .dataTryout[this
-                                                                    ._soalModel
-                                                                    .currentIndex]
-                                                                .choice[
-                                                                    choiceIndex]
-                                                                .choice
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                  )),
-                                            ),
-                                          ],
-                                        ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
-                                ),
-                              )
+                                    )
                             ],
                           ),
                         ),
@@ -529,8 +598,17 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     Widget continueButton = FlatButton(
       child: Text("Kumpulkan"),
       onPressed: () {
+        // print(this._soalModel.currentIndex);
+        int totalSoal = this._soalModel.currentIndex + 1;
+        print(totalSoal);
         Navigator.pop(context);
         this._soalPresenter.kumpulkan();
+        Toast.show("Soal selesai :)", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        // if (this._soalModel.tryoutSoalResponse.dataTryout.length == totalSoal) {
+        // } else {
+        //   Navigator.pop(context);
+        // }
       },
     );
 

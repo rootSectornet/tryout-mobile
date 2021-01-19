@@ -145,7 +145,7 @@ class PembayaranDetailState extends State<PembayaranDetail>
                     ),
                     Container(
                       child: Text(
-                        'Atas Nama: CV Candahar Technologi',
+                        'Masih sandbox',
                         style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 12,

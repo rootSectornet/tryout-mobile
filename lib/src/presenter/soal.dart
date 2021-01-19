@@ -7,6 +7,7 @@ abstract class SoalPresenterAbstract {
   void getSoal(int idmatpel, int idTryoutDetail) {}
   void selected(int index) {}
   void jawab(int index) {}
+  void jawabEssay(String jawaban) {}
   void kumpulkan() {}
 }
 
@@ -72,20 +73,48 @@ class SoalPresenter implements SoalPresenterAbstract {
   }
 
   @override
+  void jawabEssay(String jawaban) {
+    this
+        ._soalModel
+        .tryoutSoalResponse
+        .dataTryout[this._soalModel.currentIndex]
+        .jawabanUser = jawaban;
+    this
+        ._soalModel
+        .tryoutSoalResponse
+        .dataTryout[this._soalModel.currentIndex]
+        .status = true;
+    int totalSoal = this._soalModel.tryoutSoalResponse.dataTryout.length;
+    if ((this._soalModel.currentIndex + 1) < totalSoal) {
+      this._soalModel.currentIndex++;
+    }
+    this._soalModel.jawabanEssay.clear();
+    this._soalState.refreshData(this._soalModel);
+  }
+
+  @override
   void kumpulkan() async {
     this._soalModel.isloading = true;
     this._soalState.refreshData(this._soalModel);
     await Future.forEach(this._soalModel.tryoutSoalResponse.dataTryout,
         (element) async {
       if (element.jawabanUser != null) {
+        print(element.idTryoutDetailSoals);
+        print(' hehe ');
         print(element.jawabanUser);
         Map<String, String> body = <String, String>{
-          "id_tryoutDetail": this._soalModel.idTryoutDetail.toString(),
+          // "id": this._soalModel.idTryoutDetail.toString(),
+          "id": element.idTryoutDetailSoals.toString(),
           "jawaban_user": element.jawabanUser,
         };
         var a = await this._tryoutApi.kumpulkan(body);
         print(a);
       }
+    });
+    this._tryoutApi.finishMatpel(this._soalModel.idTryoutDetail).then((value) {
+      print(value);
+    }).catchError((onError) {
+      this._soalState.onError(onError.toString());
     });
     this._soalModel.isloading = false;
     this._soalState.refreshData(this._soalModel);

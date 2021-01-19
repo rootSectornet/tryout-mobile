@@ -28,6 +28,7 @@ final routes = {
   '/login': (BuildContext context) => new Login(),
   '/signup': (BuildContext context) => new SignUp(),
   '/verify': (BuildContext context) => new VerificationScreen(),
+  '/tryout': (BuildContext context) => new TryoutScreen(),
   '/home': (BuildContext context) => new Home(),
   '/profile_detail': (BuildContext context) => new ProfileDetail(),
   '/profile_nilai': (BuildContext context) => new ProfileNilai(),

@@ -1,3 +1,4 @@
+import 'package:TesUjian/src/response/finishTryoutDetail.dart';
 import 'package:TesUjian/src/response/tryoutdetail.dart';
 import 'package:TesUjian/src/response/tryoutinfo.dart';
 import 'package:TesUjian/src/response/tryoutsoal.dart';
@@ -9,6 +10,10 @@ import 'dart:convert';
 
 class TryoutApi {
   Client _client = new Client();
+  Map<String, String> _headers = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+  };
 
   // ignore: missing_return
   Future<int> saveTryout(Map<String, String> data) async {
@@ -40,6 +45,27 @@ class TryoutApi {
         TryoutDetailResponse tryoutDetailResponse =
             TryoutDetailResponse.fromJson(json.decode(response.body));
         return tryoutDetailResponse;
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<FinishTryoutDetail> checkmatpel(
+      int idTryout, int idTryoutDetail) async {
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_CHECK_MATPELS_STATUS}/$idTryout?id_tryoutDetail=$idTryoutDetail");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      // print(res);
+      print("ENDPOINT_CHECK_MATPELS_STATUS");
+      if (res['success']) {
+        FinishTryoutDetail finishTryoutDetail =
+            FinishTryoutDetail.fromJson(json.decode(response.body));
+        return finishTryoutDetail;
       } else {
         Future.error("${res['data']}");
       }
@@ -103,8 +129,34 @@ class TryoutApi {
   }
 
   // ignore: missing_return
+  Future<String> finishMatpel(int idTryoutDetail) async {
+    // print('test');
+    final response = await _client.post(
+        "${Paths.BASEURL}${Paths.ENDPOINT_FINISH_MATPELS_STATUS}/$idTryoutDetail",
+        headers: _headers);
+    if (response.statusCode == 200) {
+      return 'ok';
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<String> finishTryout(int idTryout) async {
+    // print('test');
+    final response = await _client.post(
+        "${Paths.BASEURL}${Paths.ENDPOINT_FINISH_TRYOUT_STATUS}/$idTryout",
+        headers: _headers);
+    if (response.statusCode == 200) {
+      return 'ok';
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
   Future<bool> kumpulkan(Map<String, String> data) async {
-    print('test');
+    // print('test');
     var uri = Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_KUMPULKAN_V2}");
     var request = MultipartRequest('PUT', uri)..fields.addAll(data);
     var response = await request.send();

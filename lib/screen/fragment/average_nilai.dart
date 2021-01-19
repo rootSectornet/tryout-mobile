@@ -11,8 +11,10 @@ class AverageNilai extends StatefulWidget {
   final String title;
   final int idMurid;
   final int idTryout;
+  final int idArea;
 
-  const AverageNilai({Key key, this.title, this.idMurid, this.idTryout})
+  const AverageNilai(
+      {Key key, this.title, this.idMurid, this.idTryout, this.idArea})
       : super(key: key);
   @override
   _AverageNilaiState createState() => _AverageNilaiState();
@@ -33,7 +35,9 @@ class _AverageNilaiState extends State<AverageNilai>
   void initState() {
     super.initState();
     this._rasioGradesPresenter.view = this;
-    this._rasioGradesPresenter.getData(widget.idMurid, widget.idTryout);
+    this
+        ._rasioGradesPresenter
+        .getData(widget.idMurid, widget.idTryout, widget.idArea);
     _controller = AnimationController(vsync: this);
   }
 

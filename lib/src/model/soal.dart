@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:TesUjian/src/response/tryoutsoal.dart';
+import 'package:flutter/material.dart';
 
 class JawabanTemp {
   int idTryoutDetail = 0;
@@ -19,6 +20,7 @@ class SoalModel {
   int currentIndex = 0;
   String jawaban;
   List<JawabanTemp> jawabanTemp = new List<JawabanTemp>();
+  final TextEditingController jawabanEssay = new TextEditingController();
   TryoutSoalResponse tryoutSoalResponse = new TryoutSoalResponse();
   List<String> choiceNumber = ["A.", "B.", "C.", "D."];
 }

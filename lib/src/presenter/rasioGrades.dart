@@ -11,7 +11,7 @@ import 'package:TesUjian/src/state/total_nilai.dart';
 
 abstract class RasioGradesPresenterAbstract {
   set view(RasioGradeState view) {}
-  void getData(int idMurid, int idTryout) {}
+  void getData(int idMurid, int idTryout, int idArea) {}
 }
 
 class RasioGradesPresenter implements RasioGradesPresenterAbstract {
@@ -29,11 +29,14 @@ class RasioGradesPresenter implements RasioGradesPresenterAbstract {
   }
 
   @override
-  void getData(int idMurid, int idTryout) {
+  void getData(int idMurid, int idTryout, int idArea) {
     print('test');
     this._rasioGradeModel.isloading = true;
     this._rasioGradeState.refreshData(this._rasioGradeModel);
-    this._historyTryoutApi.getRasioGrades(idMurid, idTryout).then((value) {
+    this
+        ._historyTryoutApi
+        .getRasioGrades(idMurid, idTryout, idArea)
+        .then((value) {
       this._rasioGradeModel.rasioGradeResponse = value;
       value.dataTryout.forEach((element) {
         this._rasioGradeModel.rasioGrade.add(new RasioGrade(

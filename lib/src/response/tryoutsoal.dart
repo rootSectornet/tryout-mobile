@@ -25,6 +25,7 @@ class TryoutSoalResponse {
 }
 
 class DataTryout {
+  int idTryoutDetailSoals;
   int id;
   String jawabanUser;
   String soal;
@@ -36,7 +37,8 @@ class DataTryout {
   bool imgPembahasan;
 
   DataTryout(
-      {this.id,
+      {this.idTryoutDetailSoals,
+      this.id,
       this.jawabanUser,
       this.soal,
       this.jawabanBenar,
@@ -47,6 +49,7 @@ class DataTryout {
       this.imgPembahasan});
 
   DataTryout.fromJson(Map<String, dynamic> json) {
+    idTryoutDetailSoals = json['id_tryoutDetailSoals'];
     id = json['id'];
     jawabanUser = json['jawaban_user'];
     soal = json['soal'];
@@ -65,6 +68,7 @@ class DataTryout {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id_tryoutDetailSoals'] = this.idTryoutDetailSoals;
     data['id'] = this.id;
     data['jawaban_user'] = this.jawabanUser;
     data['soal'] = this.soal;
