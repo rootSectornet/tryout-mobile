@@ -138,14 +138,14 @@ class ProfileInfoLayananState extends State<ProfileInfoLayanan>
                                 child: Row(
                                   children: [
                                     Icon(
-                                      Ionicons.chatbox,
+                                      Ionicons.logo_instagram,
                                       color: Colors.green,
                                       size: 16,
                                     ),
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text("Chat Support",
+                                    Text("@tesujian",
                                         style: GoogleFonts.poppins(
                                             color: Colors.black, fontSize: 14)),
                                   ],
@@ -197,7 +197,7 @@ class ProfileInfoLayananState extends State<ProfileInfoLayanan>
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text("08123456",
+                                    Text("0821-2215-3857",
                                         style: GoogleFonts.poppins(
                                             color: Colors.black, fontSize: 14)),
                                   ],
@@ -249,7 +249,7 @@ class ProfileInfoLayananState extends State<ProfileInfoLayanan>
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text("tpm@tpm.com",
+                                    Text("support@tesujian.com",
                                         style: GoogleFonts.poppins(
                                             color: Colors.black, fontSize: 14)),
                                   ],

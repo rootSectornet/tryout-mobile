@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   auto_size_text: ^2.1.0
+  audioplayers: ^0.17.0
   badges: ^1.1.3
   bottom_navy_bar: ^5.5.0
   cached_network_image: ^2.3.3
@@ -34,6 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
   encrypt: ^4.0.0
+  flutter_audio_recorder: ^0.5.5
   flutter_html: ^1.1.1
   flutter_plugin_android_lifecycle: ^1.0.11
   flutter_svg: null
@@ -52,6 +54,7 @@ dependencies:
   mime: ^0.9.7
   modal_bottom_sheet: ^1.0.0+1
   path: ^1.7.0
+  path_provider: ^1.6.24
   percent_indicator: ^2.1.8
   pie_chart: ^4.0.1
   progress_dialog: ^1.2.4

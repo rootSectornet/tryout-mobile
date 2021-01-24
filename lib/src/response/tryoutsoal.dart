@@ -32,7 +32,7 @@ class DataTryout {
   String jawabanBenar;
   List<Choice> choice;
   bool status;
-  bool isEssay;
+  int isEssay;
   String pembahasan;
   bool imgPembahasan;
 

@@ -1263,7 +1263,9 @@ class EditProfileState extends State<EditProfile>
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        print(_image);
         fileName = _image.path.split('/').last;
+        print(fileName);
       } else {
         print('No image selected.');
       }
@@ -1277,7 +1279,9 @@ class EditProfileState extends State<EditProfile>
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        print(_image);
         fileName = _image.path.split('/').last;
+        print(fileName);
       } else {
         print('No image selected.');
       }
