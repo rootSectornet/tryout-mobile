@@ -44,5 +44,9 @@
 	
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Record audio for playback</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
 </dict>
 </plist>

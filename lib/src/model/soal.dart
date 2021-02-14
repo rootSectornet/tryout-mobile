@@ -18,6 +18,7 @@ class SoalModel {
   File fileUpload;
   int idSoal = 0;
   int currentIndex = 0;
+  int status = 0;
   String jawaban;
   List<JawabanTemp> jawabanTemp = new List<JawabanTemp>();
   final TextEditingController jawabanEssay = new TextEditingController();
