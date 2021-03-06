@@ -48,8 +48,10 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   int _currentDuration;
   double _completedPercentage = 0.0;
   bool _isPlaying = false;
+  bool _isPlayingSoal = false;
   int _selectedIndex = -1;
 
+  AudioPlayer _audioPlayerSoal = AudioPlayer();
   final int idtryoutdetail;
   final int idMatpel;
   final String matpel;
@@ -193,6 +195,49 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
           _completedPercentage =
               _currentDuration.toDouble() / _totalDuration.toDouble();
         });
+      });
+    }
+  }
+
+  Future<void> _onPlaySoal(
+      {@required String filePath, @required int index}) async {
+    print(filePath);
+    if (!_isPlayingSoal) {
+      int result =
+          await _audioPlayerSoal.play('http://103.41.207.247:3000/' + filePath);
+      print(result);
+      print('hasil audio');
+      setState(() {
+        _selectedIndex = index;
+        _completedPercentage = 0.0;
+        _isPlayingSoal = true;
+      });
+
+      _audioPlayerSoal.onPlayerCompletion.listen((_) {
+        setState(() {
+          _isPlayingSoal = false;
+          _completedPercentage = 0.0;
+        });
+      });
+      _audioPlayerSoal.onDurationChanged.listen((duration) {
+        setState(() {
+          _totalDuration = duration.inMicroseconds;
+        });
+      });
+
+      _audioPlayerSoal.onAudioPositionChanged.listen((duration) {
+        setState(() {
+          _currentDuration = duration.inMicroseconds;
+          _completedPercentage =
+              _currentDuration.toDouble() / _totalDuration.toDouble();
+        });
+      });
+    } else {
+      _audioPlayerSoal.stop();
+      setState(() {
+        _selectedIndex = index;
+        _completedPercentage = 0.0;
+        _isPlayingSoal = false;
       });
     }
   }
@@ -470,36 +515,119 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Html(
-                                  data: htmlParser.DocumentFragment.html(this
-                                          ._soalModel
-                                          .tryoutSoalResponse
-                                          .dataTryout[
-                                              this._soalModel.currentIndex]
-                                          .soal)
-                                      .text,
-                                  style: {
-                                    "table": Style(
-                                      backgroundColor: Color.fromARGB(
-                                          0x50, 0xee, 0xee, 0xee),
-                                    ),
-                                    "tr": Style(
-                                      border: Border(
-                                          bottom:
-                                              BorderSide(color: Colors.grey)),
-                                    ),
-                                    "th": Style(
-                                      padding: EdgeInsets.all(6),
-                                      backgroundColor: Colors.grey,
-                                    ),
-                                    "td": Style(
-                                      padding: EdgeInsets.all(6),
-                                    ),
-                                    "p": Style(
-                                        fontFamily: 'serif',
-                                        textAlign: TextAlign.justify),
-                                  },
-                                ),
+                                this
+                                            ._soalModel
+                                            .tryoutSoalResponse
+                                            .dataTryout[
+                                                this._soalModel.currentIndex]
+                                            .isEssay ==
+                                        2
+                                    ? Column(
+                                        children: [
+                                          ExpansionTile(
+                                            title: Text(this
+                                                ._soalModel
+                                                .tryoutSoalResponse
+                                                .dataTryout[this
+                                                    ._soalModel
+                                                    .currentIndex]
+                                                .soal),
+                                            // subtitle: Text(
+                                            //     _getDateFromFilePatah(filePath: widget.records.elementAt(i))),
+                                            onExpansionChanged: ((newState) {
+                                              if (newState) {
+                                                setState(() {
+                                                  _selectedIndex = 0;
+                                                });
+                                              }
+                                            }),
+                                            children: [
+                                              Container(
+                                                height: 100,
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    LinearProgressIndicator(
+                                                      minHeight: 5,
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                                  Color>(
+                                                              Colors.green),
+                                                      value: _selectedIndex == 0
+                                                          ? _completedPercentage
+                                                          : 0,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        IconButton(
+                                                          icon: _selectedIndex ==
+                                                                  0
+                                                              ? _isPlayingSoal
+                                                                  ? Icon(Icons
+                                                                      .pause)
+                                                                  : Icon(Icons
+                                                                      .play_arrow)
+                                                              : Icon(Icons
+                                                                  .play_arrow),
+                                                          onPressed: () => _onPlaySoal(
+                                                              filePath: this
+                                                                  ._soalModel
+                                                                  .tryoutSoalResponse
+                                                                  .dataTryout[this
+                                                                      ._soalModel
+                                                                      .currentIndex]
+                                                                  .soal,
+                                                              index: 0),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                    : Html(
+                                        data: htmlParser.DocumentFragment.html(
+                                                this
+                                                    ._soalModel
+                                                    .tryoutSoalResponse
+                                                    .dataTryout[this
+                                                        ._soalModel
+                                                        .currentIndex]
+                                                    .soal)
+                                            .text,
+                                        style: {
+                                          "table": Style(
+                                            backgroundColor: Color.fromARGB(
+                                                0x50, 0xee, 0xee, 0xee),
+                                          ),
+                                          "tr": Style(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey)),
+                                          ),
+                                          "th": Style(
+                                            padding: EdgeInsets.all(6),
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                          "td": Style(
+                                            padding: EdgeInsets.all(6),
+                                          ),
+                                          "p": Style(
+                                              fontFamily: 'serif',
+                                              textAlign: TextAlign.justify),
+                                        },
+                                      ),
                                 this
                                             ._soalModel
                                             .tryoutSoalResponse

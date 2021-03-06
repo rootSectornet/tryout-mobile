@@ -1,6 +1,6 @@
 // ignore: unused_import
 import 'package:TesUjian/src/response/profile.dart';
-import 'package:http/http.dart' show Client;
+import 'package:http/http.dart' show Client, MultipartRequest;
 // ignore: unused_import
 // ignore: unused_import
 import 'package:TesUjian/helper/paths.dart';
@@ -23,21 +23,19 @@ class ProfileApi {
   }
 
   // ignore: missing_return
-  Future<ProfileResponse> updateProfile(String data) async {
-    final response =
-        await _client.post("${Paths.BASEURL}${Paths.ENDPOINT_MURID}");
+  Future<ProfileResponse> updateProfile(
+      Map<String, String> data, String idMurid) async {
+    var uri = Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_DAFTAR}/$idMurid");
+    var request = MultipartRequest('put', uri)..fields.addAll(data);
+    var response = await request.send();
     if (response.statusCode == 200) {
-      Map<String, dynamic> res = jsonDecode(response.body);
-      print(res);
-      if (res['success']) {
-        ProfileResponse profileResponse =
-            ProfileResponse.fromJson(json.decode(response.body));
-        return profileResponse;
-      } else {
-        Future.error("${res['data']}");
-      }
+      final d = await response.stream.bytesToString();
+      print(d);
+      ProfileResponse profileResponse =
+          ProfileResponse.fromJson(json.decode(d.toString()));
+      return profileResponse;
     } else {
-      Future.error("Yah, Internet Kamu error!");
+      Future.error("Yah, Internet Kamu errors!");
     }
   }
 }

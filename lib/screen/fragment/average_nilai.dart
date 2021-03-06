@@ -24,8 +24,11 @@ class _AverageNilaiState extends State<AverageNilai>
     with SingleTickerProviderStateMixin
     implements RasioGradeState {
   AnimationController _controller;
+  String selectedJenjang = "SD";
   RasioGradeModel _rasioGradeModel;
   RasioGradesPresenter _rasioGradesPresenter;
+  int indexSelected = 0;
+  List<String> jenjangs = ["SD", "SMP", "SMA", "SMK", "PTN", "PONDOK"];
 
   _AverageNilaiState() {
     this._rasioGradesPresenter = new RasioGradesPresenter();
@@ -217,13 +220,64 @@ class _AverageNilaiState extends State<AverageNilai>
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 30,
+                              child: ListView.builder(
+                                  itemCount: this
+                                      ._rasioGradeModel
+                                      .rasioGradeResponse
+                                      .dataTryout[0]
+                                      .dataSekolah
+                                      .length,
+                                  shrinkWrap: true,
+                                  physics: ClampingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () => {
+                                        setState(() {
+                                          this.indexSelected = index;
+                                        })
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        margin: EdgeInsets.only(left: 8),
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            color: this.indexSelected == index
+                                                ? Colors.blue
+                                                : Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        child: Text(
+                                          this
+                                              ._rasioGradeModel
+                                              .rasioGradeResponse
+                                              .dataTryout[0]
+                                              .dataSekolah[index]
+                                              .jenjang,
+                                          style: TextStyle(
+                                              color: this.indexSelected == index
+                                                  ? Colors.white
+                                                  : Colors.blue),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ),
                           SizedBox(height: 20),
                           Container(
                             child: this
                                         ._rasioGradeModel
                                         .rasioGradeResponse
                                         .dataTryout[0]
-                                        .dataSekolah ==
+                                        .dataSekolah[this.indexSelected]
+                                        .data ==
                                     []
                                 ? Container(
                                     child: Text('Data sekolah kosong'),
@@ -251,7 +305,8 @@ class _AverageNilaiState extends State<AverageNilai>
                                           ._rasioGradeModel
                                           .rasioGradeResponse
                                           .dataTryout[0]
-                                          .dataSekolah
+                                          .dataSekolah[this.indexSelected]
+                                          .data
                                           .map(
                                             (dataSekolah) => DataRow(cells: [
                                               DataCell(

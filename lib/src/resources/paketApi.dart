@@ -9,9 +9,10 @@ import 'dart:convert';
 class PaketApi {
   Client _client = new Client();
   // ignore: missing_return
-  Future<PaketResponse> getPakets() async {
-    final response =
-        await _client.get("${Paths.BASEURL}${Paths.ENDPOINT_PAKET}");
+  Future<PaketResponse> getPakets(bool isPondok) async {
+    int pondok = isPondok ? 1 : 0;
+    final response = await _client
+        .get("${Paths.BASEURL}${Paths.ENDPOINT_PAKET}?isPondok=$pondok");
     if (response.statusCode == 200) {
       PaketResponse paketResponse =
           PaketResponse.fromJson(json.decode(response.body));

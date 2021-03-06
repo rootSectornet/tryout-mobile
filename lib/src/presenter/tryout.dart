@@ -14,7 +14,8 @@ abstract class TryoutPresenterAbstract {
   set view(TryoutState view) {}
   void save(int idPaket, int idJenjang) {}
   void getMatpels(int idTryout) {}
-  void getArea() {}
+  void getProv() {}
+  void getArea(int idProv) {}
   void getInfo(int idTryout) {}
   void check(int idMurid, int idTryout) {}
   void checkMatpelStatus(int idTryout, int idTryoutDetail, int index) {}
@@ -42,19 +43,22 @@ class TryoutPresenter implements TryoutPresenterAbstract {
 
   @override
   void save(int idPaket, int idJenjang) async {
+    print('masuk ke save');
     this._tryoutModel.isloading = true;
     int idMurid = await Session.getId();
     this._tryoutModel.idMurid = idMurid;
     this._tryoutModel.idPaket = idPaket;
     this._tryoutModel.jenjang = idJenjang;
     this._tryoutState.refreshData(this._tryoutModel);
-    Map<String, String> body = <String, String>{
+    Map<String, String> body = {
       "id_paket": idPaket.toString(),
       "id_murid": idMurid.toString(),
       "id_jenjang": idJenjang.toString(),
       "tgl":
           DateFormat("yyyy-MM-dd").format(DateTime.now().toLocal()).toString()
     };
+    print(body);
+    print('woi');
     this._tryoutApi.saveTryout(body).then((v) {
       this._tryoutModel.idTryout = v;
       this._tryoutState.refreshData(this._tryoutModel);
@@ -86,11 +90,11 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   }
 
   @override
-  void getArea() {
+  void getProv() {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getArea().then((value) {
-      this._tryoutModel.area = value;
+    this._sekolahApi.getProv().then((value) {
+      this._tryoutModel.provinsi = value;
       this._tryoutState.refreshData(this._tryoutModel);
     }).catchError((err) {
       this._tryoutState.onError(err.toString());
@@ -98,7 +102,21 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   }
 
   @override
+  void getArea(int idProv) {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getArea(idProv).then((value) {
+      this._tryoutModel.area = value;
+      this._tryoutState.refreshData(this._tryoutModel);
+      this._tryoutState.selectAreaTujuan();
+    }).catchError((err) {
+      this._tryoutState.onError(err.toString());
+    });
+  }
+
+  @override
   void getMatpels(int idTryout) {
+    print('getmatpel');
     this._tryoutModel.isloading = true;
     this._tryoutModel.idTryout = idTryout;
     this._tryoutState.refreshData(this._tryoutModel);

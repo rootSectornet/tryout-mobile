@@ -1,53 +1,30 @@
 class ProfileResponse {
   bool success;
-  DataMurid dataMurid;
+  List<DataMurid> dataMurid;
 
   ProfileResponse({this.success, this.dataMurid});
 
   ProfileResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    dataMurid = json['data_murid'] != null
-        ? new DataMurid.fromJson(json['data_murid'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.dataMurid != null) {
-      data['data_murid'] = this.dataMurid.toJson();
-    }
-    return data;
-  }
-}
-
-class DataMurid {
-  int total;
-  List<DataMurids> dataMurids;
-
-  DataMurid({this.total, this.dataMurids});
-
-  DataMurid.fromJson(Map<String, dynamic> json) {
-    total = json['total'];
-    if (json['data_murids'] != null) {
-      dataMurids = new List<DataMurids>();
-      json['data_murids'].forEach((v) {
-        dataMurids.add(new DataMurids.fromJson(v));
+    if (json['data_murid'] != null) {
+      dataMurid = new List<DataMurid>();
+      json['data_murid'].forEach((v) {
+        dataMurid.add(new DataMurid.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total'] = this.total;
-    if (this.dataMurids != null) {
-      data['data_murids'] = this.dataMurids.map((v) => v.toJson()).toList();
+    data['success'] = this.success;
+    if (this.dataMurid != null) {
+      data['data_murid'] = this.dataMurid.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class DataMurids {
+class DataMurid {
   int id;
   String name;
   String email;
@@ -61,8 +38,9 @@ class DataMurids {
   String createdAt;
   String updatedAt;
   Sekolah sekolah;
+  List<Daftars> daftars;
 
-  DataMurids(
+  DataMurid(
       {this.id,
       this.name,
       this.email,
@@ -75,9 +53,10 @@ class DataMurids {
       this.picture,
       this.createdAt,
       this.updatedAt,
-      this.sekolah});
+      this.sekolah,
+      this.daftars});
 
-  DataMurids.fromJson(Map<String, dynamic> json) {
+  DataMurid.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -92,6 +71,12 @@ class DataMurids {
     updatedAt = json['updatedAt'];
     sekolah =
         json['sekolah'] != null ? new Sekolah.fromJson(json['sekolah']) : null;
+    if (json['daftars'] != null) {
+      daftars = new List<Daftars>();
+      json['daftars'].forEach((v) {
+        daftars.add(new Daftars.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -111,6 +96,9 @@ class DataMurids {
     if (this.sekolah != null) {
       data['sekolah'] = this.sekolah.toJson();
     }
+    if (this.daftars != null) {
+      data['daftars'] = this.daftars.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -127,6 +115,55 @@ class Sekolah {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['nama'] = this.nama;
+    return data;
+  }
+}
+
+class Daftars {
+  int id;
+  int idMurid;
+  Null idSekolahTujuan;
+  String tglDaftar;
+  bool status;
+  String code;
+  String createdAt;
+  String updatedAt;
+  Null sekolah;
+
+  Daftars(
+      {this.id,
+      this.idMurid,
+      this.idSekolahTujuan,
+      this.tglDaftar,
+      this.status,
+      this.code,
+      this.createdAt,
+      this.updatedAt,
+      this.sekolah});
+
+  Daftars.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    idMurid = json['id_murid'];
+    idSekolahTujuan = json['id_sekolah_tujuan'];
+    tglDaftar = json['tgl_daftar'];
+    status = json['status'];
+    code = json['code'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    sekolah = json['sekolah'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['id_murid'] = this.idMurid;
+    data['id_sekolah_tujuan'] = this.idSekolahTujuan;
+    data['tgl_daftar'] = this.tglDaftar;
+    data['status'] = this.status;
+    data['code'] = this.code;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['sekolah'] = this.sekolah;
     return data;
   }
 }

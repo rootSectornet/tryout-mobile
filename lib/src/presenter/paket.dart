@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 abstract class PaketPresenterAbstract {
   set view(PaketState view) {}
-  void getData() {}
+  void getData(bool isPondok) {}
   void getJenjang() {}
 }
 
@@ -28,12 +28,12 @@ class PaketPresenter implements PaketPresenterAbstract {
   }
 
   @override
-  void getData() {
+  void getData(bool isPondok) {
     // ignore: todo
     // TODO: implement getData
     this._paketModel.isloading = true;
     this._paketState.refreshData(this._paketModel);
-    this._paketApi.getPakets().then((value) {
+    this._paketApi.getPakets(isPondok).then((value) {
       value.dataPaket.data.forEach((element) {
         var durasi = element.waktuPengerjaan;
         String tanggal = DateFormat("d, MMMM - y")

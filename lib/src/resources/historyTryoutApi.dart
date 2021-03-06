@@ -33,7 +33,7 @@ class HistoryTryoutApi {
   Future<RasioGradeResponse> getRasioGrades(
       int idMurid, int idTryout, int idArea) async {
     final response = await _client.get(
-        "${Paths.BASEURL}${Paths.ENDPOINT_RASIO_GRADES}?id_murid=$idMurid&id=$idTryout&id_area=$idArea");
+        "${Paths.BASEURL}${Paths.ENDPOINT_RASIO_GRADES}?id_murid=$idMurid&id=$idTryout&id_area=$idArea&limit=100");
     if (response.statusCode == 200) {
       print(response.body);
       Map<String, dynamic> res = jsonDecode(response.body);

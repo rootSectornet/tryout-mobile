@@ -30,5 +30,6 @@ class Bayar {
 class BayarModel {
   bool isloading = false;
   bool isSuccess = false;
+  int harga;
   List<Bayar> bayars = new List<Bayar>();
 }

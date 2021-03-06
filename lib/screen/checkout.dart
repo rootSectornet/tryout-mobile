@@ -40,6 +40,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
   @override
   void initState() {
     super.initState();
+    this._pembayaranPresenter.getHarga();
     this._pembayaranPresenter.view = this;
   }
 
@@ -146,7 +147,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                                 Center(
                                   child: Container(
                                     child: Text(
-                                      'Rp. 20.000',
+                                      this._bayarModel.harga.toString(),
                                       style: GoogleFonts.poppins(
                                           color: Colors.red,
                                           fontSize: 24,
@@ -377,7 +378,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                               GetStorage().read(ID_MURID),
                               idTryout,
                               selected,
-                              '20000');
+                              this._bayarModel.harga.toString());
                         }
                         // Navigator.pushNamed(context, "/pembayaran_detail");
                       },

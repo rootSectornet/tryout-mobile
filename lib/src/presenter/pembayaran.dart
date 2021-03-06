@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 
 abstract class PembayaranPresenterAbstract {
   set view(PembayaranState view) {}
+  void getHarga() {}
   void checkPembayaranStatus(String idBayar) {}
   void checkout(int idMurid, int idTryout, String metode, String jumlah) {}
 }
@@ -78,6 +79,19 @@ class PembayaranPresenter implements PembayaranPresenterAbstract {
     this._bayarApi.bayarPost(json.encode(param)).then((value) {
       this._pembayaranState.onCheck(value);
       this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
+    }).catchError((err) {
+      this._bayarModel.isloading = false;
+      this._pembayaranState.refreshData(this._bayarModel);
+      this._pembayaranState.onError(err.toString());
+    });
+  }
+
+  @override
+  void getHarga() {
+    this._bayarApi.hargaGet().then((value) {
+      this._bayarModel.isloading = false;
+      this._bayarModel.harga = value.dataBayar[0].harga;
       this._pembayaranState.refreshData(this._bayarModel);
     }).catchError((err) {
       this._bayarModel.isloading = false;

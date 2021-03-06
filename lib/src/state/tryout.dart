@@ -13,4 +13,5 @@ abstract class TryoutState {
   void showMatpel(BuildContext context);
   void onCheckBayar(BayarModel bayarModel);
   void refreshTampilan();
+  void selectAreaTujuan();
 }

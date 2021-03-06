@@ -45,7 +45,7 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
     this._totalNilaiState.refreshData(this._totalNilaiModel);
     this._historyTryoutApi.getHistoryTryouts(idMurid).then((value) {
       value.dataTryout.forEach((element) {
-        int t = 0;
+        // int t = 0;
         int nilai = element.totalNilai.round();
         int totalSoal = element.totalSoal;
         int totalBenar = element.totalBenar;
@@ -66,7 +66,7 @@ class TotalNilaiPresenter implements TotalNilaiPresenterAbstract {
             namaJenjang:
                 element.tingkat != null ? element.tingkat.jenjang : '-',
             sudahSelesai: sudahSelesai));
-        t++;
+        // t++;
       });
       this._totalNilaiModel.isloading = false;
       this._totalNilaiState.refreshData(this._totalNilaiModel);

@@ -28,6 +28,8 @@ class HomePresenter implements HomePresenterAbstract {
       this._homeState.showJenjang(context, id);
     } else {
       this._homeModel.jenjang = id;
+      //
+      this._homeModel.isPondok = id == 16;
       this._homeState.refreshData(this._homeModel);
       if (this._homeModel.idPaket == 0) {
         this._homeState.showPaket(context);
@@ -47,7 +49,7 @@ class HomePresenter implements HomePresenterAbstract {
   @override
   void save(paket, jenjang) {
     print(jenjang);
-    print("+++++++++++");
+    print("+++++++++++save paket");
     print(paket);
     this._homeModel.jenjang = 0;
     this._homeModel.idPaket = 0;

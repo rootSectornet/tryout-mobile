@@ -14,9 +14,12 @@ import 'package:toast/toast.dart';
 class PaketScreen extends StatefulWidget {
   final TryoutCallback onTryoutgo;
   final bool isList;
-  const PaketScreen({Key key, this.onTryoutgo, this.isList}) : super(key: key);
+  final bool isPondok;
+  const PaketScreen({Key key, this.onTryoutgo, this.isList, this.isPondok})
+      : super(key: key);
   @override
-  _PaketScreenState createState() => _PaketScreenState(onTryoutgo, isList);
+  _PaketScreenState createState() =>
+      _PaketScreenState(onTryoutgo, isList, isPondok);
 }
 
 class _PaketScreenState extends State<PaketScreen> implements PaketState {
@@ -25,7 +28,8 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
   PaketPresenter _paketPresenter;
   final TryoutCallback onTryoutgo;
   final bool isList;
-  _PaketScreenState(this.onTryoutgo, this.isList) {
+  final bool isPondok;
+  _PaketScreenState(this.onTryoutgo, this.isList, this.isPondok) {
     this._paketPresenter = new PaketPresenter();
   }
 
@@ -33,7 +37,7 @@ class _PaketScreenState extends State<PaketScreen> implements PaketState {
   void initState() {
     super.initState();
     this._paketPresenter.view = this;
-    this._paketPresenter.getData();
+    this._paketPresenter.getData(isPondok);
     this._paketPresenter.getJenjang();
   }
 

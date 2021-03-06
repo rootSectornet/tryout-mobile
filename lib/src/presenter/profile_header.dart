@@ -1,12 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:TesUjian/src/model/profile.dart';
 import 'package:TesUjian/src/resources/daftarApi.dart';
 import 'package:TesUjian/src/resources/profileApi.dart';
 import 'package:TesUjian/src/resources/sekolahApi.dart';
 import 'package:TesUjian/src/state/profile_header.dart';
-import 'package:flutter/src/widgets/editable_text.dart';
+import 'package:TesUjian/src/resources/session.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -57,7 +54,7 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
     this._profileModel.isloading = true;
     this._profileHeaderState.refreshData(this._profileModel);
     this._profileApi.getProfile(idMurid).then((value) {
-      value.dataMurid.dataMurids.forEach((element) {
+      value.dataMurid.forEach((element) {
         // List<String> time = element.waktuPengerjaan.split(" - ");
         // DateTime akhir = DateTime.parse("2020-11-20 " + time[1]);
         // DateTime awal = DateTime.parse("2020-11-20 " + time[0]);
@@ -108,7 +105,7 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
   void getArea() {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getArea().then((value) {
+    this._sekolahApi.getArea(0).then((value) {
       this._profileModel.area = value;
       this._profileHeaderState.refreshData(this._profileModel);
     }).catchError((err) {
@@ -185,19 +182,28 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
       alamat, asalSekolah, tujuanSekolah) {
     // ignore: todo
     // TODO: implement getSekolah
-    Map param = {
-      'id': id,
-      'id_sekolah': asalSekolah,
-      'nama': nama,
-      'email': email,
-      'password': password,
-      'phone': phone,
-      'tgl_lahir': tglLahir,
-      'kelamin': jenisKelamin,
-      'alamat': alamat,
+    Map<String, String> body = <String, String>{
+      "id": id.toString(),
+      "id_sekolah": asalSekolah,
+      "name": nama,
+      "email": email,
+      "password": password,
+      "phone": phone,
+      "tgl_lahir": DateFormat("yyyy-MM-dd")
+          .format(this._profileModel.tanggalLahir.toLocal())
+          .toString(),
+      "kelamin": jenisKelamin,
+      "alamat": alamat,
+      "id_sekolah_tujuan": tujuanSekolah,
     };
-    this._profileApi.updateProfile(json.encode(param)).then((res) {
-      this._profileHeaderState.onSuccess(res.success.toString());
+    print(body);
+    this._profileApi.updateProfile(body, id.toString()).then((res) {
+      this._profileHeaderState.onUpdateSuccess(res.success.toString());
+      if (nama != '') {
+        Session.removeName();
+        print('nama lama dihapus');
+        Session.setName(nama);
+      }
       this._profileHeaderState.refreshData(this._profileModel);
     }).catchError((err) {
       this._profileHeaderState.onError(err.toString());

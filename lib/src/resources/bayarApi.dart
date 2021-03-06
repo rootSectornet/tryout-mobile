@@ -3,6 +3,7 @@ import 'package:TesUjian/src/response/bayarGet.dart';
 import 'package:TesUjian/src/response/bayarPost.dart';
 import 'package:TesUjian/src/response/cekPembayaran.dart';
 import 'package:TesUjian/src/response/cekStatus.dart';
+import 'package:TesUjian/src/response/hargaGetResponse.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' show Client;
 // ignore: unused_import
@@ -54,6 +55,19 @@ class BayarApi {
       BayarCheckResponse bayarCheckResponse =
           BayarCheckResponse.fromJson(json.decode(response.body));
       return bayarCheckResponse;
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<HargaGetResponse> hargaGet() async {
+    final response =
+        await _client.get("${Paths.BASEURL}${Paths.ENDPOINT_HARGA_GET}");
+    if (response.statusCode == 200) {
+      HargaGetResponse hargaCheckResponse =
+          HargaGetResponse.fromJson(json.decode(response.body));
+      return hargaCheckResponse;
     } else {
       Future.error("Yah, Internet Kamu error!");
     }

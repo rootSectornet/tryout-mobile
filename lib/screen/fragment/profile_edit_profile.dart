@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:TesUjian/helper/paths.dart';
 import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
@@ -16,11 +15,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class Service {
@@ -39,11 +38,15 @@ class Service {
       String idSekolahTujuan,
       BuildContext context}) async {
     ///MultiPart request
+
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_MURID}/$idMurid"),
     );
-    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    Map<String, String> headers = {
+      "accept": "application/json",
+      "Content-type": "multipart/form-data"
+    };
     request.files.add(
       http.MultipartFile(
         'picture',
@@ -66,6 +69,7 @@ class Service {
       "alamat": alamat,
       "id_sekolah_tujuan": idSekolahTujuan
     });
+    print(request.fields);
     print("request: " + request.toString());
     final res = await request.send();
     final respStr = await res.stream.bytesToString();
@@ -78,7 +82,9 @@ class Service {
       } else {
         Session.setPicture(filename);
       }
-      Session.setName(name);
+      if (name != '') {
+        Session.setName(name);
+      }
       Toast.show("profil berhasil di update :)", context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       Navigator.popAndPushNamed(context, '/home');
@@ -109,8 +115,6 @@ class EditProfileState extends State<EditProfile>
   ProfileHeaderPresenter _profileHeaderPresenter;
   TextEditingController _inputNamaController;
   FocusNode _inputNamaFocusNode;
-  TextEditingController _inputKelaminController;
-  FocusNode _inputKelaminFocusNode;
   TextEditingController _inputEmailController;
   FocusNode _inputEmailFocusNode;
   TextEditingController _inputPasswordController;
@@ -118,9 +122,6 @@ class EditProfileState extends State<EditProfile>
   FocusNode _inputPhoneFocusNode;
   TextEditingController _inputAlamatController;
   FocusNode _inputAlamatFocusNode;
-  FocusNode _inputAsalSekolahFocusNode;
-  FocusNode _inputAreaFocusNode;
-  FocusNode _inputTujuanSekolahFocusNode;
   TextEditingController _inputTanggalLahirController;
 
   final formKey = GlobalKey<FormState>();
@@ -137,16 +138,11 @@ class EditProfileState extends State<EditProfile>
     _inputNamaFocusNode = FocusNode();
     _inputEmailController = TextEditingController();
     _inputEmailFocusNode = FocusNode();
-    _inputKelaminController = TextEditingController();
-    _inputKelaminFocusNode = FocusNode();
     _inputPasswordController = TextEditingController();
     _inputPhoneController = TextEditingController();
     _inputPhoneFocusNode = FocusNode();
     _inputAlamatController = TextEditingController();
     _inputAlamatFocusNode = FocusNode();
-    _inputAsalSekolahFocusNode = FocusNode();
-    _inputAreaFocusNode = FocusNode();
-    _inputTujuanSekolahFocusNode = FocusNode();
     _inputTanggalLahirController = TextEditingController();
     this._profileHeaderPresenter.view = this;
     print(GetStorage().read(ID_MURID));
@@ -550,30 +546,44 @@ class EditProfileState extends State<EditProfile>
                                 Divider(),
                                 Text('Jenis Kelamin'),
                                 Padding(
-                                  padding: EdgeInsets.all(1),
-                                  child: TextFormField(
-                                    style: TextStyle(color: Colors.grey),
-                                    readOnly: true,
-                                    controller: _inputKelaminController
-                                      ..text = this
-                                          ._profileModel
-                                          .profiles[0]
-                                          .kelamin,
-                                    keyboardType: TextInputType.text,
-                                    textInputAction: TextInputAction.next,
-                                    onFieldSubmitted: (_) {
-                                      FocusScope.of(context)
-                                          .requestFocus(_inputKelaminFocusNode);
-                                    },
-                                    onChanged: (String phone) {},
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none),
-                                  ),
-                                ),
+                                    padding: EdgeInsets.all(1),
+                                    child: DropdownButtonHideUnderline(
+                                      child: new DropdownButton(
+                                        isExpanded: true,
+                                        iconEnabledColor: Color(0xff2D8EFF),
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                            decorationColor: Color(0xff2D8EFF)),
+                                        elevation: 0,
+                                        value: this
+                                            ._profileModel
+                                            .profiles[0]
+                                            .kelamin,
+                                        hint: Text(
+                                          "Jenis Kelamin",
+                                          style: TextStyle(
+                                              color: Color(0xff2D8EFF),
+                                              fontSize: 12),
+                                        ),
+                                        items: this
+                                            ._profileModel
+                                            .kelaminList
+                                            .map((value) => DropdownMenuItem(
+                                                  child: Text(value),
+                                                  value: value,
+                                                ))
+                                            .toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            this
+                                                ._profileModel
+                                                .profiles[0]
+                                                .kelamin = value;
+                                          });
+                                        },
+                                      ),
+                                    )),
                                 Divider(),
                                 Text('Tanggal Lahir'),
                                 Padding(
@@ -596,15 +606,8 @@ class EditProfileState extends State<EditProfile>
                                         hintStyle: TextStyle(
                                             color: Color(0xff2D8EFF),
                                             fontSize: 12)),
-                                    onTap: (() => {
-                                          // this.showCalender()
-                                        }),
-                                    readOnly: true,
-                                    controller: _inputTanggalLahirController
-                                      ..text = this
-                                          ._profileModel
-                                          .profiles[0]
-                                          .tglLahir,
+                                    onTap: (() => {this.showCalender()}),
+                                    controller: _inputTanggalLahirController,
                                   ),
                                 ),
                                 Divider(),
@@ -626,13 +629,14 @@ class EditProfileState extends State<EditProfile>
                                                     ._profileModel
                                                     .profiles[0]
                                                     .alamat ==
-                                                ''
+                                                null
                                             ? 'alamat belum diisi'
                                             : this
-                                                ._profileModel
-                                                .profiles[0]
-                                                .alamat,
-                                        hintStyle: TextStyle(fontSize: 12.0),
+                                                    ._profileModel
+                                                    .profiles[0]
+                                                    .alamat +
+                                                ' (alamat saat ini)',
+                                        hintStyle: TextStyle(fontSize: 16.0),
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -738,30 +742,22 @@ class EditProfileState extends State<EditProfile>
                                             fontWeight: FontWeight.w600),
                                       ),
                                       onPressed: () {
-                                        if (_image != null ||
-                                            _inputNamaController.text != '' ||
-                                            _inputEmailController.text != '' ||
-                                            _inputPasswordController.text !=
-                                                '' ||
-                                            _inputPhoneController.text != '' ||
-                                            _inputAlamatController.text != '') {
+                                        // if (_image != null ||
+                                        //     _inputNamaController.text != '' ||
+                                        //     _inputEmailController.text != '' ||
+                                        //     _inputPasswordController.text !=
+                                        //         '' ||
+                                        //     _inputPhoneController.text != '' ||
+                                        //     _inputAlamatController.text != '') {
+                                        if (_image != null) {
+                                          print('test');
                                           Service service = Service();
-                                          // print(_inputNamaController.text);
-                                          // print(_inputPhoneController.text);
-                                          // print(_inputAlamatController.text);
-                                          // print(this
-                                          //     ._profileModel
-                                          //     .sekolahTujuanId);
 
                                           service.submitSubscription(
                                               file: _image,
                                               filename: fileName,
                                               idMurid:
                                                   GetStorage().read(ID_MURID),
-                                              idSekolah: this
-                                                  ._profileModel
-                                                  .sekolahId
-                                                  .toString(),
                                               name: _inputNamaController.text,
                                               email: _inputEmailController.text,
                                               password:
@@ -771,21 +767,52 @@ class EditProfileState extends State<EditProfile>
                                                   ._profileModel
                                                   .profiles[0]
                                                   .tglLahirAsli,
-                                              kelamin:
-                                                  _inputKelaminController.text,
+                                              kelamin: this
+                                                  ._profileModel
+                                                  .profiles[0]
+                                                  .kelamin,
                                               alamat:
                                                   _inputAlamatController.text,
+                                              idSekolah: this
+                                                  ._profileModel
+                                                  .sekolahId
+                                                  .toString(),
                                               idSekolahTujuan: this
                                                   ._profileModel
                                                   .sekolahTujuanId
                                                   .toString(),
                                               context: context);
                                         } else {
-                                          Toast.show(
-                                              "Harus terisi semua! :)", context,
-                                              duration: Toast.LENGTH_LONG,
-                                              gravity: Toast.BOTTOM);
+                                          this
+                                              ._profileHeaderPresenter
+                                              .updateProfile(
+                                                  GetStorage().read(ID_MURID),
+                                                  _inputNamaController.text,
+                                                  _inputEmailController.text,
+                                                  _inputPasswordController.text,
+                                                  _inputPhoneController.text,
+                                                  this
+                                                      ._profileModel
+                                                      .profiles[0]
+                                                      .kelamin,
+                                                  _inputTanggalLahirController
+                                                      .text,
+                                                  _inputAlamatController.text,
+                                                  this
+                                                      ._profileModel
+                                                      .sekolahId
+                                                      .toString(),
+                                                  this
+                                                      ._profileModel
+                                                      .sekolahTujuanId
+                                                      .toString());
                                         }
+                                        // } else {
+                                        //   Toast.show(
+                                        //       "Harus terisi semua! :)", context,
+                                        //       duration: Toast.LENGTH_LONG,
+                                        //       gravity: Toast.BOTTOM);
+                                        // }
                                       },
                                     ),
                                   ),
@@ -803,29 +830,28 @@ class EditProfileState extends State<EditProfile>
     );
   }
 
-  // DateTime pilihTanggal, labelText;
-  // @override
-  // void showCalender() {
-  //   // ignore: todo
-  //   // TODO: implement showCalender.
-  //   showDatePicker(
-  //           context: context,
-  //           initialDate: DateTime.now(),
-  //           firstDate: DateTime(1969, 1, 1, 11, 33),
-  //           lastDate: DateTime.now())
-  //       .then((value) {
-  //     if (value == null) {
-  //       return;
-  //     }
-  //     setState(() {
-  //       this.pilihTanggal = value;
-  //       _inputTanggalLahirController.text = DateFormat("d, MMMM - y")
-  //           .format(this.pilihTanggal.toLocal())
-  //           .toString();
-  //       // this.refreshData(this._profileModel);
-  //     });
-  //   });
-  // }
+  @override
+  // ignore: override_on_non_overriding_member
+  void showCalender() {
+    // ignore: todo
+    // TODO: implement showCalender.
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1989, 1, 1, 11, 33),
+            lastDate: DateTime.now())
+        .then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _inputTanggalLahirController.text = DateFormat("d, MMMM - y")
+            .format(this._profileModel.tanggalLahir.toLocal())
+            .toString();
+        // this.refreshData(this._profileModel);
+      });
+    });
+  }
 
   String _userPasswordValidation(String value) {
     if (value.isEmpty) {
@@ -839,6 +865,13 @@ class EditProfileState extends State<EditProfile>
   void onError(String error) {
     Toast.show("$error", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+  }
+
+  @override
+  void onUpdateSuccess(String success) {
+    Toast.show("profil berhasil di update :)", context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+    Navigator.popAndPushNamed(context, '/home');
   }
 
   @override
@@ -1214,7 +1247,7 @@ class EditProfileState extends State<EditProfile>
           ),
         )).then((value) {
       this._profileModel.sekolahId =
-          this._profileModel.sekolah.dataSekolah.data[value].id;
+          this._profileModel.sekolah.dataSekolah.data[value].id.toString();
       this._profileModel.namaSekolah =
           this._profileModel.sekolah.dataSekolah.data[value].nama;
       this._profileModel.sekolahAsalController.text =
@@ -1242,7 +1275,7 @@ class EditProfileState extends State<EditProfile>
           ),
         )).then((value) {
       this._profileModel.sekolahTujuanId =
-          this._profileModel.sekolah.dataSekolah.data[value].id;
+          this._profileModel.sekolah.dataSekolah.data[value].id.toString();
       this._profileModel.namaSekolahTujuan =
           this._profileModel.sekolah.dataSekolah.data[value].nama;
       this._profileModel.sekolahTujuanController.text =

@@ -26,6 +26,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   SignUpPresenter _signUpPresenter;
   // ignore: unused_field
   SignUpModel _signUpModel;
+  bool _isPasswordVisible = true;
   final _formkey = GlobalKey<FormState>();
   _SignUpUI() {
     this._signUpPresenter = new SignUpPresenter();
@@ -314,7 +315,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                                   });
                                 },
                                 controller: this._signUpModel.password,
-                                obscureText: true,
+                                obscureText: _isPasswordVisible,
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 14),
                                 decoration: InputDecoration(
@@ -326,6 +327,19 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                                       size: 18,
                                     ),
                                     hintText: "Password",
+                                    suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _isPasswordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isPasswordVisible =
+                                                !_isPasswordVisible;
+                                          });
+                                        }),
                                     border: InputBorder.none,
                                     errorText: this._signUpModel.passwordError,
                                     errorStyle: TextStyle(

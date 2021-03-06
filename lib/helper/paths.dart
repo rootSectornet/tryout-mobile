@@ -11,6 +11,7 @@ class Paths {
   static const String ENDPOINT_WAREHOUSE = "warehouses";
   static const String ENDPOINT_STOCK = "products";
   static const String ENDPOINT_AREA = "area";
+  static const String ENDPOINT_PROVINSI = "area/provinsi";
   static const String ENDPOINT_SEKOLAH = "sekolah";
   static const String ENDPOINT_DAFTAR = "murid";
   static const String ENDPOINT_VERIFY = "daftar";
@@ -29,6 +30,7 @@ class Paths {
   static const String ENDPOINT_KUMPULKAN = "tryoutdetailsoal";
   static const String ENDPOINT_KUMPULKAN_V2 = "UpdateJawabans";
   static const String ENDPOINT_BAYAR = "bayar";
+  static const String ENDPOINT_HARGA_GET = "bayar/hargaGet";
   static const String ENDPOINT_CHECKPEMBAYARAN = "bayar/check";
   static const String ENDPOINT_BAYARCANCEL = "bayar/cancel";
   static const String ENDPOINT_CHECKSTATUSPEMBAYARAN = "CheckStatus";

@@ -166,6 +166,7 @@ class _HomeState extends State<Home> implements HomeState {
                         PaketScreen(
                           key: Key("1"),
                           isList: false,
+                          isPondok: false,
                           onTryoutgo: (int paket, bool isParent, String name) {
                             this._homePresenter.setPaket(paket, context);
                           },
@@ -185,6 +186,7 @@ class _HomeState extends State<Home> implements HomeState {
                               (int jenjang, bool isParent, String name) {
                             setState(() {
                               this._homeModel.idPaket = 0;
+                              this._homeModel.isPondok = jenjang == 16;
                             });
                             this
                                 ._homePresenter
@@ -357,6 +359,7 @@ class _HomeState extends State<Home> implements HomeState {
                     child: PaketScreen(
                         key: Key("4"),
                         isList: true,
+                        isPondok: this._homeModel.isPondok,
                         onTryoutgo: (int paket, bool isParent, String name) {
                           this
                               ._homePresenter

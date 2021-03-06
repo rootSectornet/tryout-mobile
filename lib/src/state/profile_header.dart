@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 abstract class ProfileHeaderState {
   void refreshData(ProfileModel paketModel);
   void onSuccess(String success);
+  void onUpdateSuccess(String success);
   void onError(String error);
   void selectSekolah();
   void selectSekolahTujuan();

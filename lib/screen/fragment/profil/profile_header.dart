@@ -241,4 +241,9 @@ class _ProfileHeaderState extends State<ProfileHeader>
   void showJenjangTujuan(BuildContext context, int idParent) {
     // TODO: implement showJenjangTujuan
   }
+
+  @override
+  void onUpdateSuccess(String success) {
+    // TODO: implement onUpdateSuccess
+  }
 }

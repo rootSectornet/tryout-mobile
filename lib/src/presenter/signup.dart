@@ -80,7 +80,7 @@ class SignUpPresenter implements SignUpPresenterAbstract {
   void getArea() {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getArea().then((value) {
+    this._sekolahApi.getArea(0).then((value) {
       this._signUpModel.area = value;
       this._signUpState.refreshData(this._signUpModel);
     }).catchError((err) {

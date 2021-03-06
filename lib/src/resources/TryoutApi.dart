@@ -35,6 +35,7 @@ class TryoutApi {
 
   // ignore: missing_return
   Future<TryoutDetailResponse> getMatpels(int id) async {
+    print("idnya" + id.toString());
     final response = await _client
         .get("${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_MATPELS}?id_tryout=$id");
     if (response.statusCode == 200) {

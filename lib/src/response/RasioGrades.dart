@@ -73,16 +73,44 @@ class DataTryout {
 }
 
 class DataSekolah {
-  String namaSekolah;
-  String kkm;
-  String grades;
+  String jenjang;
+  List<Data> data;
 
-  DataSekolah({this.namaSekolah, this.kkm, this.grades});
+  DataSekolah({this.jenjang, this.data});
 
   DataSekolah.fromJson(Map<String, dynamic> json) {
+    jenjang = json['jenjang'];
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jenjang'] = this.jenjang;
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
+  String namaSekolah;
+  var kkm;
+  String grades;
+  String area;
+
+  Data({this.namaSekolah, this.kkm, this.grades, this.area});
+
+  Data.fromJson(Map<String, dynamic> json) {
     namaSekolah = json['namaSekolah'];
-    kkm = json['kkm'].toString();
+    kkm = json['kkm'];
     grades = json['grades'];
+    area = json['area'];
   }
 
   Map<String, dynamic> toJson() {
@@ -90,6 +118,7 @@ class DataSekolah {
     data['namaSekolah'] = this.namaSekolah;
     data['kkm'] = this.kkm;
     data['grades'] = this.grades;
+    data['area'] = this.area;
     return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:TesUjian/screen/checkout.dart';
 import 'package:TesUjian/screen/fragment/average_nilai.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
+import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/screen/fragment/tryout/info.dart';
 import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
@@ -60,7 +61,7 @@ class _TryoutScreenState extends State<TryoutScreen>
   // ignore: must_call_super
   void initState() {
     tabController = new TabController(length: 2, vsync: this);
-    this._tryoutPresenter.getArea();
+    this._tryoutPresenter.getProv();
     this._tryoutPresenter.view = this;
     if (this.idTryout == 0) {
       this._tryoutPresenter.save(this.idPaket, this.idJenjang);
@@ -1398,7 +1399,7 @@ class _TryoutScreenState extends State<TryoutScreen>
                       onTap: (() => {
                             FocusScope.of(context)
                                 .requestFocus(new FocusNode()),
-                            this.selectAreaTujuan()
+                            this.selectProvinsiTujuan()
                           }),
                       onChanged: (String area) {},
                       decoration: InputDecoration(
@@ -1421,7 +1422,30 @@ class _TryoutScreenState extends State<TryoutScreen>
 
   @override
   // ignore: override_on_non_overriding_member
-  void selectAreaTujuan() async {
+  void selectProvinsiTujuan() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectProv(
+            key: Key("1"),
+            areaResponse: this._tryoutModel.provinsi,
+          ),
+        )).then((value) {
+      // print(this._tryoutModel.area.data[value].id);
+      this._tryoutModel.idProv = this._tryoutModel.provinsi.data[value].id;
+      this.refreshData(this._tryoutModel);
+      this.getArea(this._tryoutModel.idProv);
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void getArea(int idProv) {
+    this._tryoutPresenter.getArea(idProv);
+  }
+
+  @override
+  void selectAreaTujuan() {
     Navigator.push(
         context,
         MaterialPageRoute(

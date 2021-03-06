@@ -52,7 +52,7 @@ class Profile {
 class ProfileModel {
   bool isloading = false;
   bool isSuccess = false;
-  int sekolahId = 0;
+  String sekolahId = "";
   int areaId = 0;
   int jenjangId = 0;
   int areaIdTujuan = 0;
@@ -62,8 +62,10 @@ class ProfileModel {
   String namaJenjang = "";
   String namaAreaTujuan = "";
   String namaJenjangTujuan = "";
-  int sekolahTujuanId = 0;
+  String sekolahTujuanId = "";
   String namaSekolahTujuan = "";
+  List<String> kelaminList = ["Laki - Laki", "Perempuan"];
+  DateTime tanggalLahir = DateTime.now().toLocal();
   SekolahResponse sekolah = new SekolahResponse();
   AreaResponse area = new AreaResponse();
   JenjangsResponse jenjang = new JenjangsResponse();

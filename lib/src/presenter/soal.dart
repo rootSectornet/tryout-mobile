@@ -52,6 +52,7 @@ class SoalPresenter implements SoalPresenterAbstract {
   @override
   void selected(int index) {
     this._soalModel.currentIndex = index;
+    this._soalModel.jawabanEssay.clear();
     this._soalState.refreshData(this._soalModel);
   }
 

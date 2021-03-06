@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:TesUjian/src/response/area.dart';
+import 'package:TesUjian/src/response/provinsi.dart';
 import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:http/http.dart' show Client, MultipartRequest;
 // ignore: unused_import
@@ -30,9 +31,23 @@ class SekolahApi {
   Client _client = new Client();
 
   // ignore: missing_return
-  Future<AreaResponse> getArea() async {
+  Future<ProvinsiResponse> getProv() async {
     final response =
-        await _client.get("${Paths.BASEURL}${Paths.ENDPOINT_AREA}");
+        await _client.get("${Paths.BASEURL}${Paths.ENDPOINT_PROVINSI}");
+    if (response.statusCode == 200) {
+      print(response.body);
+      ProvinsiResponse sekolahResponse =
+          ProvinsiResponse.fromJson(json.decode(response.body));
+      return sekolahResponse;
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<AreaResponse> getArea(int idProv) async {
+    final response = await _client
+        .get("${Paths.BASEURL}${Paths.ENDPOINT_AREA}?id_provinsi=$idProv");
     if (response.statusCode == 200) {
       print(response.body);
       AreaResponse sekolahResponse =
