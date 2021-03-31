@@ -25,23 +25,30 @@ class _SelectSekolahScreenState extends State<SelectSekolahScreen> {
       appBar: AppBar(
         title: Text("Pilih Sekolah Asalmu"),
       ),
-      body: ListView.builder(
-        itemCount: this._sekolahResponse.dataSekolah.data.length,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 20, right: 20),
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            contentPadding: EdgeInsets.all(10),
-            leading: Icon(Ionicons.school),
-            title:
-                Text("${this._sekolahResponse.dataSekolah.data[index].nama}"),
-            onTap: (() {
-              Navigator.pop(context, index);
-            }),
-          );
-        },
-      ),
+      body: this._sekolahResponse.dataSekolah.data.length < 1
+          ? Center(
+              child: Text(
+                'Kosong',
+                style: TextStyle(fontSize: 16),
+              ),
+            )
+          : ListView.builder(
+              itemCount: this._sekolahResponse.dataSekolah.data.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 20, right: 20),
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  contentPadding: EdgeInsets.all(10),
+                  leading: Icon(Ionicons.school),
+                  title: Text(
+                      "${this._sekolahResponse.dataSekolah.data[index].nama}"),
+                  onTap: (() {
+                    Navigator.pop(context, index);
+                  }),
+                );
+              },
+            ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:TesUjian/helper/paths.dart';
 import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
+import 'package:TesUjian/screen/fragment/selectprovinsi.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:http/http.dart' as http;
 
@@ -148,7 +149,7 @@ class EditProfileState extends State<EditProfile>
     print(GetStorage().read(ID_MURID));
     this._profileHeaderPresenter.getData(GetStorage().read(ID_MURID));
     this._profileHeaderPresenter.getDaftar(GetStorage().read(ID_MURID));
-    this._profileHeaderPresenter.getArea();
+    this._profileHeaderPresenter.getProv();
     if (Profile().checkIfAnyIsNull()) {
       kosong = true;
     }
@@ -928,6 +929,28 @@ class EditProfileState extends State<EditProfile>
                   Padding(
                     padding: EdgeInsets.all(1),
                     child: TextFormField(
+                      controller: this._profileModel.provinsiController,
+                      keyboardType: TextInputType.text,
+                      validator: _userPasswordValidation,
+                      textInputAction: TextInputAction.next,
+                      onTap: (() => {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode()),
+                            this.selectProvinsi()
+                          }),
+                      onChanged: (String area) {},
+                      decoration: InputDecoration(
+                          hintText: 'pilih Provinsi',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextFormField(
                       controller: this._profileModel.areaController,
                       keyboardType: TextInputType.text,
                       validator: _userPasswordValidation,
@@ -1012,6 +1035,28 @@ class EditProfileState extends State<EditProfile>
                     ],
                   ),
                   Text('Pilih Area & jenjang'),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextFormField(
+                      controller: this._profileModel.provinsiTujuanController,
+                      keyboardType: TextInputType.text,
+                      validator: _userPasswordValidation,
+                      textInputAction: TextInputAction.next,
+                      onTap: (() => {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode()),
+                            this.selectProvinsiTujuan()
+                          }),
+                      onChanged: (String area) {},
+                      decoration: InputDecoration(
+                          hintText: 'pilih area',
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(1),
                     child: TextFormField(
@@ -1257,6 +1302,59 @@ class EditProfileState extends State<EditProfile>
       this._profileModel.namaArea = "";
       this._profileModel.namaJenjang = "";
       this._profileModel.sekolah.dataSekolah.data.clear();
+      this.refreshData(this._profileModel);
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectProvinsi() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectProvinsi(
+            key: Key("1"),
+            provinsiResponse: this._profileModel.provinsi,
+          ),
+        )).then((value) {
+      print(this._profileModel.provinsi.data[value].id);
+      setState(() {
+        this._profileModel.idProv = this._profileModel.provinsi.data[value].id;
+        this._profileModel.namaProv =
+            this._profileModel.provinsi.data[value].name;
+        this._profileModel.provinsiController.text =
+            this._profileModel.provinsi.data[value].name;
+        this
+            ._profileHeaderPresenter
+            .getArea(this._profileModel.provinsi.data[value].id);
+      });
+      this.refreshData(this._profileModel);
+    });
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  void selectProvinsiTujuan() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectProvinsi(
+            key: Key("1"),
+            provinsiResponse: this._profileModel.provinsi,
+          ),
+        )).then((value) {
+      print(this._profileModel.provinsi.data[value].id);
+      setState(() {
+        this._profileModel.idProvTujuan =
+            this._profileModel.provinsi.data[value].id;
+        this._profileModel.namaProvTujuan =
+            this._profileModel.provinsi.data[value].name;
+        this._profileModel.provinsiTujuanController.text =
+            this._profileModel.provinsi.data[value].name;
+        this
+            ._profileHeaderPresenter
+            .getArea(this._profileModel.provinsi.data[value].id);
+      });
       this.refreshData(this._profileModel);
     });
   }

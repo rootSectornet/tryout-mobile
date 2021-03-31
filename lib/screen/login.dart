@@ -255,8 +255,8 @@ class _LoginUI extends State<Login> implements LoginState {
                                         color: Colors.grey),
                                   ),
                                   InkWell(
-                                    onTap: () => Navigator.pushNamed(
-                                        context, "/register"),
+                                    onTap: () =>
+                                        Navigator.pushNamed(context, "/signup"),
                                     child: Text(
                                       "Daftar Sekarang ",
                                       style: TextStyle(

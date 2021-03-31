@@ -5,6 +5,8 @@ import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
 import 'package:TesUjian/screen/fragment/menu/paket.dart';
 import 'package:TesUjian/screen/fragment/report.dart';
 import 'package:TesUjian/screen/fragment/report/progress.dart';
+import 'package:TesUjian/screen/fragment/soal/landing_tutorial_pondok.dart';
+import 'package:TesUjian/screen/select_sekolah.dart';
 import 'package:TesUjian/screen/tryout.dart';
 import 'package:TesUjian/src/model/home.dart';
 import 'package:TesUjian/src/presenter/home.dart';
@@ -168,7 +170,10 @@ class _HomeState extends State<Home> implements HomeState {
                           isList: false,
                           isPondok: false,
                           onTryoutgo: (int paket, bool isParent, String name) {
-                            this._homePresenter.setPaket(paket, context);
+                            setState(() {
+                              this._homeModel.namaPaket = name;
+                            });
+                            this._homePresenter.setPaket(paket, name, context);
                           },
                         ),
                         Text("Jenjang soal",
@@ -186,11 +191,12 @@ class _HomeState extends State<Home> implements HomeState {
                               (int jenjang, bool isParent, String name) {
                             setState(() {
                               this._homeModel.idPaket = 0;
+                              this._homeModel.namaJenjang = name;
                               this._homeModel.isPondok = jenjang == 16;
                             });
                             this
                                 ._homePresenter
-                                .setJenjang(jenjang, isParent, context);
+                                .setJenjang(jenjang, isParent, name, context);
                           },
                           idparent: 0,
                         ),
@@ -302,7 +308,7 @@ class _HomeState extends State<Home> implements HomeState {
                       onTryoutgo: (int jenjang, bool isParent, String name) {
                         this
                             ._homePresenter
-                            .setJenjang(jenjang, isParent, context);
+                            .setJenjang(jenjang, isParent, name, context);
                       },
                       idparent: idParent,
                     ),
@@ -361,6 +367,9 @@ class _HomeState extends State<Home> implements HomeState {
                         isList: true,
                         isPondok: this._homeModel.isPondok,
                         onTryoutgo: (int paket, bool isParent, String name) {
+                          setState(() {
+                            this._homeModel.namaPaket = name;
+                          });
                           this
                               ._homePresenter
                               .save(this._homeModel.jenjang, paket);
@@ -382,10 +391,26 @@ class _HomeState extends State<Home> implements HomeState {
         context,
         MaterialPageRoute(
           builder: (context) => TryoutScreen(
+              key: Key("1"),
+              idPaket: idPaket,
+              idJenjang: idJenjang,
+              idTryout: 0),
+        ));
+  }
+
+  @override
+  void toSelectSekolah(int idPaket, int idJenjang) {
+    Navigator.pop(context);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectSekolahsScreen(
             key: Key("1"),
             idPaket: idPaket,
             idJenjang: idJenjang,
             idTryout: 0,
+            namaJenjang: this._homeModel.namaJenjang,
+            namaPaket: this._homeModel.namaPaket,
           ),
         ));
   }

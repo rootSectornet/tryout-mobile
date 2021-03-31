@@ -122,13 +122,13 @@ class Sekolah {
 class Daftars {
   int id;
   int idMurid;
-  Null idSekolahTujuan;
+  int idSekolahTujuan;
   String tglDaftar;
   bool status;
   String code;
   String createdAt;
   String updatedAt;
-  Null sekolah;
+  Sekolah sekolah;
 
   Daftars(
       {this.id,
@@ -150,7 +150,8 @@ class Daftars {
     code = json['code'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    sekolah = json['sekolah'];
+    sekolah =
+        json['sekolah'] != null ? new Sekolah.fromJson(json['sekolah']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -163,7 +164,9 @@ class Daftars {
     data['code'] = this.code;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['sekolah'] = this.sekolah;
+    if (this.sekolah != null) {
+      data['sekolah'] = this.sekolah.toJson();
+    }
     return data;
   }
 }

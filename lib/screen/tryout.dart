@@ -6,6 +6,8 @@ import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
+import 'package:TesUjian/screen/fragment/soal/imla.dart';
+import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
 import 'package:TesUjian/screen/fragment/tryout/info.dart';
 import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
 import 'package:TesUjian/screen/fragment/widget/clipath.dart';
@@ -27,16 +29,24 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
 
+import 'fragment/soal/soal_timer_foto.dart';
+
 class TryoutScreen extends StatefulWidget {
   final int idPaket;
   final int idJenjang;
   final int idTryout;
+  final int sekolahTujuan;
 
-  const TryoutScreen({Key key, this.idPaket, this.idJenjang, this.idTryout})
+  const TryoutScreen(
+      {Key key,
+      this.idPaket,
+      this.idJenjang,
+      this.idTryout,
+      this.sekolahTujuan})
       : super(key: key);
   @override
-  _TryoutScreenState createState() =>
-      _TryoutScreenState(this.idPaket, this.idJenjang, this.idTryout);
+  _TryoutScreenState createState() => _TryoutScreenState(
+      this.idPaket, this.idJenjang, this.idTryout, this.sekolahTujuan);
 }
 
 class _TryoutScreenState extends State<TryoutScreen>
@@ -45,6 +55,7 @@ class _TryoutScreenState extends State<TryoutScreen>
   final int idPaket;
   final int idJenjang;
   final int idTryout;
+  final int sekolahTujuan;
 
   int totalSoal;
   int selected;
@@ -54,7 +65,8 @@ class _TryoutScreenState extends State<TryoutScreen>
   // ignore: unused_field
   TryoutPresenter _tryoutPresenter;
   TabController tabController;
-  _TryoutScreenState(this.idPaket, this.idJenjang, this.idTryout) {
+  _TryoutScreenState(
+      this.idPaket, this.idJenjang, this.idTryout, this.sekolahTujuan) {
     this._tryoutPresenter = new TryoutPresenter();
   }
   @override
@@ -64,7 +76,13 @@ class _TryoutScreenState extends State<TryoutScreen>
     this._tryoutPresenter.getProv();
     this._tryoutPresenter.view = this;
     if (this.idTryout == 0) {
-      this._tryoutPresenter.save(this.idPaket, this.idJenjang);
+      if (this.sekolahTujuan == null) {
+        this._tryoutPresenter.saveTryouts(this.idPaket, this.idJenjang);
+      } else {
+        this
+            ._tryoutPresenter
+            .save(this.idPaket, this.idJenjang, this.sekolahTujuan);
+      }
     } else {
       this._tryoutPresenter.getMatpels(this.idTryout);
       // this._tryoutPresenter.getInfo(this.idTryout);
@@ -412,7 +430,8 @@ class _TryoutScreenState extends State<TryoutScreen>
                                       ._tryoutModel
                                       .tryoutInfoResponse
                                       .dataTryout
-                                      .id);
+                                      .idSekolahTujuan);
+                                  print(this._tryoutModel.idTryout);
                                   this._tryoutPresenter.finishTryout(this
                                       ._tryoutModel
                                       .tryoutInfoResponse
@@ -453,7 +472,53 @@ class _TryoutScreenState extends State<TryoutScreen>
                                     child: InkWell(
                                       splashColor: Color(0xff7474BF),
                                       onTap: () {
-                                        this.areaJenjangTujuan();
+                                        if (widget.idJenjang == 16) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AverageNilai(
+                                                        title:
+                                                            "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
+                                                        idMurid: GetStorage()
+                                                            .read(ID_MURID),
+                                                        idTryout: this
+                                                            ._tryoutModel
+                                                            .idTryout,
+                                                        // idArea: this
+                                                        //     ._tryoutModel
+                                                        //     .idArea,
+                                                      )));
+                                        } else {
+                                          print(this
+                                              ._tryoutModel
+                                              .tryoutInfoResponse
+                                              .dataTryout
+                                              .idSekolahTujuan);
+                                          print(this._tryoutModel.idTryout);
+                                          // this.areaJenjangTujuan();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AverageNilai(
+                                                        title:
+                                                            "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
+                                                        idMurid: GetStorage()
+                                                            .read(ID_MURID),
+                                                        idTryout: this
+                                                            ._tryoutModel
+                                                            .idTryout,
+                                                        // idArea: this
+                                                        //     ._tryoutModel
+                                                        //     .idArea,
+                                                        idSekolahTujuan: this
+                                                            ._tryoutModel
+                                                            .tryoutInfoResponse
+                                                            .dataTryout
+                                                            .idSekolahTujuan,
+                                                      )));
+                                        }
                                       },
                                       child: Container(
                                         margin: EdgeInsets.only(top: 50.0),
@@ -708,23 +773,23 @@ class _TryoutScreenState extends State<TryoutScreen>
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => SoalScreen(
-                                              key: Key("Soal$index"),
-                                              idMatpel: this
-                                                  ._tryoutModel
-                                                  .tryoutDetailResponse
-                                                  .data[index]
-                                                  .idmatpel,
-                                              idtryoutdetail: this
-                                                  ._tryoutModel
-                                                  .tryoutDetailResponse
-                                                  .data[index]
-                                                  .id,
-                                              matpel: this
-                                                  ._tryoutModel
-                                                  .tryoutDetailResponse
-                                                  .data[index]
-                                                  .nama,
-                                            ),
+                                                key: Key("Soal$index"),
+                                                idMatpel: this
+                                                    ._tryoutModel
+                                                    .tryoutDetailResponse
+                                                    .data[index]
+                                                    .idmatpel,
+                                                idtryoutdetail: this
+                                                    ._tryoutModel
+                                                    .tryoutDetailResponse
+                                                    .data[index]
+                                                    .id,
+                                                matpel: this
+                                                    ._tryoutModel
+                                                    .tryoutDetailResponse
+                                                    .data[index]
+                                                    .nama,
+                                                jenjang: this.idJenjang),
                                           )).then((value) {
                                         this._tryoutPresenter.getMatpels(
                                             this._tryoutModel.idTryout);
@@ -814,22 +879,164 @@ class _TryoutScreenState extends State<TryoutScreen>
                         .nama,
                   )));
     } else {
-      print(this._tryoutModel.tryoutDetailResponse.data[indexs].nama);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SoalScreen(
-              key: Key("Soal$indexs"),
-              idMatpel:
-                  this._tryoutModel.tryoutDetailResponse.data[indexs].idmatpel,
-              idtryoutdetail:
-                  this._tryoutModel.tryoutDetailResponse.data[indexs].id,
-              matpel: this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
-            ),
-          )).then((value) {
-        this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
-        this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-      });
+      print(this._tryoutModel.tryoutDetailResponse.data[indexs].idmatpel);
+      switch (this._tryoutModel.tryoutDetailResponse.data[indexs].idmatpel) {
+        case 76:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalImlaScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        case 72:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalTimerFotoScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        case 73:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalTimerFotoScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        case 74:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalTimerFotoScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        case 75:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        case 71:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalTextVoiceScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+          break;
+        default:
+          print('default');
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SoalScreen(
+                  key: Key("Soal$indexs"),
+                  idMatpel: this
+                      ._tryoutModel
+                      .tryoutDetailResponse
+                      .data[indexs]
+                      .idmatpel,
+                  idtryoutdetail:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
+                  matpel:
+                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
+                  jenjang: this.idJenjang,
+                ),
+              )).then((value) {
+            this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
+          });
+      }
     }
   }
 
@@ -1022,6 +1229,7 @@ class _TryoutScreenState extends State<TryoutScreen>
           //             )));
         } else {
           print(this._tryoutModel.tryoutDetailResponse.data[selected].nama);
+
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -1039,6 +1247,7 @@ class _TryoutScreenState extends State<TryoutScreen>
                       .tryoutDetailResponse
                       .data[selected]
                       .nama,
+                  jenjang: this.idJenjang,
                 ),
               )).then((value) {
             this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);

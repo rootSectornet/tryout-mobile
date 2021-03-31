@@ -3,6 +3,7 @@ import 'dart:io';
 // import 'package:TesUjian/screen/fragment/soal/image_list_view.dart';
 // import 'package:TesUjian/screen/fragment/soal/video_list_view.dart';
 // import 'package:TesUjian/screen/fragment/soal/recorded_list_view.dart';
+import 'package:TesUjian/screen/fragment/soal/detail_video_screen.dart';
 import 'package:TesUjian/screen/fragment/soal/recorder_view.dart';
 import 'package:TesUjian/screen/fragment/soal/pick_image.dart';
 import 'package:TesUjian/screen/fragment/soal/pick_video.dart';
@@ -23,12 +24,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
 
+import 'fragment/soal/detail_image_screen.dart';
+
 class SoalScreen extends StatefulWidget {
   final int idtryoutdetail;
   final int idMatpel;
   final String matpel;
+  final int jenjang;
 
-  const SoalScreen({Key key, this.idtryoutdetail, this.idMatpel, this.matpel})
+  const SoalScreen(
+      {Key key, this.idtryoutdetail, this.idMatpel, this.matpel, this.jenjang})
       : super(key: key);
   @override
   _SoalScreenState createState() =>
@@ -67,6 +72,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   // ignore: must_call_super
   void initState() {
     this.jepret = 0;
+    print(widget.jenjang);
     this.rekam = 0;
     this._soalPresenter.view = this;
     this._soalPresenter.getSoal(idMatpel, idtryoutdetail);
@@ -101,21 +107,6 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     pictures = null;
     videos = null;
     super.dispose();
-  }
-
-  _onRecordComplete() {
-    records.clear();
-    appDirectory.list().listen((onData) {
-      if (onData.path.endsWith(".aac")) {
-        records.add(onData.path);
-      }
-    }).onDone(() {
-      records.sort();
-      records = records.reversed.toList();
-      setState(() {
-        this._soalModel.status = 1;
-      });
-    });
   }
 
   Future<void> deleteFileRec(String filePath) async {
@@ -272,7 +263,11 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
       records.sort();
       records = records.reversed.toList();
       setState(() {
-        this._soalModel.status = 0;
+        this
+            ._soalModel
+            .tryoutSoalResponse
+            .dataTryout[this._soalModel.currentIndex]
+            .statusSoal = 0;
       });
     });
   }
@@ -286,9 +281,6 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     }).onDone(() {
       pictures.sort();
       pictures = pictures.reversed.toList();
-      setState(() {
-        this._soalModel.status = 0;
-      });
     });
   }
 
@@ -301,9 +293,6 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
     }).onDone(() {
       videos.sort();
       videos = videos.reversed.toList();
-      setState(() {
-        this._soalModel.status = 0;
-      });
     });
   }
 
@@ -516,12 +505,14 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 this
-                                            ._soalModel
-                                            .tryoutSoalResponse
-                                            .dataTryout[
-                                                this._soalModel.currentIndex]
-                                            .isEssay ==
-                                        2
+                                                ._soalModel
+                                                .tryoutSoalResponse
+                                                .dataTryout[this
+                                                    ._soalModel
+                                                    .currentIndex]
+                                                .isEssay ==
+                                            2 &&
+                                        widget.jenjang == 16
                                     ? Column(
                                         children: [
                                           ExpansionTile(
@@ -628,13 +619,10 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                               textAlign: TextAlign.justify),
                                         },
                                       ),
-                                this
-                                            ._soalModel
-                                            .tryoutSoalResponse
-                                            .dataTryout[
-                                                this._soalModel.currentIndex]
-                                            .isEssay ==
-                                        2
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                widget.jenjang == 16
                                     ? Container(
                                         child: Column(
                                           children: [
@@ -644,430 +632,68 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                         .dataTryout[this
                                                             ._soalModel
                                                             .currentIndex]
-                                                        .jawabanUser !=
+                                                        .jawabanUser ==
                                                     null
-                                                ? Column(
-                                                    children: [
-                                                      Column(
-                                                        children:
-                                                            videos.map((value) {
-                                                          //   return Text(value);
-                                                          // }).toList(),
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.mp4')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 3;
-                                                            return Column(
-                                                              children: [
-                                                                Text(value
-                                                                    .split("/")
-                                                                    .last),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                      Column(
-                                                        children: pictures
-                                                            .map((value) {
-                                                          //   return Text(value);
-                                                          // }).toList(),
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.jpg')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 2;
-                                                            return Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center, // This is needed
-                                                                  child: Image
-                                                                      .file(
-                                                                    File(value),
-                                                                    width: 170,
-                                                                    height: 170,
-                                                                    fit: BoxFit
-                                                                        .fitHeight,
-                                                                  ),
-                                                                ),
-                                                                ButtonTheme(
-                                                                  buttonColor:
-                                                                      Colors
-                                                                          .red,
-                                                                  minWidth:
-                                                                      40.0,
-                                                                  height: 30.0,
-                                                                  child:
-                                                                      Container(),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                      Column(
-                                                        children: records
-                                                            .map((value) {
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.aac')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 1;
-
-                                                            return ExpansionTile(
-                                                              title: Text(
-                                                                  'Rekaman soal ${value.toString()}'),
-                                                              // subtitle: Text(
-                                                              //     _getDateFromFilePatah(filePath: widget.records.elementAt(i))),
-                                                              onExpansionChanged:
-                                                                  ((newState) {
-                                                                if (newState) {
-                                                                  setState(() {
-                                                                    _selectedIndex =
-                                                                        0;
-                                                                  });
-                                                                }
-                                                              }),
-                                                              children: [
-                                                                Container(
-                                                                  height: 100,
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(10),
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      LinearProgressIndicator(
-                                                                        minHeight:
-                                                                            5,
-                                                                        backgroundColor:
-                                                                            Colors.black,
-                                                                        valueColor:
-                                                                            AlwaysStoppedAnimation<Color>(Colors.green),
-                                                                        value: _selectedIndex ==
-                                                                                0
-                                                                            ? _completedPercentage
-                                                                            : 0,
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          IconButton(
-                                                                            icon: _selectedIndex == 0
-                                                                                ? _isPlaying
-                                                                                    ? Icon(Icons.pause)
-                                                                                    : Icon(Icons.play_arrow)
-                                                                                : Icon(Icons.play_arrow),
-                                                                            onPressed: () =>
-                                                                                _onPlay(filePath: value, index: 0),
-                                                                          ),
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Column(
-                                                    children: [
-                                                      Column(
-                                                        children:
-                                                            videos.map((value) {
-                                                          //   return Text(value);
-                                                          // }).toList(),
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.mp4')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 3;
-                                                            return Column(
-                                                              children: [
-                                                                Text(value
-                                                                    .split("/")
-                                                                    .last),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                                ButtonTheme(
-                                                                  buttonColor:
-                                                                      Colors
-                                                                          .red,
-                                                                  minWidth:
-                                                                      40.0,
-                                                                  height: 30.0,
-                                                                  child:
-                                                                      RaisedButton(
-                                                                    onPressed: () =>
-                                                                        deleteFileVid(
-                                                                            value),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .delete,
-                                                                      size: 18,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                      Column(
-                                                        children: pictures
-                                                            .map((value) {
-                                                          //   return Text(value);
-                                                          // }).toList(),
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.jpg')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 2;
-                                                            return Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center, // This is needed
-                                                                  child: Image
-                                                                      .file(
-                                                                    File(value),
-                                                                    width: 170,
-                                                                    height: 170,
-                                                                    fit: BoxFit
-                                                                        .fitHeight,
-                                                                  ),
-                                                                ),
-                                                                ButtonTheme(
-                                                                  buttonColor:
-                                                                      Colors
-                                                                          .red,
-                                                                  minWidth:
-                                                                      40.0,
-                                                                  height: 30.0,
-                                                                  child:
-                                                                      RaisedButton(
-                                                                    onPressed: () =>
-                                                                        deleteFilePict(
-                                                                            value),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .delete,
-                                                                      size: 18,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                      Column(
-                                                        children: records
-                                                            .map((value) {
-                                                          if (value.endsWith(this
-                                                                  ._soalModel
-                                                                  .tryoutSoalResponse
-                                                                  .dataTryout[this
-                                                                      ._soalModel
-                                                                      .currentIndex]
-                                                                  .idTryoutDetailSoals
-                                                                  .toString() +
-                                                              '.aac')) {
-                                                            this
-                                                                ._soalModel
-                                                                .status = 1;
-
-                                                            return ExpansionTile(
-                                                              title: Text(
-                                                                  'Rekaman soal ${value.toString()}'),
-                                                              // subtitle: Text(
-                                                              //     _getDateFromFilePatah(filePath: widget.records.elementAt(i))),
-                                                              onExpansionChanged:
-                                                                  ((newState) {
-                                                                if (newState) {
-                                                                  setState(() {
-                                                                    _selectedIndex =
-                                                                        0;
-                                                                  });
-                                                                }
-                                                              }),
-                                                              children: [
-                                                                Container(
-                                                                  height: 100,
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(10),
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      LinearProgressIndicator(
-                                                                        minHeight:
-                                                                            5,
-                                                                        backgroundColor:
-                                                                            Colors.black,
-                                                                        valueColor:
-                                                                            AlwaysStoppedAnimation<Color>(Colors.green),
-                                                                        value: _selectedIndex ==
-                                                                                0
-                                                                            ? _completedPercentage
-                                                                            : 0,
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          IconButton(
-                                                                            icon: _selectedIndex == 0
-                                                                                ? _isPlaying
-                                                                                    ? Icon(Icons.pause)
-                                                                                    : Icon(Icons.play_arrow)
-                                                                                : Icon(Icons.play_arrow),
-                                                                            onPressed: () =>
-                                                                                _onPlay(filePath: value, index: 0),
-                                                                          ),
-                                                                          IconButton(
-                                                                            icon:
-                                                                                Icon(Icons.delete),
-                                                                            onPressed: () =>
-                                                                                deleteFileRec(value),
-                                                                          )
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                            //Return an empty Container for non-matching case
-                                                          }
-                                                        }).toList(),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            this
+                                                ? Container()
+                                                : Container(
+                                                    alignment: Alignment
+                                                        .center, // This is needed
+                                                    child: Text(this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
                                                             ._soalModel
-                                                            .tryoutSoalResponse
-                                                            .dataTryout[this
-                                                                ._soalModel
-                                                                .currentIndex]
-                                                            .jawabanUser ==
-                                                        null &&
-                                                    this._soalModel.status == 0
+                                                            .currentIndex]
+                                                        .jawabanUser)),
+                                            this
+                                                        ._soalModel
+                                                        .tryoutSoalResponse
+                                                        .dataTryout[this
+                                                            ._soalModel
+                                                            .currentIndex]
+                                                        .statusSoal ==
+                                                    0
                                                 ? Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      RecorderView(
-                                                        onSaved:
-                                                            _onRecordComplete,
-                                                        onDuplicate:
-                                                            _onRecordDuplicate,
-                                                        number: this
-                                                            ._soalModel
-                                                            .tryoutSoalResponse
-                                                            .dataTryout[this
-                                                                ._soalModel
-                                                                .currentIndex]
-                                                            .idTryoutDetailSoals,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      PickImage(
-                                                        onSaved:
-                                                            _onTakePictComplete,
-                                                        onDuplicate:
-                                                            _onRecordDuplicate,
-                                                        number: this
-                                                            ._soalModel
-                                                            .tryoutSoalResponse
-                                                            .dataTryout[this
-                                                                ._soalModel
-                                                                .currentIndex]
-                                                            .idTryoutDetailSoals,
-                                                        jepret: this.jepret,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
+                                                      // RecorderView(
+                                                      //   onSaved:
+                                                      //       onSuccessRecord,
+                                                      //   onDuplicate:
+                                                      //       _onRecordDuplicate,
+                                                      //   number: this
+                                                      //       ._soalModel
+                                                      //       .tryoutSoalResponse
+                                                      //       .dataTryout[this
+                                                      //           ._soalModel
+                                                      //           .currentIndex]
+                                                      //       .idTryoutDetailSoals,
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   height: 10,
+                                                      // ),
+                                                      // PickImage(
+                                                      //   onSaved:
+                                                      //       onSuccessTakePict,
+                                                      //   onDuplicate:
+                                                      //       _onRecordDuplicate,
+                                                      //   number: this
+                                                      //       ._soalModel
+                                                      //       .tryoutSoalResponse
+                                                      //       .dataTryout[this
+                                                      //           ._soalModel
+                                                      //           .currentIndex]
+                                                      //       .idTryoutDetailSoals,
+                                                      //   jepret: this.jepret,
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   height: 10,
+                                                      // ),
                                                       PickVideo(
                                                         onSaved:
-                                                            _onTakeVideoComplete,
+                                                            onSuccessTakeVid,
                                                         onDuplicate:
                                                             _onRecordDuplicate,
                                                         number: this
@@ -1081,157 +707,131 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
                                                       ),
                                                     ],
                                                   )
-                                                : Container(),
+                                                : Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      ElevatedButton(
+                                                        child: Text('Preview'),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary:
+                                                              Colors.blueAccent,
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          DetailVideoScreen(
+                                                                            urlVideo:
+                                                                                'http://103.41.207.247:3000/' + this._soalModel.tryoutSoalResponse.dataTryout[this._soalModel.currentIndex].jawabanUser,
+                                                                          )));
+                                                        },
+                                                      ),
+                                                      PickVideo(
+                                                        onSaved:
+                                                            onSuccessTakeVid,
+                                                        onDuplicate:
+                                                            _onRecordDuplicate,
+                                                        number: this
+                                                            ._soalModel
+                                                            .tryoutSoalResponse
+                                                            .dataTryout[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .idTryoutDetailSoals,
+                                                        rekam: this.rekam,
+                                                      ),
+                                                    ],
+                                                  ),
                                             SizedBox(
                                               height: 20,
                                             ),
-                                            this
-                                                        ._soalModel
-                                                        .tryoutSoalResponse
-                                                        .dataTryout[this
-                                                            ._soalModel
-                                                            .currentIndex]
-                                                        .jawabanUser !=
-                                                    null
-                                                ? Center(
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Color(0xff7474BF),
-                                                      onTap: () {
-                                                        this.onError(
-                                                            'soal sudah dijawab (jawaban sudah terkirim)');
-                                                      },
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: 10.0),
-                                                        height: 35,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            1.4,
-                                                        decoration: BoxDecoration(
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  offset: Offset(
-                                                                      0, 28),
-                                                                  blurRadius:
-                                                                      40,
-                                                                  spreadRadius:
-                                                                      -12)
-                                                            ],
-                                                            color: Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Soal Sudah Dijawab',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : Center(
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Color(0xff7474BF),
-                                                      onTap: () {
-                                                        print(this
-                                                            ._soalModel
-                                                            .status);
-                                                        this
-                                                                    ._soalModel
-                                                                    .status ==
-                                                                1
-                                                            ? this._soalPresenter.jawabVoice(
-                                                                records,
-                                                                this
-                                                                    ._soalModel
-                                                                    .tryoutSoalResponse
-                                                                    .dataTryout[this
-                                                                        ._soalModel
-                                                                        .currentIndex]
-                                                                    .idTryoutDetailSoals)
-                                                            : this
-                                                                        ._soalModel
-                                                                        .status ==
-                                                                    2
-                                                                ? this._soalPresenter.jawabGambar(
-                                                                    pictures,
-                                                                    this
-                                                                        ._soalModel
-                                                                        .tryoutSoalResponse
-                                                                        .dataTryout[this
-                                                                            ._soalModel
-                                                                            .currentIndex]
-                                                                        .idTryoutDetailSoals)
-                                                                : this._soalModel.status ==
-                                                                        3
-                                                                    ? this._soalPresenter.jawabVideo(
-                                                                        videos,
-                                                                        this
-                                                                            ._soalModel
-                                                                            .tryoutSoalResponse
-                                                                            .dataTryout[this
-                                                                                ._soalModel
-                                                                                .currentIndex]
-                                                                            .idTryoutDetailSoals)
-                                                                    : this.onError(
-                                                                        'Cek Dulu Soal Dan Jawabannya :)');
-                                                      },
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: 10.0),
-                                                        height: 35,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            1.4,
-                                                        decoration: BoxDecoration(
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  offset: Offset(
-                                                                      0, 28),
-                                                                  blurRadius:
-                                                                      40,
-                                                                  spreadRadius:
-                                                                      -12)
-                                                            ],
-                                                            color: Color(
-                                                                0xff1d63dc),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Next & kirim jawaban file',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
+                                            Center(
+                                              child: InkWell(
+                                                splashColor: Color(0xff7474BF),
+                                                onTap: () {
+                                                  print(this
+                                                      ._soalModel
+                                                      .tryoutSoalResponse
+                                                      .dataTryout[this
+                                                          ._soalModel
+                                                          .currentIndex]
+                                                      .statusSoal);
+                                                  this._soalPresenter.submit();
+                                                  // this
+                                                  //             ._soalModel
+                                                  //             .status ==
+                                                  //         1
+                                                  //     ? this
+                                                  //         ._soalPresenter
+                                                  //         .jawabVoice(
+                                                  //             'test')
+                                                  //     : this
+                                                  //                 ._soalModel
+                                                  //                 .status ==
+                                                  //             2
+                                                  //         ? this._soalPresenter.jawabGambar(
+                                                  //             pictures,
+                                                  //             this
+                                                  //                 ._soalModel
+                                                  //                 .tryoutSoalResponse
+                                                  //                 .dataTryout[this
+                                                  //                     ._soalModel
+                                                  //                     .currentIndex]
+                                                  //                 .idTryoutDetailSoals)
+                                                  //         : this._soalModel.status ==
+                                                  //                 3
+                                                  //             ? this._soalPresenter.jawabVideo(
+                                                  //                 videos,
+                                                  //                 this
+                                                  //                     ._soalModel
+                                                  //                     .tryoutSoalResponse
+                                                  //                     .dataTryout[this
+                                                  //                         ._soalModel
+                                                  //                         .currentIndex]
+                                                  //                     .idTryoutDetailSoals)
+                                                  //             : this.onError(
+                                                  //                 'Cek Dulu Soal Dan Jawabannya :)');
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 10.0),
+                                                  height: 35,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      1.4,
+                                                  decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            color:
+                                                                Colors.black26,
+                                                            offset:
+                                                                Offset(0, 28),
+                                                            blurRadius: 40,
+                                                            spreadRadius: -12)
+                                                      ],
+                                                      color: Color(0xff1d63dc),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Next',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       )
@@ -1638,7 +1238,16 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
         int totalSoal = this._soalModel.currentIndex + 1;
         print(totalSoal);
         Navigator.pop(context);
-        this._soalPresenter.kumpulkan();
+        if (this
+                ._soalModel
+                .tryoutSoalResponse
+                .dataTryout[this._soalModel.currentIndex]
+                .statusSoal ==
+            0) {
+          this._soalPresenter.kumpulkan();
+        } else {
+          this._soalPresenter.kumpulkanFile();
+        }
         Toast.show("Soal selesai :)", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
         // if (this._soalModel.tryoutSoalResponse.dataTryout.length == totalSoal) {
@@ -1663,5 +1272,59 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
         return alert;
       },
     );
+  }
+
+  @override
+  void onSuccessRecord(String fileNya) {
+    records.clear();
+    appDirectory.list().listen((onData) {
+      if (onData.path.endsWith(".aac")) {
+        records.add(onData.path);
+      }
+    }).onDone(() {
+      records.sort();
+      records = records.reversed.toList();
+      setState(() {
+        this._soalModel.status = 1;
+      });
+    });
+    this._soalPresenter.jawabFile(fileNya, 1);
+  }
+
+  @override
+  void onSuccessTakePict(String fileNya, String lokasiFile) {
+    pictures.clear();
+    appDirectory.list().listen((onData) {
+      if (onData.path.endsWith(".jpg")) {
+        pictures.add(onData.path);
+      }
+    }).onDone(() {
+      pictures.sort();
+      pictures = pictures.reversed.toList();
+      setState(() {
+        this._soalModel.status = 2;
+        this.jepret += 1;
+      });
+    });
+    this._soalPresenter.jawabFile(fileNya, 2);
+  }
+
+  @override
+  void onSuccessTakeVid(String fileNya) {
+    videos.clear();
+    appDirectory.list().listen((onData) {
+      if (onData.path.endsWith(".mp4")) {
+        videos.add(onData.path);
+        deleteFileVid(onData.path);
+      }
+    }).onDone(() {
+      videos.sort();
+      videos = videos.reversed.toList();
+      setState(() {
+        this._soalModel.status = 3;
+        this.rekam += 1;
+      });
+    });
+    this._soalPresenter.jawabFile(fileNya, 3);
   }
 }

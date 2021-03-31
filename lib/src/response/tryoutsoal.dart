@@ -32,9 +32,10 @@ class DataTryout {
   String jawabanBenar;
   List<Choice> choice;
   bool status;
+  int statusSoal;
   int isEssay;
   String pembahasan;
-  bool imgPembahasan;
+  String imgPembahasan;
 
   DataTryout(
       {this.idTryoutDetailSoals,
@@ -44,6 +45,7 @@ class DataTryout {
       this.jawabanBenar,
       this.choice,
       this.status,
+      this.statusSoal,
       this.isEssay,
       this.pembahasan,
       this.imgPembahasan});
@@ -61,9 +63,10 @@ class DataTryout {
       });
     }
     status = json['status'];
+    statusSoal = 0;
     isEssay = json['isEssay'];
     pembahasan = json['pembahasan'];
-    imgPembahasan = json['imgPembahasan'];
+    imgPembahasan = json['imgPembahasan'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +80,7 @@ class DataTryout {
       data['choice'] = this.choice.map((v) => v.toJson()).toList();
     }
     data['status'] = this.status;
+    statusSoal = this.statusSoal;
     data['isEssay'] = this.isEssay;
     data['pembahasan'] = this.pembahasan;
     data['imgPembahasan'] = this.imgPembahasan;

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:TesUjian/src/response/area.dart';
+import 'package:TesUjian/src/response/provinsi.dart';
 import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +22,16 @@ class SignUpModel {
   String sekolahError = "";
   int sekolahId = 0;
   int areaId = 0;
-  int jenjangId = 0;
-  String namaSekolah = "";
+  int idArea = 0;
+  int idProv = 0;
+  String namaProv = "";
   String namaArea = "";
+  String namaSekolah = "";
+  int jenjangId = 0;
   String namaJenjang = "";
-  SekolahResponse sekolah = new SekolahResponse();
+  ProvinsiResponse provinsi = new ProvinsiResponse();
   AreaResponse area = new AreaResponse();
+  SekolahResponse sekolah = new SekolahResponse();
   DateTime tanggalLahir = DateTime.now().toLocal();
   String kelamin = "Laki - Laki";
   List<String> kelaminList = ["Laki - Laki", "Perempuan"];
@@ -38,4 +43,5 @@ class SignUpModel {
   final TextEditingController tanggalahirController =
       new TextEditingController();
   final TextEditingController sekolahController = new TextEditingController();
+  final TextEditingController provinsiController = new TextEditingController();
 }

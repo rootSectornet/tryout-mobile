@@ -11,7 +11,8 @@ abstract class ProfileHeaderPresenterAbstract {
   set view(ProfileHeaderState view) {}
   void getData(int idMurid) {}
   void getDaftar(int idMurid) {}
-  void getArea() {}
+  void getArea(int idProv) {}
+  void getProv() {}
   void getSekolah() {}
   void setJenjang(int id, bool isParent, String name, BuildContext context) {}
   void setJenjangTujuan(
@@ -45,6 +46,18 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
     // TODO: implement view
     this._profileHeaderState = view;
     this._profileHeaderState.refreshData(this._profileModel);
+  }
+
+  @override
+  void getProv() {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getProv().then((value) {
+      this._profileModel.provinsi = value;
+      this._profileHeaderState.refreshData(this._profileModel);
+    }).catchError((err) {
+      this._profileHeaderState.onError(err.toString());
+    });
   }
 
   @override
@@ -102,10 +115,10 @@ class ProfileHeaderPresenter implements ProfileHeaderPresenterAbstract {
   }
 
   @override
-  void getArea() {
+  void getArea(int idProv) {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getArea(0).then((value) {
+    this._sekolahApi.getArea(idProv).then((value) {
       this._profileModel.area = value;
       this._profileHeaderState.refreshData(this._profileModel);
     }).catchError((err) {

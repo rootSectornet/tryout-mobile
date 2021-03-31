@@ -7,8 +7,9 @@ import 'package:intl/intl.dart';
 abstract class SignUpPresenterAbstract {
   set view(SignUpState view) {}
   void register() {}
-  void getSekolah() {}
-  void getArea() {}
+  void getSekolah(int area, int jenjang) {}
+  void getArea(int idProv) {}
+  void getProv() {}
   void setJenjang(int id, bool isParent, String name, BuildContext context) {}
   void save(int area, int jenjang) {}
 }
@@ -25,6 +26,18 @@ class SignUpPresenter implements SignUpPresenterAbstract {
     // TODO: implement view
     this._signUpState = view;
     this._signUpState.refreshData(this._signUpModel);
+  }
+
+  @override
+  void getProv() {
+    // ignore: todo
+    // TODO: implement getSekolah
+    this._sekolahApi.getProv().then((value) {
+      this._signUpModel.provinsi = value;
+      this._signUpState.refreshData(this._signUpModel);
+    }).catchError((err) {
+      this._signUpState.onError(err.toString());
+    });
   }
 
   @override
@@ -65,22 +78,24 @@ class SignUpPresenter implements SignUpPresenterAbstract {
   }
 
   @override
-  void getSekolah() {
-    // ignore: todo
-    // TODO: implement getSekolah
-    this._sekolahApi.getSekolah(1, 2).then((value) {
+  void getSekolah(int area, int jenjang) {
+    print(jenjang);
+    print("+++++++++++");
+    print(area);
+    this._sekolahApi.getSekolah(area, jenjang).then((value) {
       this._signUpModel.sekolah = value;
       this._signUpState.refreshData(this._signUpModel);
+      this._signUpState.selectSekolah();
     }).catchError((err) {
       this._signUpState.onError(err.toString());
     });
   }
 
   @override
-  void getArea() {
+  void getArea(int idProv) {
     // ignore: todo
     // TODO: implement getSekolah
-    this._sekolahApi.getArea(0).then((value) {
+    this._sekolahApi.getArea(idProv).then((value) {
       this._signUpModel.area = value;
       this._signUpState.refreshData(this._signUpModel);
     }).catchError((err) {
@@ -108,7 +123,7 @@ class SignUpPresenter implements SignUpPresenterAbstract {
     this._sekolahApi.getSekolah(area, jenjang).then((value) {
       this._signUpModel.sekolah = value;
       this._signUpState.refreshData(this._signUpModel);
-      this._signUpState.selectSekolah();
+      // this._signUpState.selectSekolah();
     }).catchError((err) {
       this._signUpState.onError(err.toString());
     });

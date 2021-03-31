@@ -25,16 +25,18 @@ class DataTryout {
   int id;
   String codeAkses;
   int idMurid;
-  Null idGuru;
+  int idGuru;
   String tgl;
   bool status;
   String jenjang;
   int idPaket;
+  bool statusKoreksi;
+  int idSekolahTujuan;
   String createdAt;
   String updatedAt;
   Tingkat tingkat;
   Paket paket;
-  Null guru;
+  String guru;
   Murid murid;
 
   DataTryout(
@@ -46,6 +48,8 @@ class DataTryout {
       this.status,
       this.jenjang,
       this.idPaket,
+      this.statusKoreksi,
+      this.idSekolahTujuan,
       this.createdAt,
       this.updatedAt,
       this.tingkat,
@@ -62,6 +66,8 @@ class DataTryout {
     status = json['status'];
     jenjang = json['jenjang'];
     idPaket = json['id_paket'];
+    statusKoreksi = json['statusKoreksi'];
+    idSekolahTujuan = json['idSekolahTujuan'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     tingkat =
@@ -81,6 +87,8 @@ class DataTryout {
     data['status'] = this.status;
     data['jenjang'] = this.jenjang;
     data['id_paket'] = this.idPaket;
+    data['statusKoreksi'] = this.statusKoreksi;
+    data['idSekolahTujuan'] = this.idSekolahTujuan;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     if (this.tingkat != null) {
@@ -100,14 +108,16 @@ class DataTryout {
 class Tingkat {
   int id;
   String jenjang;
+  Null icon;
   String createdAt;
   String updatedAt;
 
-  Tingkat({this.id, this.jenjang, this.createdAt, this.updatedAt});
+  Tingkat({this.id, this.jenjang, this.icon, this.createdAt, this.updatedAt});
 
   Tingkat.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     jenjang = json['jenjang'];
+    icon = json['icon'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -116,6 +126,7 @@ class Tingkat {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['jenjang'] = this.jenjang;
+    data['icon'] = this.icon;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
@@ -169,7 +180,7 @@ class Murid {
   String kelamin;
   String alamat;
   int idSekolah;
-  var picture;
+  String picture;
   String createdAt;
   String updatedAt;
 

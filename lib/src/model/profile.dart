@@ -1,6 +1,7 @@
 import 'package:TesUjian/src/response/area.dart';
 import 'package:TesUjian/src/response/daftar.dart';
 import 'package:TesUjian/src/response/jenjangResponse.dart';
+import 'package:TesUjian/src/response/provinsi.dart';
 import 'package:TesUjian/src/response/sekolah.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +58,10 @@ class ProfileModel {
   int jenjangId = 0;
   int areaIdTujuan = 0;
   int jenjangIdTujuan = 0;
+  int idProv = 0;
+  String namaProv = "";
+  int idProvTujuan = 0;
+  String namaProvTujuan = "";
   String namaSekolah = "";
   String namaArea = "";
   String namaJenjang = "";
@@ -68,9 +73,13 @@ class ProfileModel {
   DateTime tanggalLahir = DateTime.now().toLocal();
   SekolahResponse sekolah = new SekolahResponse();
   AreaResponse area = new AreaResponse();
+  ProvinsiResponse provinsi = new ProvinsiResponse();
   JenjangsResponse jenjang = new JenjangsResponse();
   List<Profile> profiles = new List<Profile>();
   DaftarResponse daftarResponse = new DaftarResponse();
+  final TextEditingController provinsiController = new TextEditingController();
+  final TextEditingController provinsiTujuanController =
+      new TextEditingController();
   TextEditingController areaController = new TextEditingController();
   TextEditingController jenjangController = new TextEditingController();
   TextEditingController areaTujuanController = new TextEditingController();

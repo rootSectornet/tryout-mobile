@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 
 abstract class HomePresenterAbstract {
   set view(HomeState view) {}
-  void setPaket(id, BuildContext context) {}
-  void setJenjang(id, isParent, BuildContext context) {}
+  void setPaket(id, namaPaket, BuildContext context) {}
+  void setJenjang(id, isParent, namaJenjang, BuildContext context) {}
   void save(int paket, int jenjang) {}
 }
 
@@ -23,25 +23,34 @@ class HomePresenter implements HomePresenterAbstract {
   }
 
   @override
-  void setJenjang(id, isParent, context) {
+  void setJenjang(id, isParent, namaJenjang, context) {
     if (isParent) {
       this._homeState.showJenjang(context, id);
     } else {
       this._homeModel.jenjang = id;
+      this._homeModel.namaJenjang = namaJenjang;
       //
       this._homeModel.isPondok = id == 16;
       this._homeState.refreshData(this._homeModel);
+
       if (this._homeModel.idPaket == 0) {
         this._homeState.showPaket(context);
       } else {
-        this.save(this._homeModel.idPaket, id);
+        if (this._homeModel.isPondok) {
+          // print('ini soal pondok');
+          this._homeState.onError('Coba Selain Pondok :)');
+        } else {
+          // print('bukan');
+          this.save(this._homeModel.idPaket, id);
+        }
       }
     }
   }
 
   @override
-  void setPaket(id, context) {
+  void setPaket(id, namaPaket, context) {
     this._homeModel.idPaket = id;
+    this._homeModel.namaPaket = namaPaket;
     this._homeState.refreshData(this._homeModel);
     this._homeState.showJenjang(context, 0);
   }
@@ -49,11 +58,17 @@ class HomePresenter implements HomePresenterAbstract {
   @override
   void save(paket, jenjang) {
     print(jenjang);
-    print("+++++++++++save paket");
+    print("+++++++++++To Select Sekolah");
     print(paket);
     this._homeModel.jenjang = 0;
     this._homeModel.idPaket = 0;
     this._homeState.refreshData(this._homeModel);
-    this._homeState.toTryout(jenjang, paket);
+    if (this._homeModel.isPondok) {
+      this._homeState.toTryout(jenjang, paket);
+      print('pondok');
+    } else {
+      this._homeState.toSelectSekolah(jenjang, paket);
+      print('bukan');
+    }
   }
 }

@@ -7,12 +7,12 @@ import 'package:TesUjian/src/resources/bayarApi.dart';
 import 'package:TesUjian/src/resources/sekolahApi.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:TesUjian/src/state/tryout.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 abstract class TryoutPresenterAbstract {
   set view(TryoutState view) {}
-  void save(int idPaket, int idJenjang) {}
+  void save(int idPaket, int idJenjang, int sekolahTujuan) {}
+  void saveTryouts(int idPaket, int idJenjang) {}
   void getMatpels(int idTryout) {}
   void getProv() {}
   void getArea(int idProv) {}
@@ -42,7 +42,7 @@ class TryoutPresenter implements TryoutPresenterAbstract {
   }
 
   @override
-  void save(int idPaket, int idJenjang) async {
+  void save(int idPaket, int idJenjang, int sekolahTujuan) async {
     print('masuk ke save');
     this._tryoutModel.isloading = true;
     int idMurid = await Session.getId();
@@ -51,11 +51,60 @@ class TryoutPresenter implements TryoutPresenterAbstract {
     this._tryoutModel.jenjang = idJenjang;
     this._tryoutState.refreshData(this._tryoutModel);
     Map<String, String> body = {
-      "id_paket": idPaket.toString(),
       "id_murid": idMurid.toString(),
       "id_jenjang": idJenjang.toString(),
+      "id_paket": idPaket.toString(),
+      "idSekolahTujuan": sekolahTujuan.toString(),
       "tgl":
-          DateFormat("yyyy-MM-dd").format(DateTime.now().toLocal()).toString()
+          DateFormat("yyyy-MM-dd").format(DateTime.now().toLocal()).toString(),
+    };
+    print(body);
+    print('woi');
+    this._tryoutApi.saveTryout(body).then((v) {
+      this._tryoutModel.idTryout = v;
+      this._tryoutState.refreshData(this._tryoutModel);
+      this._tryoutApi.getMatpels(v).then((value) {
+        this._tryoutModel.tryoutDetailResponse = value;
+        this._tryoutState.refreshData(this._tryoutModel);
+        this._tryoutApi.getInfo(v).then((c) {
+          this._tryoutModel.tryoutInfoResponse = c;
+          this._tryoutModel.isloading = false;
+          this._tryoutState.refreshData(this._tryoutModel);
+        }).catchError((onError) {
+          print(onError.toString());
+          print("info");
+          this._tryoutModel.isloading = false;
+          this._tryoutState.refreshData(this._tryoutModel);
+        });
+      }).catchError((onError) {
+        print(onError.toString());
+        print("save mt");
+        this._tryoutModel.isloading = false;
+        this._tryoutState.refreshData(this._tryoutModel);
+      });
+    }).catchError((onError) {
+      print(onError.toString());
+      print("save");
+      this._tryoutModel.isloading = false;
+      this._tryoutState.refreshData(this._tryoutModel);
+    });
+  }
+
+  @override
+  void saveTryouts(int idPaket, int idJenjang) async {
+    print('masuk ke save');
+    this._tryoutModel.isloading = true;
+    int idMurid = await Session.getId();
+    this._tryoutModel.idMurid = idMurid;
+    this._tryoutModel.idPaket = idPaket;
+    this._tryoutModel.jenjang = idJenjang;
+    this._tryoutState.refreshData(this._tryoutModel);
+    Map<String, String> body = {
+      "id_murid": idMurid.toString(),
+      "id_jenjang": idJenjang.toString(),
+      "id_paket": idPaket.toString(),
+      "tgl":
+          DateFormat("yyyy-MM-dd").format(DateTime.now().toLocal()).toString(),
     };
     print(body);
     print('woi');

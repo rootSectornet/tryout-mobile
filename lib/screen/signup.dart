@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
+import 'package:TesUjian/screen/fragment/selectprovinsi.dart';
 import 'package:TesUjian/screen/fragment/selectsekolah.dart';
 import 'package:TesUjian/src/model/signup.dart';
 import 'package:TesUjian/src/presenter/signup.dart';
@@ -41,7 +42,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   void initState() {
     super.initState();
     this._signUpPresenter.view = this;
-    this._signUpPresenter.getArea();
+    this._signUpPresenter.getProv();
   }
 
   @override
@@ -570,8 +571,6 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
 
   @override
   void selectSekolah() async {
-    Navigator.pop(context);
-    Navigator.pop(context);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -586,12 +585,8 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
           this._signUpModel.sekolah.dataSekolah.data[value].nama;
       this._signUpModel.sekolahController.text =
           this._signUpModel.sekolah.dataSekolah.data[value].nama;
-      this._signUpModel.areaId = 0;
-      this._signUpModel.jenjangId = 0;
-      this._signUpModel.namaArea = "";
-      this._signUpModel.namaJenjang = "";
-      this._signUpModel.sekolah.dataSekolah.data.clear();
       this.refreshData(this._signUpModel);
+      Navigator.of(context).pop();
     });
   }
 
@@ -599,7 +594,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   // ignore: override_on_non_overriding_member
   void areaJenjang() {
     showCupertinoModalBottomSheet(
-      expand: false,
+      expand: true,
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
@@ -633,21 +628,115 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                     ],
                   ),
                   Text('Pilih Area & jenjang'),
-                  Padding(
-                    padding: EdgeInsets.all(1),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: 30,
+                    margin:
+                        EdgeInsets.only(top: 4, left: 16, bottom: 1, right: 16),
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xff2D8EFF)),
+                        )),
                     child: TextFormField(
-                      controller: this._signUpModel.areaController,
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      onTap: (() => {this.selectArea()}),
-                      onChanged: (String area) {},
+                      // initialValue: new DateFormat("d, MMMM - y").format(this._signUpModel.tanggalLahir.toLocal()).toString(),
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
                       decoration: InputDecoration(
-                          hintText: 'pilih area',
+                          icon: Icon(
+                            Ionicons.map,
+                            color: Color(0xff2D8EFF),
+                            size: 18,
+                          ),
+                          hintText: "Provinsi",
                           border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none),
+                          errorStyle: TextStyle(color: Colors.red, fontSize: 9),
+                          fillColor: Colors.grey,
+                          hintStyle: TextStyle(
+                              color: Color(0xff2D8EFF), fontSize: 12)),
+                      onTap: (() => {this.selectProvinsi()}),
+                      controller: this._signUpModel.provinsiController,
+                      readOnly: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: 30,
+                    margin:
+                        EdgeInsets.only(top: 4, left: 16, bottom: 1, right: 16),
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xff2D8EFF)),
+                        )),
+                    child: TextFormField(
+                      // initialValue: new DateFormat("d, MMMM - y").format(this._signUpModel.tanggalLahir.toLocal()).toString(),
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      decoration: InputDecoration(
+                          icon: Icon(
+                            Ionicons.map_outline,
+                            color: Color(0xff2D8EFF),
+                            size: 18,
+                          ),
+                          hintText: "Area",
+                          border: InputBorder.none,
+                          errorStyle: TextStyle(color: Colors.red, fontSize: 9),
+                          fillColor: Colors.grey,
+                          hintStyle: TextStyle(
+                              color: Color(0xff2D8EFF), fontSize: 12)),
+                      onTap: (() => {
+                            this._signUpModel.idProv == 0
+                                ? Toast.show("Provinsi Harus Dipilih", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM)
+                                : this.selectArea()
+                          }),
+                      controller: this._signUpModel.areaController,
+                      readOnly: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: 30,
+                    margin:
+                        EdgeInsets.only(top: 4, left: 16, bottom: 1, right: 16),
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xff2D8EFF)),
+                        )),
+                    child: TextFormField(
+                      // initialValue: new DateFormat("d, MMMM - y").format(this._signUpModel.tanggalLahir.toLocal()).toString(),
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      decoration: InputDecoration(
+                          icon: Icon(
+                            Ionicons.school,
+                            color: Color(0xff2D8EFF),
+                            size: 18,
+                          ),
+                          hintText: "Sekolah",
+                          border: InputBorder.none,
+                          errorStyle: TextStyle(color: Colors.red, fontSize: 9),
+                          fillColor: Colors.grey,
+                          hintStyle: TextStyle(
+                              color: Color(0xff2D8EFF), fontSize: 12)),
+                      onTap: (() => {
+                            this._signUpModel.idArea == 0
+                                ? Toast.show("Area Harus Dipilih", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM)
+                                : this.selectJenjangnya()
+                          }),
+                      controller: this._signUpModel.sekolahController,
+                      readOnly: true,
                     ),
                   ),
                   // Text("Jenjang soal",
@@ -688,13 +777,13 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
             areaResponse: this._signUpModel.area,
           ),
         )).then((value) {
-      print(this._signUpModel.area.data[value].id);
       this._signUpModel.areaId = this._signUpModel.area.data[value].id;
+      this._signUpModel.idArea = this._signUpModel.area.data[value].id;
       this._signUpModel.namaArea = this._signUpModel.area.data[value].area;
       this._signUpModel.areaController.text =
           this._signUpModel.area.data[value].area;
+
       this.refreshData(this._signUpModel);
-      this.selectJenjangnya();
     });
   }
 
@@ -763,8 +852,35 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   }
 
   @override
+  // ignore: override_on_non_overriding_member
+  void selectProvinsi() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectProvinsi(
+            key: Key("1"),
+            provinsiResponse: this._signUpModel.provinsi,
+          ),
+        )).then((value) {
+      print(this._signUpModel.provinsi.data[value].id);
+      setState(() {
+        this._signUpModel.idProv = this._signUpModel.provinsi.data[value].id;
+        this._signUpModel.namaProv =
+            this._signUpModel.provinsi.data[value].name;
+        this._signUpModel.provinsiController.text =
+            this._signUpModel.provinsi.data[value].name;
+        this
+            ._signUpPresenter
+            .getArea(this._signUpModel.provinsi.data[value].id);
+      });
+      this.refreshData(this._signUpModel);
+    });
+  }
+
+  @override
   void saveAreaJenjang(int jenjang) {
-    this._signUpPresenter.save(this._signUpModel.areaId, jenjang);
+    this._signUpPresenter.getSekolah(this._signUpModel.areaId, jenjang);
+    Navigator.of(context).pop();
   }
 
   @override

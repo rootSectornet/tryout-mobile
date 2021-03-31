@@ -1,5 +1,5 @@
 class Paths {
-  static const String BASEURL = "http://api.tesujian.com/v1/";
+  static const String BASEURL = "https://api.tesujian.com/v1/";
   static const String LOGIN = "auth/login";
   static const String KEY = "Tedi Susanto";
   static const String ENDPOINT_PENJUALAN = "transactions/penjualan";
@@ -34,4 +34,5 @@ class Paths {
   static const String ENDPOINT_CHECKPEMBAYARAN = "bayar/check";
   static const String ENDPOINT_BAYARCANCEL = "bayar/cancel";
   static const String ENDPOINT_CHECKSTATUSPEMBAYARAN = "CheckStatus";
+  static const String ENDPOINT_UPLOAD = "upload";
 }

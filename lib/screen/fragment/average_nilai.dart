@@ -12,9 +12,15 @@ class AverageNilai extends StatefulWidget {
   final int idMurid;
   final int idTryout;
   final int idArea;
+  final int idSekolahTujuan;
 
   const AverageNilai(
-      {Key key, this.title, this.idMurid, this.idTryout, this.idArea})
+      {Key key,
+      this.title,
+      this.idMurid,
+      this.idTryout,
+      this.idArea,
+      this.idSekolahTujuan})
       : super(key: key);
   @override
   _AverageNilaiState createState() => _AverageNilaiState();
@@ -24,11 +30,11 @@ class _AverageNilaiState extends State<AverageNilai>
     with SingleTickerProviderStateMixin
     implements RasioGradeState {
   AnimationController _controller;
-  String selectedJenjang = "SD";
+  // String selectedJenjang = "SD";
   RasioGradeModel _rasioGradeModel;
   RasioGradesPresenter _rasioGradesPresenter;
   int indexSelected = 0;
-  List<String> jenjangs = ["SD", "SMP", "SMA", "SMK", "PTN", "PONDOK"];
+  // List<String> jenjangs = ["SD", "SMP", "SMA", "SMK", "PTN", "PONDOK"];
 
   _AverageNilaiState() {
     this._rasioGradesPresenter = new RasioGradesPresenter();
@@ -40,7 +46,7 @@ class _AverageNilaiState extends State<AverageNilai>
     this._rasioGradesPresenter.view = this;
     this
         ._rasioGradesPresenter
-        .getData(widget.idMurid, widget.idTryout, widget.idArea);
+        .getData(widget.idMurid, widget.idTryout, widget.idSekolahTujuan);
     _controller = AnimationController(vsync: this);
   }
 
@@ -220,126 +226,147 @@ class _AverageNilaiState extends State<AverageNilai>
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 30,
-                              child: ListView.builder(
-                                  itemCount: this
-                                      ._rasioGradeModel
-                                      .rasioGradeResponse
-                                      .dataTryout[0]
-                                      .dataSekolah
-                                      .length,
-                                  shrinkWrap: true,
-                                  physics: ClampingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () => {
-                                        setState(() {
-                                          this.indexSelected = index;
-                                        })
-                                      },
-                                      child: Container(
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: Container(
+                          //     height: 30,
+                          //     child: ListView.builder(
+                          //         itemCount: this
+                          //             ._rasioGradeModel
+                          //             .rasioGradeResponse
+                          //             .dataTryout[0]
+                          //             .dataSekolah
+                          //             .length,
+                          //         shrinkWrap: true,
+                          //         physics: ClampingScrollPhysics(),
+                          //         scrollDirection: Axis.horizontal,
+                          //         itemBuilder: (context, index) {
+                          //           return InkWell(
+                          //             onTap: () => {
+                          //               setState(() {
+                          //                 this.indexSelected = index;
+                          //               })
+                          //             },
+                          //             child: Container(
+                          //               alignment: Alignment.center,
+                          //               padding: EdgeInsets.symmetric(
+                          //                   horizontal: 20),
+                          //               margin: EdgeInsets.only(left: 8),
+                          //               height: 30,
+                          //               decoration: BoxDecoration(
+                          //                   color: this.indexSelected == index
+                          //                       ? Colors.blue
+                          //                       : Colors.white,
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(30)),
+                          //               child: Text(
+                          //                 this
+                          //                     ._rasioGradeModel
+                          //                     .rasioGradeResponse
+                          //                     .dataTryout[0]
+                          //                     .dataSekolah[index]
+                          //                     .jenjang,
+                          //                 style: TextStyle(
+                          //                     color: this.indexSelected == index
+                          //                         ? Colors.white
+                          //                         : Colors.blue),
+                          //               ),
+                          //             ),
+                          //           );
+                          //         }),
+                          //   ),
+                          // ),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                height: 130,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(color: Colors.grey, blurRadius: 2)
+                                  ],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      child: Align(
                                         alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        margin: EdgeInsets.only(left: 8),
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                            color: this.indexSelected == index
-                                                ? Colors.blue
-                                                : Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
+                                        child: Text(this
+                                            ._rasioGradeModel
+                                            .rasioGrade[0]
+                                            .namaSekolah),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 25),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'KKM: ${this._rasioGradeModel.rasioGrade[0].kkm}',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 130,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(color: Colors.grey, blurRadius: 2)
+                                  ],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text('Hasil Tryout'),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 25),
+                                      child: Align(
+                                        alignment: Alignment.center,
                                         child: Text(
                                           this
                                               ._rasioGradeModel
-                                              .rasioGradeResponse
-                                              .dataTryout[0]
-                                              .dataSekolah[index]
-                                              .jenjang,
+                                              .rasioGrade[0]
+                                              .grade,
                                           style: TextStyle(
-                                              color: this.indexSelected == index
-                                                  ? Colors.white
-                                                  : Colors.blue),
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                    );
-                                  }),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Container(
-                            child: this
-                                        ._rasioGradeModel
-                                        .rasioGradeResponse
-                                        .dataTryout[0]
-                                        .dataSekolah[this.indexSelected]
-                                        .data ==
-                                    []
-                                ? Container(
-                                    child: Text('Data sekolah kosong'),
-                                  )
-                                : FittedBox(
-                                    child: DataTable(
-                                      columns: [
-                                        DataColumn(
-                                            label: Text('Sekolah',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 16))),
-                                        DataColumn(
-                                            label: Text('Nilai KKM',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 16))),
-                                        DataColumn(
-                                            label: Text('Hasil',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 16))),
-                                      ],
-                                      rows: this
-                                          ._rasioGradeModel
-                                          .rasioGradeResponse
-                                          .dataTryout[0]
-                                          .dataSekolah[this.indexSelected]
-                                          .data
-                                          .map(
-                                            (dataSekolah) => DataRow(cells: [
-                                              DataCell(
-                                                Text(dataSekolah.namaSekolah,
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.black,
-                                                        fontSize: 18)),
-                                              ),
-                                              DataCell(
-                                                Text(dataSekolah.kkm.toString(),
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.black,
-                                                        fontSize: 18)),
-                                              ),
-                                              DataCell(
-                                                Text(
-                                                  dataSekolah.grades,
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.red,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                            ]),
-                                          )
-                                          .toList(),
                                     ),
-                                  ),
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
+                          Container(
+                              child: this
+                                          ._rasioGradeModel
+                                          .rasioGrade[0]
+                                          .grade ==
+                                      "Lolos"
+                                  ? Text(
+                                      'Yeyy Selamat, nilai kamu memenuhi standar sekolah tujuan')
+                                  : Text(
+                                      'Ayo jangan menyerah, belajar lagi :)'))
                           // Row(
                           //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                           //   children: [

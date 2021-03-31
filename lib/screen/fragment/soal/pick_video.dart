@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file/local.dart';
+import 'package:TesUjian/helper/paths.dart';
+import 'package:http/http.dart' as http;
 
 class PickVideo extends StatefulWidget {
   final Function onSaved;
@@ -137,7 +140,22 @@ class _PickVideoState extends State<PickVideo> {
       setState(() {
         _video = null;
       });
-      widget.onSaved();
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_UPLOAD}"),
+      );
+      Map<String, String> headers = {"Content-type": "multipart/form-data"};
+      request.files.add(http.MultipartFile('picture',
+          File(newPath).readAsBytes().asStream(), File(newPath).lengthSync(),
+          filename: newPath.split("/").last));
+      request.headers.addAll(headers);
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        final respStr = await response.stream.bytesToString();
+        var hasil = json.decode(respStr);
+        print(hasil['data']);
+        return widget.onSaved(hasil['data']);
+      }
     } else {
       print('No image selected.');
     }

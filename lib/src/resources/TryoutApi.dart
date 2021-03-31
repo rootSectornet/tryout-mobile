@@ -1,4 +1,5 @@
 import 'package:TesUjian/src/response/finishTryoutDetail.dart';
+import 'package:TesUjian/src/response/tryoutGetResponse.dart';
 import 'package:TesUjian/src/response/tryoutdetail.dart';
 import 'package:TesUjian/src/response/tryoutinfo.dart';
 import 'package:TesUjian/src/response/tryoutsoal.dart';
@@ -25,6 +26,27 @@ class TryoutApi {
       print("ENDPOINT_TRYOUT");
       if (res['success']) {
         return res['data'];
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet kamu error!");
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutGetResponse> checkTryout(
+      int idMurid, int idJenjang, int idPaket) async {
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT}?id_murid=$idMurid&id_jenjang=$idJenjang&id_paket=$idPaket&offset=0&limit=123");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      print(res);
+      print("ENDPOINT_TRYOUT");
+      if (res['success']) {
+        TryoutGetResponse tryoutGetResponse =
+            TryoutGetResponse.fromJson(json.decode(response.body));
+        return tryoutGetResponse;
       } else {
         Future.error("${res['data']}");
       }

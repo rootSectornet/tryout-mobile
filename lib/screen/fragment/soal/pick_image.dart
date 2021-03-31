@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file/local.dart';
+import 'package:http/http.dart' as http;
+import 'package:TesUjian/helper/paths.dart';
 
 class PickImage extends StatefulWidget {
   final Function onSaved;
@@ -69,7 +72,7 @@ class _PickImageState extends State<PickImage> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        RaisedButton(
+        ElevatedButton(
           onPressed: () async {
             var jepretan = widget.jepret - 1;
 
@@ -106,9 +109,11 @@ class _PickImageState extends State<PickImage> {
               await _initJepret();
             }
           },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ))),
           child: Container(
             width: 60,
             height: 50,
@@ -167,7 +172,23 @@ class _PickImageState extends State<PickImage> {
       setState(() {
         _image = null;
       });
-      widget.onSaved();
+
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_UPLOAD}"),
+      );
+      Map<String, String> headers = {"Content-type": "multipart/form-data"};
+      request.files.add(http.MultipartFile('picture',
+          File(newPath).readAsBytes().asStream(), File(newPath).lengthSync(),
+          filename: newPath.split("/").last));
+      request.headers.addAll(headers);
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        final respStr = await response.stream.bytesToString();
+        var hasil = json.decode(respStr);
+        print(hasil['data']);
+        return widget.onSaved(hasil['data'], newImage.toString());
+      }
     } else {
       print('No image selected.');
     }

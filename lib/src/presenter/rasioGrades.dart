@@ -11,7 +11,7 @@ import 'package:TesUjian/src/state/total_nilai.dart';
 
 abstract class RasioGradesPresenterAbstract {
   set view(RasioGradeState view) {}
-  void getData(int idMurid, int idTryout, int idArea) {}
+  void getData(int idMurid, int idTryout, int idTujuanSekolah) {}
 }
 
 class RasioGradesPresenter implements RasioGradesPresenterAbstract {
@@ -29,22 +29,26 @@ class RasioGradesPresenter implements RasioGradesPresenterAbstract {
   }
 
   @override
-  void getData(int idMurid, int idTryout, int idArea) {
+  void getData(int idMurid, int idTryout, int idTujuanSekolah) {
     print('test');
     this._rasioGradeModel.isloading = true;
     this._rasioGradeState.refreshData(this._rasioGradeModel);
     this
         ._historyTryoutApi
-        .getRasioGrades(idMurid, idTryout, idArea)
+        .getRasioGrades(idMurid, idTryout, idTujuanSekolah)
         .then((value) {
-      this._rasioGradeModel.rasioGradeResponse = value;
       value.dataTryout.forEach((element) {
         this._rasioGradeModel.rasioGrade.add(new RasioGrade(
-            id: element.id,
-            idPaket: element.idPaket,
-            status: element.status,
-            totalNilai: element.totalNilai));
+              id: element.id,
+              idPaket: element.idPaket,
+              status: element.status,
+              totalNilai: element.totalNilai,
+              namaSekolah: element.dataSekolah[0].namaSekolah,
+              kkm: element.dataSekolah[0].kkm,
+              grade: element.dataSekolah[0].grades,
+            ));
       });
+      this._rasioGradeModel.rasioGradeResponse = value;
       this._rasioGradeModel.isloading = false;
       this._rasioGradeState.refreshData(this._rasioGradeModel);
     }).catchError((err) {

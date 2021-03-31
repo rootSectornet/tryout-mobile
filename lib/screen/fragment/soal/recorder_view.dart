@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file/local.dart';
+import 'package:http/http.dart' as http;
+import 'package:TesUjian/helper/paths.dart';
 
 class RecorderView extends StatefulWidget {
   final Function onSaved;
@@ -128,8 +131,26 @@ class _RecorderViewState extends State<RecorderView> {
 
   _stopRecording() async {
     await audioRecorder.stop();
-
-    widget.onSaved();
+    Directory appDirectory = await getApplicationDocumentsDirectory();
+    String filePath =
+        appDirectory.path + '/' + widget.number.toString() + '.aac';
+    print('tempat ' + filePath);
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("${Paths.BASEURL}${Paths.ENDPOINT_UPLOAD}"),
+    );
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(http.MultipartFile('picture',
+        File(filePath).readAsBytes().asStream(), File(filePath).lengthSync(),
+        filename: filePath.split("/").last));
+    request.headers.addAll(headers);
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      final respStr = await response.stream.bytesToString();
+      var hasil = json.decode(respStr);
+      print(hasil['data']);
+      return widget.onSaved(hasil['data']);
+    }
   }
 
   Future<void> _recordVoice() async {

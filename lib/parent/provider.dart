@@ -5,8 +5,8 @@ class Provider extends StatefulWidget {
 
   static of(BuildContext context) {
     _InheritedProvider p =
-    // ignore: deprecated_member_use
-    context.inheritFromWidgetOfExactType(_InheritedProvider);
+        // ignore: deprecated_member_use
+        context.dependOnInheritedWidgetOfExactType<_InheritedProvider>();
     return p.data;
   }
 
@@ -24,8 +24,9 @@ class _ProviderState extends State<Provider> {
     widget.data.addListener(didValueChange);
   }
 
-  didValueChange()
-  {setState(() {});}
+  didValueChange() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
