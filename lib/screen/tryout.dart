@@ -28,6 +28,7 @@ import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
+import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 
 import 'fragment/soal/soal_timer_foto.dart';
 
@@ -879,7 +880,6 @@ class _TryoutScreenState extends State<TryoutScreen>
                         .nama,
                   )));
     } else {
-      print(this._tryoutModel.tryoutDetailResponse.data[indexs].idmatpel);
       switch (this._tryoutModel.tryoutDetailResponse.data[indexs].idmatpel) {
         case 76:
           Navigator.push(

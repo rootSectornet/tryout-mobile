@@ -390,7 +390,7 @@ class _HomeState extends State<Home> implements HomeState {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TryoutScreen(
+          builder: (context) => LandingTutorialPondok(
               key: Key("1"),
               idPaket: idPaket,
               idJenjang: idJenjang,
