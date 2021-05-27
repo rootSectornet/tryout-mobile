@@ -54,7 +54,7 @@ android {
         release {
             keyAlias 'key'
             keyPassword 'root12345'
-            storeFile file('c:\\Users\\ilham\\key.jks')
+            storeFile file('c:\\Users\\Administrator\\key.jks')
             storePassword 'root12345'
         }
     }

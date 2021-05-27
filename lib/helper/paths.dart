@@ -21,6 +21,7 @@ class Paths {
   static const String ENDPOINT_RASIO_GRADES = "RasioGrades";
   static const String ENDPOINT_TRYOUT = "tryout";
   static const String ENDPOINT_TRYOUT_MATPELS = "tryoutdetails";
+  static const String ENDPOINT_TRYOUT_MATPELS_PONDOK = "tryoutdetailpondoks";
   static const String ENDPOINT_CHECK_MATPELS_STATUS = "finishTryoutDetail";
   static const String ENDPOINT_FINISH_MATPELS_STATUS = "finishTryoutDetail";
   static const String ENDPOINT_FINISH_TRYOUT_STATUS = "finishTryout";
@@ -35,4 +36,14 @@ class Paths {
   static const String ENDPOINT_BAYARCANCEL = "bayar/cancel";
   static const String ENDPOINT_CHECKSTATUSPEMBAYARAN = "CheckStatus";
   static const String ENDPOINT_UPLOAD = "upload";
+
+  static const String PSIKOTES_SOAL = "psikotes/soal";
+  static const String BACAQURAN_SOAL = "bacaQuran/soal";
+  static const String HUKUMTAJWIDS_SOAL = "hukumTajwids/soal";
+  static const String HAFALANJUZ_SOAL = "hafalanJuz/soal";
+  static const String AMMALIYAH_SOAL = "praktekIbadah/soalAmaliyah";
+  static const String QOLIYAH_SOAL = "praktekIbadah/soalQoliyah";
+  static const String BERHITUNGANGKA_SOAL = "berhitungAngka/soal";
+  static const String BERHITUNGSOAL_SOAL = "berhitungSoal/soal";
+  static const String BAHASAINDONESIA_SOAL = "bahasaIndonesia/soal";
 }

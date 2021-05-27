@@ -31,12 +31,12 @@ class DataTryout {
   String jenjang;
   int idPaket;
   bool statusKoreksi;
-  int idSekolahTujuan;
+  Null idSekolahTujuan;
   String createdAt;
   String updatedAt;
   Tingkat tingkat;
   Paket paket;
-  String guru;
+  Guru guru;
   Murid murid;
 
   DataTryout(
@@ -73,7 +73,7 @@ class DataTryout {
     tingkat =
         json['tingkat'] != null ? new Tingkat.fromJson(json['tingkat']) : null;
     paket = json['paket'] != null ? new Paket.fromJson(json['paket']) : null;
-    guru = json['guru'];
+    guru = json['guru'] != null ? new Guru.fromJson(json['guru']) : null;
     murid = json['murid'] != null ? new Murid.fromJson(json['murid']) : null;
   }
 
@@ -97,7 +97,9 @@ class DataTryout {
     if (this.paket != null) {
       data['paket'] = this.paket.toJson();
     }
-    data['guru'] = this.guru;
+    if (this.guru != null) {
+      data['guru'] = this.guru.toJson();
+    }
     if (this.murid != null) {
       data['murid'] = this.murid.toJson();
     }
@@ -138,6 +140,7 @@ class Paket {
   String namaPaket;
   String waktuPengerjaan;
   String tanggalSelesai;
+  bool isPondok;
   String createdAt;
   String updatedAt;
 
@@ -146,6 +149,7 @@ class Paket {
       this.namaPaket,
       this.waktuPengerjaan,
       this.tanggalSelesai,
+      this.isPondok,
       this.createdAt,
       this.updatedAt});
 
@@ -154,6 +158,7 @@ class Paket {
     namaPaket = json['nama_paket'];
     waktuPengerjaan = json['waktu_pengerjaan'];
     tanggalSelesai = json['tanggal_selesai'];
+    isPondok = json['isPondok'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -164,6 +169,60 @@ class Paket {
     data['nama_paket'] = this.namaPaket;
     data['waktu_pengerjaan'] = this.waktuPengerjaan;
     data['tanggal_selesai'] = this.tanggalSelesai;
+    data['isPondok'] = this.isPondok;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Guru {
+  int id;
+  String nama;
+  Null idSekolah;
+  int nip;
+  String email;
+  String phone;
+  String password;
+  Null picture;
+  String createdAt;
+  String updatedAt;
+
+  Guru(
+      {this.id,
+      this.nama,
+      this.idSekolah,
+      this.nip,
+      this.email,
+      this.phone,
+      this.password,
+      this.picture,
+      this.createdAt,
+      this.updatedAt});
+
+  Guru.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nama = json['nama'];
+    idSekolah = json['id_sekolah'];
+    nip = json['nip'];
+    email = json['email'];
+    phone = json['phone'];
+    password = json['password'];
+    picture = json['picture'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nama'] = this.nama;
+    data['id_sekolah'] = this.idSekolah;
+    data['nip'] = this.nip;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['password'] = this.password;
+    data['picture'] = this.picture;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
@@ -178,7 +237,7 @@ class Murid {
   String phone;
   String tglLahir;
   String kelamin;
-  String alamat;
+  Null alamat;
   int idSekolah;
   String picture;
   String createdAt;

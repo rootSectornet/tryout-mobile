@@ -1,5 +1,6 @@
 import 'package:TesUjian/src/response/area.dart';
 import 'package:TesUjian/src/response/provinsi.dart';
+import 'package:TesUjian/src/response/tryoutDetailPondok.dart';
 import 'package:TesUjian/src/response/tryoutdetail.dart';
 import 'package:TesUjian/src/response/tryoutinfo.dart';
 
@@ -14,6 +15,8 @@ class TryoutModel {
   int idTryout = 0;
   bool statusMatpel = false;
   TryoutDetailResponse tryoutDetailResponse = new TryoutDetailResponse();
+  TryoutDetailPondokResponse tryoutDetailPondokResponse =
+      new TryoutDetailPondokResponse();
   AreaResponse area = new AreaResponse();
   ProvinsiResponse provinsi = new ProvinsiResponse();
   TryoutInfoResponse tryoutInfoResponse = new TryoutInfoResponse();

@@ -10,6 +10,15 @@ import 'package:TesUjian/helper/paths.dart';
 abstract class SoalPresenterAbstract {
   set view(SoalState view) {}
   void getSoal(int idmatpel, int idTryoutDetail) {}
+  void getSoalPsikotes(int idTryoutDetail) {}
+  void getSoalBacaQuran(int idTryoutDetail) {}
+  void getSoalHukumTajwids(int idTryoutDetail) {}
+  void getSoalHafalanJuz(int idTryoutDetail) {}
+  void getSoalAmmaliyah(int idTryoutDetail) {}
+  void getSoalQoliyah(int idTryoutDetail) {}
+  void getSoalBerhitungSoal(int idTryoutDetail) {}
+  void getSoalBerhitungAngka(int idTryoutDetail) {}
+  void getSoalBahasaIndonesia(int idTryoutDetail) {}
   void selected(int index) {}
   void jawab(int index) {}
   void submit() {}
@@ -42,6 +51,159 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoal(idmatpel, idTryoutDetail).then((value) {
       this._soalModel.tryoutSoalResponse = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalPsikotes(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalPsikotes(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalBacaQuran(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalBacaQuran(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalAmmaliyah(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalAmmaliyah(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalQoliyah(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalQoliyah(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalHafalanJuz(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalHafalanJuz(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalHukumTajwids(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalHukumTajwids(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalBerhitungSoal(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalBerhitungSoal(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalBahasaIndonesia(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalBahasaIndonesia(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+    }).catchError((onError) {
+      this._soalModel.isloading = false;
+      this._soalState.refreshData(this._soalModel);
+      this._soalState.onError(onError.toString());
+    });
+  }
+
+  @override
+  void getSoalBerhitungAngka(int idTryoutDetail) {
+    print("=========================getsoal||||$idTryoutDetail");
+    this._soalModel.isloading = true;
+    this._soalModel.idTryoutDetail = idTryoutDetail;
+    this._soalState.refreshData(this._soalModel);
+    this._tryoutApi.getSoalBerhitungAngka(idTryoutDetail).then((value) {
+      this._soalModel.tryoutSoalPsikotes = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {

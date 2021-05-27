@@ -1,5 +1,7 @@
 import 'package:TesUjian/src/response/finishTryoutDetail.dart';
+import 'package:TesUjian/src/response/tryoutDetailPondok.dart';
 import 'package:TesUjian/src/response/tryoutGetResponse.dart';
+import 'package:TesUjian/src/response/tryoutSoalPsikotes.dart';
 import 'package:TesUjian/src/response/tryoutdetail.dart';
 import 'package:TesUjian/src/response/tryoutinfo.dart';
 import 'package:TesUjian/src/response/tryoutsoal.dart';
@@ -77,6 +79,27 @@ class TryoutApi {
   }
 
   // ignore: missing_return
+  Future<TryoutDetailPondokResponse> getMatpelPondoks(int id) async {
+    print("idnya" + id.toString());
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_MATPELS_PONDOK}?id_tryout=$id");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      print(res);
+      print("ENDPOINT_TRYOUT_MATPELS_PONDOK");
+      if (res['success']) {
+        TryoutDetailPondokResponse tryoutDetailPondokResponse =
+            TryoutDetailPondokResponse.fromJson(json.decode(response.body));
+        return tryoutDetailPondokResponse;
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
   Future<FinishTryoutDetail> checkmatpel(
       int idTryout, int idTryoutDetail) async {
     final response = await _client.get(
@@ -138,6 +161,267 @@ class TryoutApi {
           TryoutSoalResponse tryoutSoalResponse =
               TryoutSoalResponse.fromJson(json.decode(response.body));
           return tryoutSoalResponse;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalPsikotes(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.PSIKOTES_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalBacaQuran(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.BACAQURAN_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalAmmaliyah(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.AMMALIYAH_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalQoliyah(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.QOLIYAH_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalHafalanJuz(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.HAFALANJUZ_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalHukumTajwids(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.HUKUMTAJWIDS_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalBerhitungSoal(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.BERHITUNGSOAL_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalBahasaIndonesia(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.BAHASAINDONESIA_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
+        } else {
+          Future.error("${res['data']}");
+        }
+      } else {
+        Future.error("Yah, Internet Kamu error!");
+      }
+    } catch (err) {
+      print(err);
+      print("sdsdsd");
+      Future.error(err.toString());
+    }
+  }
+
+  // ignore: missing_return
+  Future<TryoutSoalPsikotes> getSoalBerhitungAngka(
+      // ignore: non_constant_identifier_names
+      int id_tryout_detail) async {
+    try {
+      print(id_tryout_detail);
+      final response = await _client.get(
+          "${Paths.BASEURL}${Paths.BERHITUNGANGKA_SOAL}?id_tryout=$id_tryout_detail");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res);
+        print("getSoal");
+        if (res['success']) {
+          TryoutSoalPsikotes tryoutSoalPsikotes =
+              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
         }

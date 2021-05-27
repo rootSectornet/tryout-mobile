@@ -58,7 +58,7 @@ class _SoalTimerFotoScreenState extends State<SoalTimerFotoScreen>
   bool _isPlayingSoal = false;
   int _selectedIndex = -1;
   CountdownTimerController _controller;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 3600000;
+  int endTime;
 
   AudioPlayer _audioPlayerSoal = AudioPlayer();
   final int idtryoutdetail;
@@ -76,6 +76,7 @@ class _SoalTimerFotoScreenState extends State<SoalTimerFotoScreen>
   // ignore: must_call_super
   void initState() {
     this.jepret = 0;
+    this.endTime = DateTime.now().millisecondsSinceEpoch + 3600000;
     print(widget.jenjang);
     this.rekam = 0;
     this._soalPresenter.view = this;

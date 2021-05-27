@@ -8,6 +8,7 @@ import 'package:TesUjian/screen/fragment/report/progress.dart';
 import 'package:TesUjian/screen/fragment/soal/landing_tutorial_pondok.dart';
 import 'package:TesUjian/screen/select_sekolah.dart';
 import 'package:TesUjian/screen/tryout.dart';
+import 'package:TesUjian/screen/tryoutPondok.dart';
 import 'package:TesUjian/src/model/home.dart';
 import 'package:TesUjian/src/presenter/home.dart';
 import 'package:TesUjian/src/resources/session.dart';
@@ -390,7 +391,7 @@ class _HomeState extends State<Home> implements HomeState {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LandingTutorialPondok(
+          builder: (context) => TryoutPondokScreen(
               key: Key("1"),
               idPaket: idPaket,
               idJenjang: idJenjang,
