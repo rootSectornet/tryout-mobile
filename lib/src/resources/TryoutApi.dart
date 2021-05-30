@@ -449,6 +449,19 @@ class TryoutApi {
   }
 
   // ignore: missing_return
+  Future<String> finishMatpelPsikotes(int idTryoutDetail) async {
+    // print('test');
+    final response = await _client.post(
+        "${Paths.BASEURL}${Paths.ENDPOINT_FINISH_MATPELS_PSIKOTES_STATUS}/$idTryoutDetail",
+        headers: _headers);
+    if (response.statusCode == 200) {
+      return 'ok';
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
   Future<String> finishTryout(int idTryout) async {
     // print('test');
     final response = await _client.post(

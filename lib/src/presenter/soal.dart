@@ -22,11 +22,14 @@ abstract class SoalPresenterAbstract {
   void selected(int index) {}
   void jawab(int index) {}
   void submit() {}
+  void submitPondok() {}
   void jawabEssay(String jawaban) {}
   void jawabFile(String fileNya, int number) {}
+  void jawabFilePsikotes(String fileNya, int number) {}
   void jawabGambar(List<String> jawaban, int number) {}
   void jawabVideo(List<String> jawaban, int number) {}
   void kumpulkan() {}
+  void kumpulkanPsikotes() {}
   void kumpulkanFile() {}
 }
 
@@ -275,6 +278,15 @@ class SoalPresenter implements SoalPresenterAbstract {
   }
 
   @override
+  void submitPondok() {
+    int totalSoal = this._soalModel.tryoutSoalPsikotes.data.length;
+    if ((this._soalModel.currentIndex + 1) < totalSoal) {
+      this._soalModel.currentIndex++;
+    }
+    this._soalState.refreshData(this._soalModel);
+  }
+
+  @override
   // Future<void> jawabFile(List<String> jawaban, int number) async {
   Future<void> jawabFile(String fileNya, int number) async {
     this
@@ -364,6 +376,27 @@ class SoalPresenter implements SoalPresenterAbstract {
   }
 
   @override
+  // Future<void> jawabFile(List<String> jawaban, int number) async {
+  Future<void> jawabFilePsikotes(String fileNya, int number) async {
+    this._soalModel.isloading = true;
+    this._soalState.refreshData(this._soalModel);
+    print('jawabfile ' + fileNya);
+    this
+        ._soalModel
+        .tryoutSoalPsikotes
+        .data[this._soalModel.currentIndex]
+        .jawabanUser = fileNya;
+    this
+        ._soalModel
+        .tryoutSoalPsikotes
+        .data[this._soalModel.currentIndex]
+        .status = 1;
+
+    this._soalModel.isloading = false;
+    this._soalState.refreshData(this._soalModel);
+  }
+
+  @override
   void kumpulkan() async {
     this._soalModel.isloading = true;
     this._soalState.refreshData(this._soalModel);
@@ -383,6 +416,23 @@ class SoalPresenter implements SoalPresenterAbstract {
       }
     });
     this._tryoutApi.finishMatpel(this._soalModel.idTryoutDetail).then((value) {
+      print(value);
+    }).catchError((onError) {
+      this._soalState.onError(onError.toString());
+    });
+    this._soalModel.isloading = false;
+    this._soalState.refreshData(this._soalModel);
+    this._soalState.onSuccess("selesai");
+  }
+
+  @override
+  void kumpulkanPsikotes() async {
+    this._soalModel.isloading = true;
+    this._soalState.refreshData(this._soalModel);
+    this
+        ._tryoutApi
+        .finishMatpelPsikotes(this._soalModel.idTryoutDetail)
+        .then((value) {
       print(value);
     }).catchError((onError) {
       this._soalState.onError(onError.toString());

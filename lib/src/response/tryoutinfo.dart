@@ -31,7 +31,7 @@ class DataTryout {
   String jenjang;
   int idPaket;
   bool statusKoreksi;
-  Null idSekolahTujuan;
+  int idSekolahTujuan;
   String createdAt;
   String updatedAt;
   Tingkat tingkat;

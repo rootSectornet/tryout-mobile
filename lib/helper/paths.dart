@@ -24,6 +24,8 @@ class Paths {
   static const String ENDPOINT_TRYOUT_MATPELS_PONDOK = "tryoutdetailpondoks";
   static const String ENDPOINT_CHECK_MATPELS_STATUS = "finishTryoutDetail";
   static const String ENDPOINT_FINISH_MATPELS_STATUS = "finishTryoutDetail";
+  static const String ENDPOINT_FINISH_MATPELS_PSIKOTES_STATUS =
+      "finishTryoutPondok";
   static const String ENDPOINT_FINISH_TRYOUT_STATUS = "finishTryout";
   static const String ENDPOINT_TRYOUT_INFO = "tryout/info";
   static const String ENDPOINT_TRYOUT_SOAL = "tryout/soals";
@@ -38,6 +40,7 @@ class Paths {
   static const String ENDPOINT_UPLOAD = "upload";
 
   static const String PSIKOTES_SOAL = "psikotes/soal";
+  static const String PSIKOTES_UPDATEJAWABAN = "psikotes/updateJawaban";
   static const String BACAQURAN_SOAL = "bacaQuran/soal";
   static const String HUKUMTAJWIDS_SOAL = "hukumTajwids/soal";
   static const String HAFALANJUZ_SOAL = "hafalanJuz/soal";

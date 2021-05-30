@@ -28,7 +28,7 @@ class Data {
   int idTryoutDetailSoals;
   int id;
   String soal;
-  Null jawabanUser;
+  String jawabanUser;
   String jawabanBenar;
   int status;
 
