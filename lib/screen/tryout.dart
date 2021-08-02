@@ -6,7 +6,7 @@ import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
-import 'package:TesUjian/screen/fragment/soal/imla.dart';
+import 'package:TesUjian/screen/fragment/pondok/imla.dart';
 import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
 import 'package:TesUjian/screen/fragment/tryout/info.dart';
 import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
@@ -1696,5 +1696,10 @@ class _TryoutScreenState extends State<TryoutScreen>
     setState(() {
       this._bayarModel = bayarModel;
     });
+  }
+
+  @override
+  void onCheckMatpelStatusPondok(int statusMatpel, int indexs) {
+    // TODO: implement onCheckMatpelStatusPondok
   }
 }

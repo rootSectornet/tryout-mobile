@@ -1,10 +1,10 @@
-class TryoutSoalPondok {
+class FinishPondokDetail {
   bool success;
   List<Data> data;
 
-  TryoutSoalPondok({this.success, this.data});
+  FinishPondokDetail({this.success, this.data});
 
-  TryoutSoalPondok.fromJson(Map<String, dynamic> json) {
+  FinishPondokDetail.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
       data = new List<Data>();
@@ -25,37 +25,19 @@ class TryoutSoalPondok {
 }
 
 class Data {
-  int idTryoutDetailSoals;
   int id;
-  String soal;
-  String jawabanUser;
-  String jawabanBenar;
   int status;
 
-  Data(
-      {this.idTryoutDetailSoals,
-      this.id,
-      this.soal,
-      this.jawabanUser,
-      this.jawabanBenar,
-      this.status});
+  Data({this.id, this.status});
 
   Data.fromJson(Map<String, dynamic> json) {
-    idTryoutDetailSoals = json['id_tryoutDetailSoals'];
     id = json['id'];
-    soal = json['soal'];
-    jawabanUser = json['jawaban_user'];
-    jawabanBenar = json['jawaban_benar'];
     status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id_tryoutDetailSoals'] = this.idTryoutDetailSoals;
     data['id'] = this.id;
-    data['soal'] = this.soal;
-    data['jawaban_user'] = this.jawabanUser;
-    data['jawaban_benar'] = this.jawabanBenar;
     data['status'] = this.status;
     return data;
   }

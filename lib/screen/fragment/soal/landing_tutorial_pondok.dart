@@ -4,9 +4,9 @@ import 'package:TesUjian/screen/fragment/average_nilai.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
-import 'package:TesUjian/screen/fragment/soal/imla.dart';
-import 'package:TesUjian/screen/fragment/soal/psikotes.dart';
-import 'package:TesUjian/screen/fragment/soal/qoliyah.dart';
+import 'package:TesUjian/screen/fragment/pondok/imla.dart';
+import 'package:TesUjian/screen/fragment/pondok/psikotes.dart';
+import 'package:TesUjian/screen/fragment/pondok/qoliyah.dart';
 import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
 import 'package:TesUjian/screen/fragment/soal/soal_timer_foto.dart';
 import 'package:TesUjian/screen/matpeldone.dart';
@@ -29,13 +29,13 @@ import 'package:toast/toast.dart';
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 
 import '../loading.dart';
-import 'ammaliyah.dart';
-import 'bacaQuran.dart';
-import 'bahasaIndonesia.dart';
-import 'berhitungAngka.dart';
-import 'berhitungSoal.dart';
-import 'hafalanJuz.dart';
-import 'hukumTajwids.dart';
+import '../pondok/ammaliyah.dart';
+import '../pondok/bacaQuran.dart';
+import '../pondok/bahasaIndonesia.dart';
+import '../pondok/berhitungAngka.dart';
+import '../pondok/berhitungSoal.dart';
+import '../pondok/hafalanJuz.dart';
+import '../pondok/hukumTajwids.dart';
 
 class LandingTutorialPondok extends StatefulWidget {
   final int idPaket;
@@ -1441,5 +1441,10 @@ class _LandingTutorialPondokState extends State<LandingTutorialPondok>
     setState(() {
       this._bayarModel = bayarModel;
     });
+  }
+
+  @override
+  void onCheckMatpelStatusPondok(int statusMatpel, int indexs) {
+    // TODO: implement onCheckMatpelStatusPondok
   }
 }

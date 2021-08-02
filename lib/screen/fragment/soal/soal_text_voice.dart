@@ -1383,7 +1383,7 @@ class _SoalTextVoiceScreenState extends State<SoalTextVoiceScreen>
   }
 
   @override
-  void onSuccessTakePict(String fileNya, String lokasiFIle) {
+  void onSuccessTakePict(String fileNya) {
     pictures.clear();
     appDirectory.list().listen((onData) {
       if (onData.path.endsWith(".jpg")) {

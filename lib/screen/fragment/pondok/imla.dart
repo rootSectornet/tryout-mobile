@@ -23,7 +23,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
 
-import 'detail_image_screen.dart';
+import '../soal/detail_image_screen.dart';
 
 class SoalImlaScreen extends StatefulWidget {
   final int idtryoutdetail;
@@ -1299,7 +1299,7 @@ class _SoalImlaScreenState extends State<SoalImlaScreen> implements SoalState {
   }
 
   @override
-  void onSuccessTakePict(String fileNya, String lokasiFile) {
+  void onSuccessTakePict(String fileNya) {
     print("====lokasi");
     pictures.clear();
     appDirectory.list().listen((onData) {

@@ -10,6 +10,7 @@ class SignUpModel {
   bool isSuccess = false;
   bool isErrorUsername = false;
   bool isErrorPassword = false;
+  bool isErrorPasswordRetype = false;
   bool isErrorEmail = false;
   bool isErrorSekolah = false;
   String usernameLabel = "Username";
@@ -18,6 +19,7 @@ class SignUpModel {
   String sekolahLabel = "Pilih Sekolah Asalmu";
   String usernameError = "";
   String passwordError = "";
+  String passwordErrorRetype = "";
   String emailError = "";
   String sekolahError = "";
   int sekolahId = 0;
@@ -38,6 +40,7 @@ class SignUpModel {
   final TextEditingController username = new TextEditingController();
   final TextEditingController email = new TextEditingController();
   final TextEditingController password = new TextEditingController();
+  final TextEditingController passwordRetype = new TextEditingController();
   TextEditingController areaController = new TextEditingController();
   TextEditingController jenjangController = new TextEditingController();
   final TextEditingController tanggalahirController =

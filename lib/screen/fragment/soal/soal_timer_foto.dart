@@ -1244,7 +1244,7 @@ class _SoalTimerFotoScreenState extends State<SoalTimerFotoScreen>
   }
 
   @override
-  void onSuccessTakePict(String fileNya, String lokasiFile) {
+  void onSuccessTakePict(String fileNya) {
     print("====lokasi");
     pictures.clear();
     appDirectory.list().listen((onData) {

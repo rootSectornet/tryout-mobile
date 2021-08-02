@@ -5,6 +5,6 @@ abstract class SoalState {
   void onSuccess(String success);
   void onError(String error);
   void onSuccessRecord(String fileNya);
-  void onSuccessTakePict(String fileNya, String lokasiFIle);
+  void onSuccessTakePict(String fileNya);
   void onSuccessTakeVid(String fileNya);
 }

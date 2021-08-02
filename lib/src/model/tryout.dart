@@ -1,4 +1,5 @@
 import 'package:TesUjian/src/response/area.dart';
+import 'package:TesUjian/src/response/finishPondokDetails.dart';
 import 'package:TesUjian/src/response/provinsi.dart';
 import 'package:TesUjian/src/response/tryoutDetailPondok.dart';
 import 'package:TesUjian/src/response/tryoutdetail.dart';
@@ -20,4 +21,5 @@ class TryoutModel {
   AreaResponse area = new AreaResponse();
   ProvinsiResponse provinsi = new ProvinsiResponse();
   TryoutInfoResponse tryoutInfoResponse = new TryoutInfoResponse();
+  FinishPondokDetail finishPondokDetail = new FinishPondokDetail();
 }

@@ -10,16 +10,16 @@ import 'package:file/local.dart';
 import 'package:http/http.dart' as http;
 import 'package:TesUjian/helper/paths.dart';
 
-class RecorderPsikotesView extends StatefulWidget {
+class RecorderQoliyahView extends StatefulWidget {
   final Function onSaved;
   final Function onDuplicate;
   final int number;
 
-  const RecorderPsikotesView(
+  const RecorderQoliyahView(
       {Key key, @required this.onSaved, this.onDuplicate, this.number})
       : super(key: key);
   @override
-  _RecorderPsikotesViewState createState() => _RecorderPsikotesViewState();
+  _RecorderQoliyahViewState createState() => _RecorderQoliyahViewState();
 }
 
 enum RecordingState {
@@ -30,7 +30,7 @@ enum RecordingState {
 }
 LocalFileSystem fs = LocalFileSystem();
 
-class _RecorderPsikotesViewState extends State<RecorderPsikotesView> {
+class _RecorderQoliyahViewState extends State<RecorderQoliyahView> {
   IconData _recordIcon = Icons.mic_none;
   String _recordText = 'Click To Start';
   RecordingState _recordingState = RecordingState.UnSet;
@@ -139,12 +139,12 @@ class _RecorderPsikotesViewState extends State<RecorderPsikotesView> {
     print('tempat ' + filePath);
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse("${Paths.BASEURL}${Paths.PSIKOTES_UPDATEJAWABAN}"),
+      Uri.parse("${Paths.BASEURL}${Paths.PRAKTEKIBADAH_UPDATEJAWABAN}"),
     );
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
     request.files.add(http.MultipartFile('filename',
         File(filePath).readAsBytes().asStream(), File(filePath).lengthSync(),
-        filename: 'psikotes' +
+        filename: 'Qoliyah' +
             GetStorage().read(ID_MURID).toString() +
             filePath.split("/").last));
     request.headers.addAll(headers);
@@ -155,7 +155,7 @@ class _RecorderPsikotesViewState extends State<RecorderPsikotesView> {
     if (response.statusCode == 200) {
       // final respStr = await response.stream.bytesToString();
       // var hasil = json.decode(respStr);
-      return widget.onSaved('psikotes' +
+      return widget.onSaved('Qoliyah' +
           GetStorage().read(ID_MURID).toString() +
           filePath.split("/").last);
     }

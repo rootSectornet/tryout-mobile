@@ -1,3 +1,4 @@
+import 'package:TesUjian/src/response/finishPondokDetails.dart';
 import 'package:TesUjian/src/response/finishTryoutDetail.dart';
 import 'package:TesUjian/src/response/tryoutDetailPondok.dart';
 import 'package:TesUjian/src/response/tryoutGetResponse.dart';
@@ -121,6 +122,26 @@ class TryoutApi {
   }
 
   // ignore: missing_return
+  Future<FinishPondokDetail> checkmatpelPondok(int idTryout) async {
+    final response = await _client.get(
+        "${Paths.BASEURL}${Paths.ENDPOINT_CHECK_PONDOK_STATUS}?id_tryout=$idTryout");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.body);
+      // print(res);
+      print("ENDPOINT_CHECK_MATPELS_STATUS");
+      if (res['success']) {
+        FinishPondokDetail finishPondokDetail =
+            FinishPondokDetail.fromJson(json.decode(response.body));
+        return finishPondokDetail;
+      } else {
+        Future.error("${res['data']}");
+      }
+    } else {
+      Future.error("Yah, Internet Kamu error!");
+    }
+  }
+
+  // ignore: missing_return
   Future<TryoutInfoResponse> getInfo(int id) async {
     final response = await _client
         .get("${Paths.BASEURL}${Paths.ENDPOINT_TRYOUT_INFO}?id=$id");
@@ -175,7 +196,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalPsikotes(
+  Future<TryoutSoalPondok> getSoalPsikotes(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -187,8 +208,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -204,7 +225,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalBacaQuran(
+  Future<TryoutSoalPondok> getSoalBacaQuran(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -216,8 +237,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -233,7 +254,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalAmmaliyah(
+  Future<TryoutSoalPondok> getSoalAmmaliyah(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -245,8 +266,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -262,7 +283,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalQoliyah(
+  Future<TryoutSoalPondok> getSoalQoliyah(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -274,8 +295,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -291,7 +312,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalHafalanJuz(
+  Future<TryoutSoalPondok> getSoalHafalanJuz(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -303,8 +324,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -320,7 +341,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalHukumTajwids(
+  Future<TryoutSoalPondok> getSoalHukumTajwids(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -332,8 +353,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -349,7 +370,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalBerhitungSoal(
+  Future<TryoutSoalPondok> getSoalBerhitungSoal(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -361,8 +382,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -378,7 +399,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalBahasaIndonesia(
+  Future<TryoutSoalPondok> getSoalBahasaIndonesia(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -390,8 +411,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -407,7 +428,7 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<TryoutSoalPsikotes> getSoalBerhitungAngka(
+  Future<TryoutSoalPondok> getSoalBerhitungAngka(
       // ignore: non_constant_identifier_names
       int id_tryout_detail) async {
     try {
@@ -419,8 +440,8 @@ class TryoutApi {
         print(res);
         print("getSoal");
         if (res['success']) {
-          TryoutSoalPsikotes tryoutSoalPsikotes =
-              TryoutSoalPsikotes.fromJson(json.decode(response.body));
+          TryoutSoalPondok tryoutSoalPsikotes =
+              TryoutSoalPondok.fromJson(json.decode(response.body));
           return tryoutSoalPsikotes;
         } else {
           Future.error("${res['data']}");
@@ -449,10 +470,10 @@ class TryoutApi {
   }
 
   // ignore: missing_return
-  Future<String> finishMatpelPsikotes(int idTryoutDetail) async {
+  Future<String> finishMatpelPondok(int idTryoutDetail) async {
     // print('test');
     final response = await _client.post(
-        "${Paths.BASEURL}${Paths.ENDPOINT_FINISH_MATPELS_PSIKOTES_STATUS}/$idTryoutDetail",
+        "${Paths.BASEURL}${Paths.ENDPOINT_FINISH_MATPELS_PONDOK_STATUS}/$idTryoutDetail",
         headers: _headers);
     if (response.statusCode == 200) {
       return 'ok';

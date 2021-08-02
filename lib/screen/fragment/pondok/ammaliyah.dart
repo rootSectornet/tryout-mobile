@@ -23,21 +23,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
 
-class BacaQuranScreen extends StatefulWidget {
+class AmmaliyahScreen extends StatefulWidget {
   final int idtryoutdetail;
   final int idMatpel;
   final String matpel;
   final int jenjang;
 
-  const BacaQuranScreen(
+  const AmmaliyahScreen(
       {Key key, this.idtryoutdetail, this.idMatpel, this.matpel, this.jenjang})
       : super(key: key);
   @override
-  _BacaQuranScreenState createState() =>
-      _BacaQuranScreenState(idtryoutdetail, idMatpel, matpel);
+  _AmmaliyahScreenState createState() =>
+      _AmmaliyahScreenState(idtryoutdetail, idMatpel, matpel);
 }
 
-class _BacaQuranScreenState extends State<BacaQuranScreen>
+class _AmmaliyahScreenState extends State<AmmaliyahScreen>
     implements SoalState {
   Directory appDirectory;
   Stream<FileSystemEntity> fileStream;
@@ -62,7 +62,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
   SoalModel _soalModel;
   SoalPresenter _soalPresenter;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  _BacaQuranScreenState(this.idtryoutdetail, this.idMatpel, this.matpel) {
+  _AmmaliyahScreenState(this.idtryoutdetail, this.idMatpel, this.matpel) {
     this._soalPresenter = new SoalPresenter();
   }
 
@@ -73,7 +73,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
     print(widget.jenjang);
     this.rekam = 0;
     this._soalPresenter.view = this;
-    this._soalPresenter.getSoalBacaQuran(idMatpel);
+    this._soalPresenter.getSoalAmmaliyah(idMatpel);
     records = [];
     pictures = [];
     videos = [];
@@ -118,7 +118,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         setState(() {
           this
               ._soalModel
-              .tryoutSoalPsikotes
+              .tryoutSoalPondok
               .data[this._soalModel.currentIndex]
               .jawabanUser = null;
         });
@@ -141,7 +141,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         setState(() {
           this
               ._soalModel
-              .tryoutSoalPsikotes
+              .tryoutSoalPondok
               .data[this._soalModel.currentIndex]
               .jawabanUser = null;
         });
@@ -164,7 +164,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         setState(() {
           this
               ._soalModel
-              .tryoutSoalPsikotes
+              .tryoutSoalPondok
               .data[this._soalModel.currentIndex]
               .jawabanUser = null;
         });
@@ -292,7 +292,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
       setState(() {
         this
             ._soalModel
-            .tryoutSoalPsikotes
+            .tryoutSoalPondok
             .data[this._soalModel.currentIndex]
             .status = 0;
       });
@@ -311,7 +311,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
       setState(() {
         this
             ._soalModel
-            .tryoutSoalPsikotes
+            .tryoutSoalPondok
             .data[this._soalModel.currentIndex]
             .status = 0;
       });
@@ -330,7 +330,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
       setState(() {
         this
             ._soalModel
-            .tryoutSoalPsikotes
+            .tryoutSoalPondok
             .data[this._soalModel.currentIndex]
             .status = 0;
       });
@@ -387,7 +387,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         key: _scaffoldKey,
         body: this._soalModel.isloading
             ? Loading()
-            : this._soalModel.tryoutSoalPsikotes.data.length == 0
+            : this._soalModel.tryoutSoalPondok.data.length == 0
                 ? NotFound(
                     errors: 'Soal Belum Siap',
                   )
@@ -460,7 +460,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                       fontSize: 18, color: Color(0xffffffff)),
                                 )),
                             Text(
-                                "${this._soalModel.tryoutSoalPsikotes.data.length} Soal",
+                                "${this._soalModel.tryoutSoalPondok.data.length} Soal",
                                 style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         fontSize: 12, color: Colors.white60))),
@@ -473,7 +473,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                 child: ListView.builder(
                                   itemCount: this
                                       ._soalModel
-                                      .tryoutSoalPsikotes
+                                      .tryoutSoalPondok
                                       .data
                                       .length,
                                   scrollDirection: Axis.horizontal,
@@ -489,7 +489,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                     itemIndex ||
                                                 this
                                                         ._soalModel
-                                                        .tryoutSoalPsikotes
+                                                        .tryoutSoalPondok
                                                         .data[itemIndex]
                                                         .jawabanUser !=
                                                     null
@@ -515,7 +515,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                         itemIndex ||
                                                     this
                                                             ._soalModel
-                                                            .tryoutSoalPsikotes
+                                                            .tryoutSoalPondok
                                                             .data[itemIndex]
                                                             .jawabanUser !=
                                                         null
@@ -547,7 +547,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                 Html(
                                   data: htmlParser.DocumentFragment.html(this
                                           ._soalModel
-                                          .tryoutSoalPsikotes
+                                          .tryoutSoalPondok
                                           .data[this._soalModel.currentIndex]
                                           .soal)
                                       .text,
@@ -587,7 +587,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                       records.map((value) {
                                                     if (value.endsWith(this
                                                             ._soalModel
-                                                            .tryoutSoalPsikotes
+                                                            .tryoutSoalPondok
                                                             .data[this
                                                                 ._soalModel
                                                                 .currentIndex]
@@ -648,7 +648,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                                       onPressed: () => _onPlaySoal(
                                                                           filePath: this
                                                                               ._soalModel
-                                                                              .tryoutSoalPsikotes
+                                                                              .tryoutSoalPondok
                                                                               .data[this._soalModel.currentIndex]
                                                                               .jawabanUser,
                                                                           index: 0),
@@ -678,7 +678,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                             ),
                                             this
                                                         ._soalModel
-                                                        .tryoutSoalPsikotes
+                                                        .tryoutSoalPondok
                                                         .data[this
                                                             ._soalModel
                                                             .currentIndex]
@@ -689,19 +689,19 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      RecorderView(
-                                                        onSaved:
-                                                            onSuccessRecord,
-                                                        onDuplicate:
-                                                            _onRecordDuplicate,
-                                                        number: this
-                                                            ._soalModel
-                                                            .tryoutSoalPsikotes
-                                                            .data[this
-                                                                ._soalModel
-                                                                .currentIndex]
-                                                            .idTryoutDetailSoals,
-                                                      ),
+                                                      // RecorderView(
+                                                      //   onSaved:
+                                                      //       onSuccessRecord,
+                                                      //   onDuplicate:
+                                                      //       _onRecordDuplicate,
+                                                      //   number: this
+                                                      //       ._soalModel
+                                                      //       .tryoutSoalPondok
+                                                      //       .data[this
+                                                      //           ._soalModel
+                                                      //           .currentIndex]
+                                                      //       .idTryoutDetailSoals,
+                                                      // ),
                                                       // SizedBox(
                                                       //   height: 10,
                                                       // ),
@@ -712,7 +712,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                       //       _onRecordDuplicate,
                                                       //   number: this
                                                       //       ._soalModel
-                                                      //       .tryoutSoalPsikotes
+                                                      //       .tryoutSoalPondok
                                                       //       .data[this
                                                       //           ._soalModel
                                                       //           .currentIndex]
@@ -722,20 +722,20 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                       // SizedBox(
                                                       //   height: 10,
                                                       // ),
-                                                      // PickVideo(
-                                                      //   onSaved:
-                                                      //       onSuccessTakeVid,
-                                                      //   onDuplicate:
-                                                      //       _onRecordDuplicate,
-                                                      //   number: this
-                                                      //       ._soalModel
-                                                      //       .tryoutSoalPsikotes
-                                                      //       .data[this
-                                                      //           ._soalModel
-                                                      //           .currentIndex]
-                                                      //       .idTryoutDetailSoals,
-                                                      //   rekam: this.rekam,
-                                                      // ),
+                                                      PickVideo(
+                                                        onSaved:
+                                                            onSuccessTakeVid,
+                                                        onDuplicate:
+                                                            _onRecordDuplicate,
+                                                        number: this
+                                                            ._soalModel
+                                                            .tryoutSoalPondok
+                                                            .data[this
+                                                                ._soalModel
+                                                                .currentIndex]
+                                                            .idTryoutDetailSoals,
+                                                        rekam: this.rekam,
+                                                      ),
                                                     ],
                                                   )
                                                 : Container(),
@@ -748,7 +748,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                 onTap: () {
                                                   print(this
                                                       ._soalModel
-                                                      .tryoutSoalPsikotes
+                                                      .tryoutSoalPondok
                                                       .data[this
                                                           ._soalModel
                                                           .currentIndex]
@@ -770,7 +770,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                   //             pictures,
                                                   //             this
                                                   //                 ._soalModel
-                                                  //                 .tryoutSoalPsikotes
+                                                  //                 .tryoutSoalPondok
                                                   //                 .data[this
                                                   //                     ._soalModel
                                                   //                     .currentIndex]
@@ -781,7 +781,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                                   //                 videos,
                                                   //                 this
                                                   //                     ._soalModel
-                                                  //                     .tryoutSoalPsikotes
+                                                  //                     .tryoutSoalPondok
                                                   //                     .data[this
                                                   //                         ._soalModel
                                                   //                         .currentIndex]
@@ -839,7 +839,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                   ),
         drawer: Drawer(
           child: this._soalModel.isloading ||
-                  this._soalModel.tryoutSoalPsikotes.data == null
+                  this._soalModel.tryoutSoalPondok.data == null
               ? Loading()
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -860,7 +860,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                                       fontSize: 18, color: Color(0xffffffff)),
                                 )),
                             Text(
-                                "${this._soalModel.tryoutSoalPsikotes.data.length} Soal",
+                                "${this._soalModel.tryoutSoalPondok.data.length} Soal",
                                 style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         fontSize: 12, color: Colors.white60))),
@@ -910,7 +910,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
                             primary: true,
                             physics: ClampingScrollPhysics(),
                             itemCount:
-                                this._soalModel.tryoutSoalPsikotes.data.length,
+                                this._soalModel.tryoutSoalPondok.data.length,
                             itemBuilder: (ctx, index) {
                               return Padding(
                                 padding: const EdgeInsets.all(4),
@@ -997,7 +997,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         Navigator.pop(context);
         if (this
                 ._soalModel
-                .tryoutSoalPsikotes
+                .tryoutSoalPondok
                 .data[this._soalModel.currentIndex]
                 .status ==
             0) {
@@ -1007,7 +1007,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
         }
         Toast.show("Soal selesai :)", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-        // if (this._soalModel.tryoutSoalPsikotes.data.length == totalSoal) {
+        // if (this._soalModel.tryoutSoalPondok.data.length == totalSoal) {
         // } else {
         //   Navigator.pop(context);
         // }
@@ -1049,7 +1049,7 @@ class _BacaQuranScreenState extends State<BacaQuranScreen>
   }
 
   @override
-  void onSuccessTakePict(String fileNya, String lokasiFIle) {
+  void onSuccessTakePict(String fileNya) {
     pictures.clear();
     appDirectory.list().listen((onData) {
       if (onData.path.endsWith(".jpg")) {

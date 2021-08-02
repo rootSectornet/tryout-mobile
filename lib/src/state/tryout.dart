@@ -9,6 +9,7 @@ abstract class TryoutState {
   void onError(String error);
   void onCheck(String error);
   void onCheckMatpelStatus(bool statusMatpel, int indexs);
+  void onCheckMatpelStatusPondok(int statusMatpel, int indexs);
   void onCheckStatus(int idMurid, int idTryout);
   void showMatpel(BuildContext context);
   void onCheckBayar(BayarModel bayarModel);

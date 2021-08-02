@@ -1,17 +1,14 @@
 import 'package:TesUjian/helper/getStorage.dart';
-import 'package:TesUjian/parent/tryout.dart';
 import 'package:TesUjian/screen/checkout.dart';
 import 'package:TesUjian/screen/fragment/average_nilai.dart';
-import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/screen/fragment/pondok/imla.dart';
 import 'package:TesUjian/screen/fragment/pondok/psikotes.dart';
+import 'package:TesUjian/screen/fragment/pondok/qoliyah.dart';
 import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
-import 'package:TesUjian/screen/fragment/tryout/info.dart';
-import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
-import 'package:TesUjian/screen/fragment/widget/clipath.dart';
+import 'package:TesUjian/screen/fragment/soal/soal_timer_foto.dart';
 import 'package:TesUjian/screen/matpeldone.dart';
 import 'package:TesUjian/screen/notfound.dart';
 import 'package:TesUjian/screen/pembahasan.dart';
@@ -26,29 +23,27 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 
-import 'fragment/pondok/ammaliyah.dart';
-import 'fragment/pondok/bacaQuran.dart';
-import 'fragment/pondok/bahasaIndonesia.dart';
-import 'fragment/pondok/berhitungAngka.dart';
-import 'fragment/pondok/berhitungSoal.dart';
-import 'fragment/pondok/hafalanJuz.dart';
-import 'fragment/pondok/hukumTajwids.dart';
-import 'fragment/pondok/qoliyah.dart';
-import 'fragment/soal/soal_timer_foto.dart';
+import '../loading.dart';
+import '../pondok/ammaliyah.dart';
+import '../pondok/bacaQuran.dart';
+import '../pondok/bahasaIndonesia.dart';
+import '../pondok/berhitungAngka.dart';
+import '../pondok/berhitungSoal.dart';
+import '../pondok/hafalanJuz.dart';
+import '../pondok/hukumTajwids.dart';
 
-class TryoutPondokScreen extends StatefulWidget {
+class LandingPsikotes extends StatefulWidget {
   final int idPaket;
   final int idJenjang;
   final int idTryout;
   final int sekolahTujuan;
 
-  const TryoutPondokScreen(
+  const LandingPsikotes(
       {Key key,
       this.idPaket,
       this.idJenjang,
@@ -56,11 +51,11 @@ class TryoutPondokScreen extends StatefulWidget {
       this.sekolahTujuan})
       : super(key: key);
   @override
-  _TryoutPondokScreenState createState() => _TryoutPondokScreenState(
+  _LandingPsikotesState createState() => _LandingPsikotesState(
       this.idPaket, this.idJenjang, this.idTryout, this.sekolahTujuan);
 }
 
-class _TryoutPondokScreenState extends State<TryoutPondokScreen>
+class _LandingPsikotesState extends State<LandingPsikotes>
     with SingleTickerProviderStateMixin
     implements TryoutState {
   final int idPaket;
@@ -76,7 +71,7 @@ class _TryoutPondokScreenState extends State<TryoutPondokScreen>
   // ignore: unused_field
   PondokPresenter _tryoutPresenter;
   TabController tabController;
-  _TryoutPondokScreenState(
+  _LandingPsikotesState(
       this.idPaket, this.idJenjang, this.idTryout, this.sekolahTujuan) {
     this._tryoutPresenter = new PondokPresenter();
   }
@@ -106,553 +101,217 @@ class _TryoutPondokScreenState extends State<TryoutPondokScreen>
         body: this._tryoutModel.isloading ||
                 this._tryoutModel.tryoutInfoResponse.dataTryout.paket == null
             ? Loading()
-            : Container(
-                width: MediaQuery.of(context).size.width,
-                height: double.infinity,
-                color: Color(0xffecedf2),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 300.0,
-                        padding: EdgeInsets.only(bottom: 0),
-                        child: Stack(
-                          children: <Widget>[
-                            ClipPath(
-                              clipper: TClipper(),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 300.0,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff25509e),
-                                    Color(0xff25509e),
-                                  ],
-                                  begin: const FractionalOffset(0.0, 0.0),
-                                  end: const FractionalOffset(1.0, 0.0),
-                                )),
-                              ),
-                            ),
-                            Positioned(
-                                top: 20,
-                                left: 0,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Ionicons.arrow_back,
-                                    color: Colors.white,
-                                  ),
-                                  iconSize: 24,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                )),
-                            Positioned(
-                              top: 90,
-                              left: 35,
-                              child: Text(
-                                "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              top: 120,
-                              left: 35,
-                              child: Text(
-                                "Ayo Semangat Mengerjakan",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.white),
-                              ),
-                            ),
-                            Positioned(
-                              // top: 140,
-                              right: 15,
-                              bottom: 40,
-                              child: Image.asset(
-                                "assets/img/lesson.png",
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                            Positioned(
-                                // top: 140,
-                                left: 15,
-                                bottom: 20,
-                                child: Text(
-                                  "Hi, Pilih Mata Pelajarannya Disini",
-                                  style: GoogleFonts.poppins(
-                                      color: Color(0xff1f1f1f), fontSize: 14),
-                                ))
-                          ],
+            : FancyOnBoarding(
+                pageList: [
+                  PageModel(
+                      color: Color(0xfffd7878),
+                      heroImagePath: "assets/img/psikotes.jpg",
+                      title: Center(
+                        child: Text(
+                          "Soal Psikotes",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35),
                         ),
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: this._tryoutModel.isloading
-                              ? GridView.builder(
-                                  padding: EdgeInsets.all(10),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10),
-                                  shrinkWrap: true,
-                                  primary: true,
-                                  physics: ClampingScrollPhysics(),
-                                  itemCount: 6,
-                                  itemBuilder: (ctx, index) {
-                                    return InkWell(
-                                        child: SkeletonAnimation(
-                                      child: Container(
-                                        padding: EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                        ),
-                                      ),
-                                    ));
-                                  })
-                              : (this
-                                          ._tryoutModel
-                                          .tryoutInfoResponse
-                                          .dataTryout
-                                          .status ==
-                                      false)
-                                  ? GridView.builder(
-                                      padding: EdgeInsets.all(10),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 2.5,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10),
-                                      shrinkWrap: true,
-                                      physics: ClampingScrollPhysics(),
-                                      itemCount: this
-                                          ._tryoutModel
-                                          .tryoutDetailPondokResponse
-                                          .data
-                                          .length,
-                                      itemBuilder: (ctx, index) {
-                                        // var nilai = this
-                                        //     ._tryoutModel
-                                        //     .tryoutDetailResponse
-                                        //     .data[index]
-                                        //     .nilai;
-                                        // var total = this
-                                        //         ._tryoutModel
-                                        //         .tryoutDetailResponse
-                                        //         .data[index]
-                                        //         .totalBenar +
-                                        //     this
-                                        //         ._tryoutModel
-                                        //         .tryoutDetailResponse
-                                        //         .data[index]
-                                        //         .totalSalah;
-                                        return InkWell(
-                                          onTap: () {
-                                            print(this._tryoutModel.idTryout);
-                                            print(this
-                                                ._tryoutModel
-                                                .tryoutDetailPondokResponse
-                                                .data[index]
-                                                .id);
-                                            this
-                                                ._tryoutPresenter
-                                                .checkMatpelStatus(
-                                                    this._tryoutModel.idTryout,
-                                                    this
-                                                        ._tryoutModel
-                                                        .tryoutDetailPondokResponse
-                                                        .data[index]
-                                                        .id,
-                                                    index);
-                                            // this.onCheckMatpelStatus(
-                                            //     true, index);
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(
-                                                  LineIcons.book,
-                                                  size: 24,
-                                                  color: Colors.red,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                        this
-                                                            ._tryoutModel
-                                                            .tryoutDetailPondokResponse
-                                                            .data[index]
-                                                            .namaSoal,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          textStyle: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Color(
-                                                                0xff485460),
-                                                          ),
-                                                        )),
-                                                    // Text(
-                                                    //     // " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
-                                                    //     "${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
-                                                    //     style:
-                                                    //         GoogleFonts.poppins(
-                                                    //       textStyle: TextStyle(
-                                                    //         fontSize: 10,
-                                                    //         color: Color(
-                                                    //             0xff7a7a7a),
-                                                    //       ),
-                                                    //     )),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      })
-                                  : GridView.builder(
-                                      padding: EdgeInsets.all(10),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 2.5,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10),
-                                      shrinkWrap: true,
-                                      physics: ClampingScrollPhysics(),
-                                      itemCount: this
-                                          ._tryoutModel
-                                          .tryoutDetailPondokResponse
-                                          .data
-                                          .length,
-                                      itemBuilder: (ctx, index) {
-                                        //
-                                        return InkWell(
-                                          onTap: () {
-                                            print(this._tryoutModel.idTryout);
-                                            print(this
-                                                ._tryoutModel
-                                                .tryoutDetailPondokResponse
-                                                .data[index]
-                                                .id);
-                                            Toast.show("soal sudah selesai :)",
-                                                context,
-                                                duration: Toast.LENGTH_SHORT,
-                                                gravity: Toast.BOTTOM);
-                                            // this._tryoutPresenter.checkMatpelStatus(
-                                            //     this._tryoutModel.idTryout,
-                                            //     this
-                                            //         ._tryoutModel
-                                            //         .tryoutDetailResponse
-                                            //         .data[index]
-                                            //         .id,
-                                            //     index);
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[300],
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(
-                                                  LineIcons.book,
-                                                  size: 24,
-                                                  color: Colors.red,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                        this
-                                                            ._tryoutModel
-                                                            .tryoutDetailPondokResponse
-                                                            .data[index]
-                                                            .namaSoal,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          textStyle: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Color(
-                                                                0xff485460),
-                                                          ),
-                                                        )),
-                                                    // Text(
-                                                    //     // " ${this._tryoutModel.tryoutDetailResponse.data[index].totalBenar + this._tryoutModel.tryoutDetailResponse.data[index].totalSalah} / ${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
-                                                    //     "${this._tryoutModel.tryoutDetailResponse.data[index].jumlahSoal} Soal",
-                                                    //     style:
-                                                    //         GoogleFonts.poppins(
-                                                    //       textStyle: TextStyle(
-                                                    //         fontSize: 10,
-                                                    //         color: Color(
-                                                    //             0xff7a7a7a),
-                                                    //       ),
-                                                    //     )),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      })),
-                      SizedBox(
-                        height: 25,
+                      body: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Center(
+                          child: Text(
+                            "Membaca soal text, & menjawab dengan merekam suara",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
                       ),
-                      (this._tryoutModel.tryoutInfoResponse.dataTryout.status ==
-                              false)
-                          ? Center(
-                              child: InkWell(
-                                splashColor: Color(0xff7474BF),
-                                onTap: () {
-                                  print(this
-                                      ._tryoutModel
-                                      .tryoutInfoResponse
-                                      .dataTryout
-                                      .idSekolahTujuan);
-                                  print(this._tryoutModel.idTryout);
-                                  // this._tryoutPresenter.finishTryout(this
-                                  //     ._tryoutModel
-                                  //     .tryoutInfoResponse
-                                  //     .dataTryout
-                                  //     .id);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10.0),
-                                  height: 43,
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.2,
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0, 28),
-                                            blurRadius: 40,
-                                            spreadRadius: -12)
-                                      ],
-                                      color: Color(0xff1d63dc),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Center(
-                                    child: Text(
-                                      "Finish Tryout",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              child: Column(
-                                children: [
-                                  Center(
-                                    child: InkWell(
-                                      splashColor: Color(0xff7474BF),
-                                      onTap: () {
-                                        if (widget.idJenjang == 16) {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AverageNilai(
-                                                        title:
-                                                            "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
-                                                        idMurid: GetStorage()
-                                                            .read(ID_MURID),
-                                                        idTryout: this
-                                                            ._tryoutModel
-                                                            .idTryout,
-                                                        // idArea: this
-                                                        //     ._tryoutModel
-                                                        //     .idArea,
-                                                      )));
-                                        } else {
-                                          print(this
-                                              ._tryoutModel
-                                              .tryoutInfoResponse
-                                              .dataTryout
-                                              .idSekolahTujuan);
-                                          print(this._tryoutModel.idTryout);
-                                          // this.areaJenjangTujuan();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AverageNilai(
-                                                        title:
-                                                            "${this._tryoutModel.tryoutInfoResponse.dataTryout.tingkat.jenjang} | ${this._tryoutModel.tryoutInfoResponse.dataTryout.paket.namaPaket}",
-                                                        idMurid: GetStorage()
-                                                            .read(ID_MURID),
-                                                        idTryout: this
-                                                            ._tryoutModel
-                                                            .idTryout,
-                                                        // idArea: this
-                                                        //     ._tryoutModel
-                                                        //     .idArea,
-                                                        idSekolahTujuan: this
-                                                            ._tryoutModel
-                                                            .tryoutInfoResponse
-                                                            .dataTryout
-                                                            .idSekolahTujuan,
-                                                      )));
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 50.0),
-                                        height: 43,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.2,
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black26,
-                                                  offset: Offset(0, 28),
-                                                  blurRadius: 40,
-                                                  spreadRadius: -12)
-                                            ],
-                                            color: Color(0xff1fc8db),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: Center(
-                                          child: Text(
-                                            "Cek nilai rata-rata",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: InkWell(
-                                      splashColor: Color(0xff7474BF),
-                                      onTap: () {
-                                        showMatpel(context);
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 10.0),
-                                        height: 43,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.2,
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black26,
-                                                  offset: Offset(0, 28),
-                                                  blurRadius: 40,
-                                                  spreadRadius: -12)
-                                            ],
-                                            color: Color(0xff1d63dc),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: Center(
-                                          child: Text(
-                                            "Cek Pembahasan",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      icon: Icon(
+                        Icons.arrow_right_alt,
+                        color: Color(0xfffd7878),
+                      )),
+                  PageModel(
+                      color: Color(0xff3da3e7),
+                      heroImagePath: "assets/img/psikotes.jpg",
+                      title: Center(
+                        child: Text(
+                          "Soal Psikotes",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35),
+                        ),
+                      ),
+                      body: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Center(
+                          child: Text(
+                            "Kerjakan dengan cermat, silahkan mulai",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.arrow_right_alt,
+                        color: Color(0xff753de7),
+                      )),
+                  // PageModel(
+                  //     color: Color(0xff3da3e7),
+                  //     heroImagePath: "assets/img/imla.png",
+                  //     title: Center(
+                  //       child: Text(
+                  //         "Imla",
+                  //         style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontWeight: FontWeight.bold,
+                  //             fontSize: 35),
+                  //       ),
+                  //     ),
+                  //     body: Padding(
+                  //       padding: EdgeInsets.symmetric(horizontal: 10),
+                  //       child: Center(
+                  //         child: Text(
+                  //           "Mendengarkan soal berupa audio, dan menjawab dengan merekam suara jawaban",
+                  //           textAlign: TextAlign.center,
+                  //           style: TextStyle(color: Colors.white, fontSize: 20),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     icon: Icon(
+                  //       Icons.arrow_right_alt,
+                  //       color: Color(0xff3da3e7),
+                  //     )),
+                  // PageModel(
+                  //     color: Color(0xff34d5eb),
+                  //     heroImagePath: "assets/img/bhsindo.png",
+                  //     title: Center(
+                  //       child: Text(
+                  //         "Berhitung & bhs",
+                  //         style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontWeight: FontWeight.bold,
+                  //             fontSize: 35),
+                  //       ),
+                  //     ),
+                  //     body: Padding(
+                  //       padding: EdgeInsets.symmetric(horizontal: 10),
+                  //       child: Center(
+                  //         child: Text(
+                  //           "membaca soal text dan menjawab dengan foto",
+                  //           textAlign: TextAlign.center,
+                  //           style: TextStyle(color: Colors.white, fontSize: 20),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     icon: Icon(
+                  //       Icons.done,
+                  //       color: Color(0xffFFE044),
+                  //     )),
+                ],
+                bottomMargin: 10,
+                showSkipButton: true,
+                skipButton: Padding(
+                  padding: EdgeInsets.only(top: 10, right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      print("On Skip pressed");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PsikotesScreen(
+                              key: Key("Soal0"),
+                              idMatpel: this
+                                  ._tryoutModel
+                                  .tryoutDetailPondokResponse
+                                  .data[0]
+                                  .id,
+                              matpel: this
+                                  ._tryoutModel
+                                  .tryoutDetailPondokResponse
+                                  .data[0]
+                                  .namaSoal,
+                              idPaket: idPaket,
+                              jenjang: this.idJenjang,
+                              idTryout: 0,
                             ),
-
-                      SizedBox(
-                        height: 5,
+                          )).then((value) {
+                        this
+                            ._tryoutPresenter
+                            .getMatpelPondoks(this._tryoutModel.idTryout);
+                        this
+                            ._tryoutPresenter
+                            .getInfo(this._tryoutModel.idTryout);
+                      });
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                        child: Text(
+                          "Skip",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Container(
-                      //       height: 40,
-                      //       width: MediaQuery.of(context).size.width / 2.5,
-                      //       child: RaisedButton(
-                      //         padding: EdgeInsets.all(10),
-                      //         color: Colors.orange,
-                      //         disabledColor: Colors.red,
-                      //         onPressed: () async {},
-                      //         shape: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(10.0)),
-                      //         child: Text(
-                      //           'cek Nilai rata-rata',
-                      //           style: GoogleFonts.poppins(
-                      //             color: Colors.white,
-                      //             fontSize: 14,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     Container(
-                      //       height: 40,
-                      //       width: MediaQuery.of(context).size.width / 2.5,
-                      //       child: RaisedButton(
-                      //         padding: EdgeInsets.all(10),
-                      //         color: Colors.blue,
-                      //         disabledColor: Colors.red,
-                      //         onPressed: () async {
-                      //           showMatpel(context);
-                      //         },
-                      //         shape: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(10.0)),
-                      //         child: Text(
-                      //           'Cek Pembahasan',
-                      //           style: GoogleFonts.poppins(
-                      //             color: Colors.white,
-                      //             fontSize: 14,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                    ],
+                    ),
+                  ),
+                ),
+                onSkipButtonPressed: () {
+                  print("On Skip pressed");
+                },
+                onDoneButtonPressed: () {
+                  print("On Done Pressed");
+                },
+                doneButton: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: GestureDetector(
+                    onTap: () {
+                      print("On Done Pressed");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PsikotesScreen(
+                              key: Key("Soal0"),
+                              idMatpel: this
+                                  ._tryoutModel
+                                  .tryoutDetailPondokResponse
+                                  .data[0]
+                                  .id,
+                              matpel: this
+                                  ._tryoutModel
+                                  .tryoutDetailPondokResponse
+                                  .data[0]
+                                  .namaSoal,
+                              idPaket: idPaket,
+                              jenjang: this.idJenjang,
+                              idTryout: 0,
+                            ),
+                          )).then((value) {
+                        this
+                            ._tryoutPresenter
+                            .getMatpelPondoks(this._tryoutModel.idTryout);
+                        this
+                            ._tryoutPresenter
+                            .getInfo(this._tryoutModel.idTryout);
+                      });
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                        child: Text(
+                          "Done",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ));
@@ -1082,7 +741,6 @@ class _TryoutPondokScreenState extends State<TryoutPondokScreen>
         });
         break;
       case 10:
-        print('bhs indo');
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -1646,7 +1304,7 @@ class _TryoutPondokScreenState extends State<TryoutPondokScreen>
   //                     .nama,
   //               ),
   //             )).then((value) {
-  //           this._tryoutPresenter.getMatpels(this._tryoutModel.idTryout);
+  //           this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
   //           this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
   //         });
   //       }
@@ -1791,285 +1449,6 @@ class _TryoutPondokScreenState extends State<TryoutPondokScreen>
 
   @override
   void onCheckMatpelStatusPondok(int statusMatpel, int indexs) {
-    if (statusMatpel == 0) {
-      switch (
-          this._tryoutModel.tryoutDetailPondokResponse.data[indexs].urutan) {
-        case 1:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PsikotesScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 2:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BacaQuranScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 3:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HukumTajwidsScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 4:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HafalanJuzScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 5:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AmmaliyahScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 6:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QoliyahScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 7:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QoliyahScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 8:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BerhitungAngkaScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 9:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BerhitungSoalScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        case 10:
-          print('bhs indo');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BahasaIndonesiaScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .id,
-                  matpel: this
-                      ._tryoutModel
-                      .tryoutDetailPondokResponse
-                      .data[indexs]
-                      .namaSoal,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-          break;
-        default:
-          print('default');
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SoalScreen(
-                  key: Key("Soal$indexs"),
-                  idMatpel: this
-                      ._tryoutModel
-                      .tryoutDetailResponse
-                      .data[indexs]
-                      .idmatpel,
-                  idtryoutdetail:
-                      this._tryoutModel.tryoutDetailResponse.data[indexs].id,
-                  matpel:
-                      this._tryoutModel.tryoutDetailResponse.data[indexs].nama,
-                  jenjang: this.idJenjang,
-                ),
-              )).then((value) {
-            this._tryoutPresenter.getMatpelPondoks(this._tryoutModel.idTryout);
-            this._tryoutPresenter.getInfo(this._tryoutModel.idTryout);
-          });
-      }
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MatpelDoneScreen(
-                    idMatpel: this
-                        ._tryoutModel
-                        .tryoutDetailPondokResponse
-                        .data[indexs]
-                        .id,
-                    idtryoutdetail: this
-                        ._tryoutModel
-                        .tryoutDetailPondokResponse
-                        .data[indexs]
-                        .id,
-                    matpel: this
-                        ._tryoutModel
-                        .tryoutDetailPondokResponse
-                        .data[indexs]
-                        .namaSoal,
-                  )));
-    }
+    // TODO: implement onCheckMatpelStatusPondok
   }
 }

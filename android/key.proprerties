@@ -1,4 +1,4 @@
 storePassword=root12345
 keyPassword=root12345
 keyAlias=key
-storeFile=/Users/Administrator/key.jks
+storeFile=/Users/ilham/key.jks

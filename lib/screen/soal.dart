@@ -1292,7 +1292,7 @@ class _SoalScreenState extends State<SoalScreen> implements SoalState {
   }
 
   @override
-  void onSuccessTakePict(String fileNya, String lokasiFile) {
+  void onSuccessTakePict(String fileNya) {
     pictures.clear();
     appDirectory.list().listen((onData) {
       if (onData.path.endsWith(".jpg")) {

@@ -28,6 +28,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
   // ignore: unused_field
   SignUpModel _signUpModel;
   bool _isPasswordVisible = true;
+  bool _isPasswordVisibleType = true;
   final _formkey = GlobalKey<FormState>();
   _SignUpUI() {
     this._signUpPresenter = new SignUpPresenter();
@@ -366,6 +367,88 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                                         width: 1, color: Color(0xff2D8EFF)),
                                   )),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    setState(() {
+                                      this._signUpModel.isErrorPasswordRetype =
+                                          true;
+                                      this._signUpModel.passwordErrorRetype =
+                                          "Password tidak boleh kosong";
+                                    });
+                                  }
+                                  if (this._signUpModel.passwordRetype !=
+                                      this._signUpModel.password) {
+                                    setState(() {
+                                      this._signUpModel.isErrorPasswordRetype =
+                                          true;
+                                      this._signUpModel.passwordErrorRetype =
+                                          "Password harus sama!";
+                                    });
+                                  }
+                                  return null;
+                                },
+                                onChanged: (str) {
+                                  setState(() {
+                                    this._signUpModel.isErrorPasswordRetype =
+                                        false;
+                                    this._signUpModel.passwordErrorRetype =
+                                        null;
+                                  });
+                                },
+                                controller: this._signUpModel.passwordRetype,
+                                obscureText: _isPasswordVisibleType,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                                decoration: InputDecoration(
+                                    icon: Icon(
+                                      Icons.lock,
+                                      color: this
+                                              ._signUpModel
+                                              .isErrorPasswordRetype
+                                          ? Colors.red
+                                          : Color(0xff2D8EFF),
+                                      size: 18,
+                                    ),
+                                    hintText: "Masukan ulang Password",
+                                    suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _isPasswordVisibleType
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isPasswordVisibleType =
+                                                !_isPasswordVisibleType;
+                                          });
+                                        }),
+                                    border: InputBorder.none,
+                                    errorText:
+                                        this._signUpModel.passwordErrorRetype,
+                                    errorStyle: TextStyle(
+                                        color: Colors.red, fontSize: 9),
+                                    fillColor: Colors.grey,
+                                    hintStyle: TextStyle(
+                                        color: Color(0xff2D8EFF),
+                                        fontSize: 12)),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: 30,
+                              margin: EdgeInsets.only(
+                                  top: 4, left: 16, bottom: 1, right: 16),
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: Color(0xff2D8EFF)),
+                                  )),
+                              child: TextFormField(
                                 // initialValue: new DateFormat("d, MMMM - y").format(this._signUpModel.tanggalLahir.toLocal()).toString(),
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 14),
@@ -395,6 +478,7 @@ class _SignUpUI extends State<SignUp> implements SignUpState {
                               splashColor: Color(0xff7474BF),
                               onTap: () {
                                 if (_formkey.currentState.validate()) {
+                                  // print('test');
                                   this._signUpPresenter.register();
                                 }
                               },

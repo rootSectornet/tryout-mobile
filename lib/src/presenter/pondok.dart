@@ -291,16 +291,14 @@ class PondokPresenter implements PondokPresenterAbstract {
     this._tryoutModel.isloading = true;
     // this._tryoutModel.statusMatpel = false;
     this._tryoutState.refreshData(this._tryoutModel);
-    this._tryoutApi.checkmatpel(idTryout, idTryoutDetail).then((value) {
+    this._tryoutApi.checkmatpelPondok(idTryoutDetail).then((value) {
       print("++++++++++cek+++++++++++++++");
       print(jsonEncode(value));
       print("++++++++++cek+++++++++++++++");
       // this._tryoutModel.statusMatpel = value.dataTryout.data[0].status;
       this._tryoutModel.isloading = false;
       this._tryoutState.refreshData(this._tryoutModel);
-      this
-          ._tryoutState
-          .onCheckMatpelStatus(value.dataTryout.data[0].status, index);
+      this._tryoutState.onCheckMatpelStatusPondok(value.data[0].status, index);
     }).catchError((onError) {
       print(onError.toString());
       print("info");

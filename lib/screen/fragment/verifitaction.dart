@@ -153,7 +153,8 @@ class _VerificationScreenState extends State<VerificationScreen>
   void onSuccess(String success) {
     Toast.show("$success", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-    Navigator.pushReplacementNamed(context, "/home");
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/home", (Route<dynamic> route) => false);
   }
 
   @override

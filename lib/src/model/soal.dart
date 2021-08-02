@@ -24,6 +24,6 @@ class SoalModel {
   List<JawabanTemp> jawabanTemp = new List<JawabanTemp>();
   final TextEditingController jawabanEssay = new TextEditingController();
   TryoutSoalResponse tryoutSoalResponse = new TryoutSoalResponse();
-  TryoutSoalPsikotes tryoutSoalPsikotes = new TryoutSoalPsikotes();
+  TryoutSoalPondok tryoutSoalPondok = new TryoutSoalPondok();
   List<String> choiceNumber = ["A.", "B.", "C.", "D."];
 }

@@ -23,8 +23,9 @@ class Paths {
   static const String ENDPOINT_TRYOUT_MATPELS = "tryoutdetails";
   static const String ENDPOINT_TRYOUT_MATPELS_PONDOK = "tryoutdetailpondoks";
   static const String ENDPOINT_CHECK_MATPELS_STATUS = "finishTryoutDetail";
+  static const String ENDPOINT_CHECK_PONDOK_STATUS = "finishdetailpondoks";
   static const String ENDPOINT_FINISH_MATPELS_STATUS = "finishTryoutDetail";
-  static const String ENDPOINT_FINISH_MATPELS_PSIKOTES_STATUS =
+  static const String ENDPOINT_FINISH_MATPELS_PONDOK_STATUS =
       "finishTryoutPondok";
   static const String ENDPOINT_FINISH_TRYOUT_STATUS = "finishTryout";
   static const String ENDPOINT_TRYOUT_INFO = "tryout/info";
@@ -41,6 +42,15 @@ class Paths {
 
   static const String PSIKOTES_SOAL = "psikotes/soal";
   static const String PSIKOTES_UPDATEJAWABAN = "psikotes/updateJawaban";
+  static const String PRAKTEKIBADAH_UPDATEJAWABAN =
+      "praktekIbadah/updateJawaban";
+  static const String BACAQURAN_UPDATEJAWABAN = "bacaQuran/updateJawaban";
+  static const String HUKUMTAJWIDS_UPDATEJAWABAN = "hukumTajwids/updateJawaban";
+  static const String HAFALANJUZ_UPDATEJAWABAN = "hafalanJuz/updateJawaban";
+  static const String BERHITUNGANGKA_UPDATEJAWABAN =
+      "berhitungAngka/updateJawaban";
+  static const String BERHITUNGSOAL_UPDATEJAWABAN =
+      "berhitungSoal/updateJawaban";
   static const String BACAQURAN_SOAL = "bacaQuran/soal";
   static const String HUKUMTAJWIDS_SOAL = "hukumTajwids/soal";
   static const String HAFALANJUZ_SOAL = "hafalanJuz/soal";

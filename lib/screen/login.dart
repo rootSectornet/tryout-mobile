@@ -352,7 +352,8 @@ class _LoginUI extends State<Login> implements LoginState {
     // TODO: implement onSuccess
     Toast.show("$success", context,
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-    Navigator.pushReplacementNamed(context, "/home");
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/home", (Route<dynamic> route) => false);
   }
 
   @override

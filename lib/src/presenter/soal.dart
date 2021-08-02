@@ -29,7 +29,7 @@ abstract class SoalPresenterAbstract {
   void jawabGambar(List<String> jawaban, int number) {}
   void jawabVideo(List<String> jawaban, int number) {}
   void kumpulkan() {}
-  void kumpulkanPsikotes() {}
+  void kumpulkanPondok() {}
   void kumpulkanFile() {}
 }
 
@@ -70,7 +70,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalPsikotes(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -87,7 +87,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalBacaQuran(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -104,7 +104,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalAmmaliyah(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -121,7 +121,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalQoliyah(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -138,7 +138,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalHafalanJuz(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -155,7 +155,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalHukumTajwids(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -172,7 +172,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalBerhitungSoal(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -189,7 +189,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalBahasaIndonesia(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -206,7 +206,7 @@ class SoalPresenter implements SoalPresenterAbstract {
     this._soalModel.idTryoutDetail = idTryoutDetail;
     this._soalState.refreshData(this._soalModel);
     this._tryoutApi.getSoalBerhitungAngka(idTryoutDetail).then((value) {
-      this._soalModel.tryoutSoalPsikotes = value;
+      this._soalModel.tryoutSoalPondok = value;
       this._soalModel.isloading = false;
       this._soalState.refreshData(this._soalModel);
     }).catchError((onError) {
@@ -279,7 +279,7 @@ class SoalPresenter implements SoalPresenterAbstract {
 
   @override
   void submitPondok() {
-    int totalSoal = this._soalModel.tryoutSoalPsikotes.data.length;
+    int totalSoal = this._soalModel.tryoutSoalPondok.data.length;
     if ((this._soalModel.currentIndex + 1) < totalSoal) {
       this._soalModel.currentIndex++;
     }
@@ -383,14 +383,11 @@ class SoalPresenter implements SoalPresenterAbstract {
     print('jawabfile ' + fileNya);
     this
         ._soalModel
-        .tryoutSoalPsikotes
+        .tryoutSoalPondok
         .data[this._soalModel.currentIndex]
         .jawabanUser = fileNya;
-    this
-        ._soalModel
-        .tryoutSoalPsikotes
-        .data[this._soalModel.currentIndex]
-        .status = 1;
+    this._soalModel.tryoutSoalPondok.data[this._soalModel.currentIndex].status =
+        1;
 
     this._soalModel.isloading = false;
     this._soalState.refreshData(this._soalModel);
@@ -426,12 +423,13 @@ class SoalPresenter implements SoalPresenterAbstract {
   }
 
   @override
-  void kumpulkanPsikotes() async {
+  void kumpulkanPondok() async {
     this._soalModel.isloading = true;
     this._soalState.refreshData(this._soalModel);
+    print("KUMPULKAN Pondok");
     this
         ._tryoutApi
-        .finishMatpelPsikotes(this._soalModel.idTryoutDetail)
+        .finishMatpelPondok(this._soalModel.idTryoutDetail)
         .then((value) {
       print(value);
     }).catchError((onError) {
