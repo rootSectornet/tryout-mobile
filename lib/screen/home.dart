@@ -3,26 +3,18 @@ import 'dart:math';
 import 'package:TesUjian/screen/fragment/menu/history.dart';
 import 'package:TesUjian/screen/fragment/menu/jenjang.dart';
 import 'package:TesUjian/screen/fragment/menu/paket.dart';
-import 'package:TesUjian/screen/fragment/report.dart';
 import 'package:TesUjian/screen/fragment/report/progress.dart';
-import 'package:TesUjian/screen/fragment/soal/landing_tutorial_pondok.dart';
 import 'package:TesUjian/screen/select_sekolah.dart';
-import 'package:TesUjian/screen/tryout.dart';
 import 'package:TesUjian/screen/tryoutPondok.dart';
 import 'package:TesUjian/src/model/home.dart';
 import 'package:TesUjian/src/presenter/home.dart';
 import 'package:TesUjian/src/resources/session.dart';
 import 'package:TesUjian/src/state/home.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:toast/toast.dart';
-
-import 'fragment/pondok/landingPsikotes.dart';
 
 class Home extends StatefulWidget {
   @override

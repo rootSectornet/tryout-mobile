@@ -1,7 +1,5 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 import 'package:select_dialog/select_dialog.dart';
 import 'package:TesUjian/src/model/stock.dart';
 import 'package:TesUjian/src/model/warehouse.dart';

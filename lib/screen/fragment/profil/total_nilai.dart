@@ -1,13 +1,8 @@
 import 'package:TesUjian/helper/getStorage.dart';
-import 'package:TesUjian/screen/fragment/profile_nilai.dart';
 import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/total_nilai.dart';
-import 'package:TesUjian/src/presenter/paket.dart';
 import 'package:TesUjian/src/presenter/total_nilai.dart';
-import 'package:TesUjian/src/resources/session.dart';
-import 'package:TesUjian/src/state/paket.dart';
 import 'package:TesUjian/src/state/total_nilai.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';

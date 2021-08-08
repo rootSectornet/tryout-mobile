@@ -1,5 +1,3 @@
-import 'package:TesUjian/src/response/cekPembayaran.dart';
-
 class Bayar {
   bool status;
   int idTryout;

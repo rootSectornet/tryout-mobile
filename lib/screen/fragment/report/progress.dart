@@ -9,7 +9,6 @@ import 'package:TesUjian/src/state/history.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:toast/toast.dart';

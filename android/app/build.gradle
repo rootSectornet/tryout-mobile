@@ -54,7 +54,7 @@ android {
         release {
             keyAlias 'upload'
             keyPassword 'root12345'
-            storeFile file('c:\\Users\\Administrator\\key.jks')
+            storeFile file('c:\\Users\\Administrator\\keystore.jks')
             storePassword 'root12345'
         }
     }

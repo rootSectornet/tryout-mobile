@@ -7,7 +7,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
 

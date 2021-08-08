@@ -1,18 +1,14 @@
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/notfound.dart';
 import 'package:TesUjian/src/model/pembahasan.dart';
-import 'package:TesUjian/src/model/soal.dart';
 import 'package:TesUjian/src/presenter/pembahasan.dart';
-import 'package:TesUjian/src/presenter/soal.dart';
 import 'package:TesUjian/src/state/pembahasan.dart';
-import 'package:TesUjian/src/state/soal.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
 

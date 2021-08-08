@@ -4,8 +4,6 @@ import 'dart:io';
 // import 'package:TesUjian/screen/fragment/soal/video_list_view.dart';
 // import 'package:TesUjian/screen/fragment/soal/recorded_list_view.dart';
 import 'package:TesUjian/screen/fragment/soal/detail_video_screen.dart';
-import 'package:TesUjian/screen/fragment/soal/recorder_view.dart';
-import 'package:TesUjian/screen/fragment/soal/pick_image.dart';
 import 'package:TesUjian/screen/fragment/soal/pick_video.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,8 +21,6 @@ import 'package:flutter_html/style.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:toast/toast.dart';
-
-import 'fragment/soal/detail_image_screen.dart';
 
 class SoalScreen extends StatefulWidget {
   final int idtryoutdetail;

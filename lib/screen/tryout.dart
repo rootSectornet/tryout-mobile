@@ -1,5 +1,4 @@
 import 'package:TesUjian/helper/getStorage.dart';
-import 'package:TesUjian/parent/tryout.dart';
 import 'package:TesUjian/screen/checkout.dart';
 import 'package:TesUjian/screen/fragment/average_nilai.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
@@ -8,8 +7,6 @@ import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/screen/fragment/pondok/imla.dart';
 import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
-import 'package:TesUjian/screen/fragment/tryout/info.dart';
-import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
 import 'package:TesUjian/screen/fragment/widget/clipath.dart';
 import 'package:TesUjian/screen/matpeldone.dart';
 import 'package:TesUjian/screen/notfound.dart';
@@ -24,11 +21,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
-import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 
 import 'fragment/soal/soal_timer_foto.dart';
 

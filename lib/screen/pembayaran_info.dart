@@ -1,10 +1,6 @@
-import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:TesUjian/src/resources/session.dart';
 
 class PembayaranInfo extends StatefulWidget {
   @override

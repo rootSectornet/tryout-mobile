@@ -1,4 +1,4 @@
 storePassword=root12345
 keyPassword=root12345
 keyAlias=upload
-storeFile=/Users/Administrator/key.jks
+storeFile=/Users/Administrator/keystore.jks

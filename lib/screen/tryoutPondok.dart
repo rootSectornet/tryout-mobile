@@ -1,16 +1,11 @@
 import 'package:TesUjian/helper/getStorage.dart';
-import 'package:TesUjian/parent/tryout.dart';
 import 'package:TesUjian/screen/checkout.dart';
 import 'package:TesUjian/screen/fragment/average_nilai.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
 import 'package:TesUjian/screen/fragment/selectProv.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
-import 'package:TesUjian/screen/fragment/pondok/imla.dart';
 import 'package:TesUjian/screen/fragment/pondok/psikotes.dart';
-import 'package:TesUjian/screen/fragment/soal/soal_text_voice.dart';
-import 'package:TesUjian/screen/fragment/tryout/info.dart';
-import 'package:TesUjian/screen/fragment/tryout/matpels.dart';
 import 'package:TesUjian/screen/fragment/widget/clipath.dart';
 import 'package:TesUjian/screen/matpeldone.dart';
 import 'package:TesUjian/screen/notfound.dart';
@@ -19,18 +14,15 @@ import 'package:TesUjian/screen/soal.dart';
 import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/tryout.dart';
 import 'package:TesUjian/src/presenter/pondok.dart';
-import 'package:TesUjian/src/presenter/tryout.dart';
 import 'package:TesUjian/src/state/tryout.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:toast/toast.dart';
-import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 
 import 'fragment/pondok/ammaliyah.dart';
 import 'fragment/pondok/bacaQuran.dart';
@@ -40,7 +32,6 @@ import 'fragment/pondok/berhitungSoal.dart';
 import 'fragment/pondok/hafalanJuz.dart';
 import 'fragment/pondok/hukumTajwids.dart';
 import 'fragment/pondok/qoliyah.dart';
-import 'fragment/soal/soal_timer_foto.dart';
 
 class TryoutPondokScreen extends StatefulWidget {
   final int idPaket;

@@ -1,5 +1,3 @@
-import 'package:TesUjian/helper/getStorage.dart';
-
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/selectarea.dart';
 import 'package:TesUjian/screen/fragment/selectprovinsi.dart';

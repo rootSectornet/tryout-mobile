@@ -1,20 +1,13 @@
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
-import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
-import 'package:TesUjian/screen/fragment/report.dart';
 import 'package:TesUjian/screen/fragment/tagihan/pembayaran_bayar.dart';
 import 'package:TesUjian/src/model/bayar.dart';
-import 'package:TesUjian/src/model/pembayaran.dart';
-import 'package:TesUjian/src/model/total_nilai.dart';
 import 'package:TesUjian/src/presenter/pembayaran.dart';
-import 'package:TesUjian/src/presenter/total_nilai.dart';
 import 'package:TesUjian/src/state/bayar.dart';
-import 'package:TesUjian/src/state/total_nilai.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:toast/toast.dart';
 
 class CheckoutScreen extends StatefulWidget {

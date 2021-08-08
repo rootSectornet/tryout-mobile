@@ -1,18 +1,13 @@
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/profil/kategori_tagihan.dart';
-import 'package:TesUjian/screen/fragment/tagihan/lunas.dart';
-import 'package:TesUjian/screen/fragment/tagihan/menungguPembayaran.dart';
 import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/presenter/bayarGet.dart';
 import 'package:TesUjian/src/state/tagihan.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
 
 String selectedKategori = "Semua";

@@ -1,7 +1,4 @@
-import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/fragment/profil/profile_header.dart';
-import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';

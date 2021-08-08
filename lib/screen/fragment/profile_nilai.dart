@@ -1,9 +1,6 @@
 import 'package:TesUjian/helper/getStorage.dart';
 import 'package:TesUjian/screen/checkout.dart';
-import 'package:TesUjian/screen/fragment/loading.dart';
 import 'package:TesUjian/screen/fragment/pembayaran_detail.dart';
-import 'package:TesUjian/screen/fragment/profil/total_nilai.dart';
-import 'package:TesUjian/screen/fragment/profile_detail_nilai.dart';
 import 'package:TesUjian/screen/fragment/report.dart';
 import 'package:TesUjian/src/model/bayar.dart';
 import 'package:TesUjian/src/model/total_nilai.dart';
@@ -16,8 +13,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:TesUjian/src/resources/session.dart';
 import 'package:toast/toast.dart';
 
 class ProfileNilai extends StatefulWidget {
