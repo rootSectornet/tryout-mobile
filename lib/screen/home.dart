@@ -76,165 +76,171 @@ class _HomeState extends State<Home> implements HomeState {
     return Scaffold(
       body: RefreshIndicator(
         key: refreshKey,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: double.infinity,
-          color: Color(0xff0066cc),
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
-                width: MediaQuery.of(context).size.width,
-                height: 90,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Hello, " + this._homeModel.nama,
-                        style: GoogleFonts.poppins(
-                          textStyle:
-                              TextStyle(fontSize: 18, color: Color(0xffffffff)),
-                        )),
-                    InkWell(
-                      onTap: () =>
-                          Navigator.pushNamed(context, "/profile_detail"),
-                      child: new Container(
-                          width: 50,
-                          height: 50,
-                          padding: EdgeInsets.all(10),
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xff2D8EFF),
-                              image: this._homeModel.picture == ""
-                                  ? new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: ExactAssetImage(
-                                          "assets/img/user.png"))
-                                  : new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(
-                                          // "assets/img/user.png"
-                                          this._homeModel.picture == ""
-                                              ? "assets/img/user.png"
-                                              : "http://103.41.207.247:3000/" +
-                                                  this._homeModel.picture)))),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
+        child: SafeArea(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: double.infinity,
+            color: Color(0xff0066cc),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(15),
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25)),
-                    color: Color(0xffecedf2),
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("Hello, " + this._homeModel.nama,
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontSize: 18, color: Color(0xffffffff)),
+                          )),
+                      InkWell(
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/profile_detail"),
+                        child: new Container(
+                            width: 50,
+                            height: 50,
+                            padding: EdgeInsets.all(10),
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xff2D8EFF),
+                                image: this._homeModel.picture == ""
+                                    ? new DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: ExactAssetImage(
+                                            "assets/img/user.png"))
+                                    : new DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                            // "assets/img/user.png"
+                                            this._homeModel.picture == ""
+                                                ? "assets/img/user.png"
+                                                : "http://103.41.207.247:3000/" +
+                                                    this._homeModel.picture)))),
+                      )
+                    ],
                   ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    physics: ClampingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ProgressScreen(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("Ayo, Uji Kemampuanmu ",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xff485460),
-                              ),
-                            )),
-                        Text("Dengan soal soal ujian kami ",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff7a7a7a),
-                              ),
-                            )),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        PaketScreen(
-                          key: Key("1"),
-                          isList: false,
-                          isPondok: false,
-                          onTryoutgo: (int paket, bool isParent, String name) {
-                            setState(() {
-                              this._homeModel.namaPaket = name;
-                            });
-                            this._homePresenter.setPaket(paket, name, context);
-                          },
-                        ),
-                        Text("Jenjang soal",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff485460),
-                                wordSpacing: 4,
-                                letterSpacing: 1.5,
-                              ),
-                            )),
-                        JenjangScreen(
-                          key: Key("2"),
-                          onTryoutgo:
-                              (int jenjang, bool isParent, String name) {
-                            setState(() {
-                              this._homeModel.idPaket = 0;
-                              this._homeModel.namaJenjang = name;
-                              this._homeModel.isPondok = jenjang == 16;
-                            });
-                            this
-                                ._homePresenter
-                                .setJenjang(jenjang, isParent, name, context);
-                          },
-                          idparent: 0,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("History",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff485460),
-                                    wordSpacing: 4,
-                                    letterSpacing: 1.5,
-                                  ),
-                                )),
-                            InkWell(
-                              child: Text("Lihat semua",
+                ),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(15),
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25)),
+                      color: Color(0xffecedf2),
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      physics: ClampingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ProgressScreen(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Ayo, Uji Kemampuanmu ",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: 24,
+                                  color: Color(0xff485460),
+                                ),
+                              )),
+                          Text("Dengan soal soal ujian kami ",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff7a7a7a),
+                                ),
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          PaketScreen(
+                            key: Key("1"),
+                            isList: false,
+                            isPondok: false,
+                            onTryoutgo:
+                                (int paket, bool isParent, String name) {
+                              setState(() {
+                                this._homeModel.namaPaket = name;
+                              });
+                              this
+                                  ._homePresenter
+                                  .setPaket(paket, name, context);
+                            },
+                          ),
+                          Text("Jenjang soal",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff485460),
+                                  wordSpacing: 4,
+                                  letterSpacing: 1.5,
+                                ),
+                              )),
+                          JenjangScreen(
+                            key: Key("2"),
+                            onTryoutgo:
+                                (int jenjang, bool isParent, String name) {
+                              setState(() {
+                                this._homeModel.idPaket = 0;
+                                this._homeModel.namaJenjang = name;
+                                this._homeModel.isPondok = jenjang == 16;
+                              });
+                              this
+                                  ._homePresenter
+                                  .setJenjang(jenjang, isParent, name, context);
+                            },
+                            idparent: 0,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("History",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
-                                      fontSize: 13,
-                                      color: Color(0xff0066cc),
+                                      fontSize: 14,
+                                      color: Color(0xff485460),
                                       wordSpacing: 4,
+                                      letterSpacing: 1.5,
                                     ),
                                   )),
-                              onTap: () {
-                                Navigator.pushNamed(context, "/profile_nilai");
-                              },
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        HistoryWidget(),
-                      ],
+                              InkWell(
+                                child: Text("Lihat semua",
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        fontSize: 13,
+                                        color: Color(0xff0066cc),
+                                        wordSpacing: 4,
+                                      ),
+                                    )),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, "/profile_nilai");
+                                },
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HistoryWidget(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
         onRefresh: refreshList,
